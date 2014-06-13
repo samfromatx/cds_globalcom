@@ -1,3 +1,17 @@
+# BEGIN W3TC Browser Cache
+<IfModule mod_deflate.c>
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/json
+    <IfModule mod_mime.c>
+        # DEFLATE by extension
+        AddOutputFilter DEFLATE js css htm html xml
+    </IfModule>
+    </IfModule>
+</IfModule>
+# END W3TC Browser Cache
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -7,4 +21,108 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
+
 # END WordPress
+
+<FilesMatch "\.pdf$">
+  header set x-robots-tag: noindex
+</FilesMatch>
+
+#Options +FollowSymLinks
+#RewriteBase /
+#RewriteCond %{HTTP_REFERER} !elqRedir.htm
+#RewriteRule ^(.+\.[pP][dD][fF])$ /elqNow/elqRedir.htm?ref=http://%{HTTP_HOST}/$1 [R=302,L]
+
+# Redirect all old blog post to new location
+RedirectMatch 301 ^/blogs/us/([0-9]{4})/([0-9]{2})/(.+)$ /blog/$3
+RedirectMatch 301 ^/blogs/us/([0-9]{4})/([0-9]{2})/ /blog/
+RedirectMatch 301 ^/blogs/us/(.+)$ /blog/
+Redirect 301 /blogs/us/category /blog/
+
+# Redirect all media/pdf except the cybershift directory
+RedirectMatch 301 ^/media/pdf/(?!cybershift) /resources/
+
+# Perspectives redirects
+RedirectMatch 301 ^/perspectives/(2009|2010|2011|2012)/(.*)/ /perspectives/
+
+
+## ERRORDOCUMENTS
+# http://askapache.com/htaccess/apache-status-code-headers-errordocument.html
+ErrorDocument 400 /e400/
+ErrorDocument 401 /e401/
+ErrorDocument 402 /e402/
+ErrorDocument 403 /e403/
+ErrorDocument 404 /e404/
+
+## 301 Redirects from old site
+Redirect 301 /index.html http://www.cds-global.com/
+RedirectMatch 301 ^/newsroom/newsreleases/(.*) /about/news/
+Redirect 301 /forms/whitepapers/eeditions_simplifying_digital_sales_data.html http://www.cds-global.com/resources/eeditions-product-brief/
+Redirect 301 /solutions/subscription_fulfillment/customer_service.html http://www.cds-global.com/solutions/customer-service/
+Redirect 301 /about/officers.html http://www.cds-global.com/about/leadership/
+Redirect 301 /solutions/product_fulfillment/warehouse_logistics.html http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /industries/nonprofit/donations_processing.html http://www.cds-global.com/industries/nonprofit/donations-processing/
+Redirect 301 /industries/consumer_magazines/index.html http://www.cds-global.com/industries/media/
+Redirect 301 /solutions/remittance_processing/lockbox_processing.html http://www.cds-global.com/solutions/payment-solutions/
+Redirect 301 /resources/forwardreports/magazines-reinvented-twelve-lessons-from-hearsts-troy-young-pt2.html http://www.cds-global.com/blog/magazines-reinvented-12-lessons-from-hearsts-troy-young-part-2/
+Redirect 301 /forms/whitepapers/from_caging_to_campaigns.html http://www.cds-global.com/resources/from-caging-to-campaigns-reducing-costs-and-driving-revenue-in-todays-economy/
+Redirect 301 /forms/whitepapers/folio-monetizing-the-digital-revolution-third-ed.html http://www.cds-global.com/resources/monetizing-the-digital-revolution/
+Redirect 301 /solutions/ecommerce/engage_ecommerce_marketing.html http://cds-global.com/solutions/customer-service/
+Redirect 301 /industries/magazines_and_media/index.html http://www.cds-global.com/industries/media/
+Redirect 301 /industries/nonprofit/index.html http://www.cds-global.com/industries/nonprofit/
+Redirect 301 /solutions/subscription_fulfillment/ehub.html http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /solutions/cross-media_communications/index.html http://www.cds-global.com/solutions/marketing-solutions/
+Redirect 301 /summit/agenda/index.html http://www.cds-global.com/events/
+Redirect 301 /solutions/subscription_fulfillment/direct_marketing.html http://www.cds-global.com/solutions/marketing-solutions/
+Redirect 301 /resources/whitepapers/donations_processing_a_strategy_in_itself.html http://www.cds-global.com/resources/more-than-just-a-deposit-donations-processing-a-strategy-in-itself-2/
+Redirect 301 /forms/whitepapers/prospect-insights.html http://www.cds-global.com/resources/prospect-insights-white-paper-the-power-of-data-proven-models-for-consumer-marketing-success/
+Redirect 301 /contact/index.html http://www.cds-global.com/about/contact/
+Redirect 301 /contact/ http://www.cds-global.com/about/contact/
+Redirect 301 /solutions/subscription_fulfillment/index.html http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /about/locations/index.html http://www.cds-global.com/about/locations/
+Redirect 301 /solutions/product_fulfillment/index.html http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /solutions/ecommerce/index.html http://www.cds-global.com/solutions/ecommerce/
+Redirect 301 /solutions/remittance_processing/index.html http://www.cds-global.com/solutions/payment-solutions/
+Redirect 301 /industries/consumer_products/index.html http://www.cds-global.com/industries/customer-products/
+Redirect 301 /solutions/subscription_fulfillment/consumer.html http://www.cds-global.com/solutions/customer-service/
+Redirect 301 /newsroom/index.html http://www.cds-global.com/about/news/
+Redirect 301 /industries/utilities/index.html http://www.cds-global.com/industries/utilities/
+Redirect 301 /solutions/product_fulfillment/customer_service.html http://www.cds-global.com/solutions/customer-service/
+Redirect 301 /nonprofits/index.html http://www.cds-global.com/industries/nonprofit/
+Redirect 301 /solutions/ecommerce/web_stores.html http://www.cds-global.com/solutions/ecommerce/
+Redirect 301 /solutions/product_fulfillment/order_management.html http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /solutions/remittance_processing/electronic_bill_presentment_payment.html http://www.cds-global.com/solutions/payment-solutions/
+Redirect 301 /solutions/remittance_processing/bill_printing_mailing_services.html http://www.cds-global.com/solutions/payment-solutions/
+Redirect 301 /solutions/subscription_fulfillment/printing_mail_management.html http://www.cds-global.com/solutions/mailing-services/
+#Redirect 301 /resources/casestudies/index.html http://www.cds-global.com/resources/?type=case-study
+#Redirect 301 /resources/whitepapers/index.html http://www.cds-global.com/resources/?type=white-paper
+#Redirect 301 /resources/webinars/index.html http://www.cds-global.com/resources/?type=webinar
+Redirect 301 /careers https://cds-global-hr.silkroad.com/epostings/index.cfm?fuseaction=app.allpositions&company_id=15982&version=1
+Redirect 301 /about/privacy.html http://www.cds-global.com/about/privacy-policy/
+Redirect 301 /solutions/customer-service http://www.cds-global.com/solutions/customer-care-services/
+#Redirect 301 /resources/casestudies http://www.cds-global.com/resources/?type=case-study
+#Redirect 301 /resources/webinars http://www.cds-global.com/resources/?type=webinar
+#Redirect 301 /resources/whitepapers http://www.cds-global.com/resources/?type=white-paper
+Redirect 301 /blogs/us/2014/03/log-analysis-is-fun-again http://www.cds-global.com/blog/log-analysis-is-fun-again/
+Redirect 301 /index_cdsfulfillment.html http://www.cds-global.com
+Redirect 301 /solutions/subscription_fulfillment/ http://www.cds-global.com/solutions/order-management-fulfillment/
+Redirect 301 /industries/magazines_and_media/ http://www.cds-global.com/industries/media/
+Redirect 301 /industries/consumer_magazines/ http://www.cds-global.com/industries/media/
+Redirect 301 /solutions/cross-media_communications/ http://www.cds-global.com/solutions/marketing-solutions/
+Redirect 301 /search/ http://www.cds-global.com/
+RedirectMatch 301 /resources/forwardreports/(.*) /resources/
+RedirectMatch 301 (.*)/whitepapers/(.*) /resources/?type=white-paper
+RedirectMatch 301 (.*)/casestudies/(.*) /resources/?type=case-study
+RedirectMatch 301 (.*)/webinars/(.*) /resources/?type=webinar
+RedirectMatch 301 (.*)/webcasts/(.*) /resources/?type=webinar
+RedirectMatch 301 (.*)/datasheets/(.*) /resources/?type=data-sheet
+RedirectMatch 301 (.*)/video/(.*) /resources/?type=video
+RedirectMatch 301 ^/about/locations/(boone|east_washington|harlan|markham|redoak|tipton|west_des_moines|wilton)/(.*) /about/locations/
+RedirectMatch 301 ^/blog/(.*)/(.*)@(.*).com mailto:$2@$3.com
+
+# Vanity URLs
+Redirect 301 /nonprofit /industries/nonprofit/
+Redirect 301 /nonprofits /industries/nonprofit/
+Redirect 301 /utilities /industries/utilities/
+Redirect 301 /ecommerce /solutions/ecommerce/
+Redirect 301 /consumerproducts /industries/consumer-products/
