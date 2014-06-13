@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Christopher Ross <info@thisismyurl.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in function
+#: common.php:71
+msgid "A special thank you to the following people for donating to support my plugin work."
+msgstr "De volgende mensen wil ik speciaal bedanken voor hun donaties ter ondersteuning van mijn werk aan plugins:"
+
+#. Text in function
+#: common.php:21
+msgid "Becoming a Fan on Facebook"
+msgstr "Word fan op Facebook"
+
+#. Text in function
+#: common.php:16
+msgid "Developing this plugin cost me hours of work. If you like it, please support it. You can help by:"
+msgstr "Het ontwikkelen van deze plugin kost mij uren werk. Als je wilt kun je dit ondersteunen. Je kunt helpen door:"
+
+#. Text in function
+#: common.php:20
+msgid "Following me on Twitter"
+msgstr "Volg mij op Twitter"
+
+#. Text in function
+#: common.php:104
+msgid "Have you enjoyed using this plugin? Why not try out my other great WordPress plugins."
+msgstr "Bevalt deze plugin? Probeer dan ook één van mijn andere geweldige Wordress plugins."
+
+#. Text in function
+#: common.php:13
+msgid "Help support this plugin"
+msgstr "Help deze plugin te ondersteunen"
+
+#. Text in function
+#: common.php:65
+msgid "Latest posts from Christopher Ross"
+msgstr "Meest recente berichten van Christopher Ross"
+
+#. Text in function
+#: common.php:104
+msgid "Other Great Plugins"
+msgstr "Andere Geweldige Plugins"
+
+#. Text in function
+#: common.php:19
+msgid "Rating it at WordPress.org"
+msgstr "Geef dit je waardering op WordPress.org"
+
+#. Text in function
+#: easy-popular-posts.php:112
+msgid "Auto Copyright by Christopher Ross"
+msgstr "Auto Copyright by Christopher Ross"
+
+#. Text in function
+#: easy-popular-posts.php:227
+msgid "Easy Popular Posts by Christopher Ross"
+msgstr "Easy Popular Posts door Christopher Ross"
+
+#. Text in echo
+#: easy-popular-posts.php:349
+msgid "Include Credit link"
+msgstr "Link naar de auteur opnemen"
+
+#. Text in function
+#: easy-popular-posts.php:227
+#: easy-popular-posts.php:124
+msgid "Settings"
+msgstr "Instellingen"
+
+#. Text in function
+#: easy-popular-posts.php:126
+msgid "This plugin has no settings. To use the plugun effectively, please consult the"
+msgstr "Deze plugin heeft geen instellingen. Om de plugin effectief te gebruiken kun je contact opnemen met"
+
+#. Text in echo
+#: easy-popular-posts.php:344
+msgid "Title"
+msgstr "Titel"
+
+#. Text in function
+#: easy-popular-posts.php:126
+msgid "readme file"
+msgstr "leesmij bestand"
+

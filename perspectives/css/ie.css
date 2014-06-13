@@ -1,0 +1,140 @@
+.onecol {
+width: 4.7%;
+}
+
+.twocol {
+width: 13.2%;
+}
+
+.threecol {
+width: 22.05%;
+}
+
+.fourcol {
+width: 30.6%;
+}
+
+.fivecol {
+width: 39%;
+}
+
+.sixcol {
+width: 48%;
+}
+
+.sevencol {
+width: 56.75%;
+}
+
+.eightcol {
+width: 61.6%;
+}
+
+.ninecol {
+width: 74.05%;
+}
+
+.tencol {
+width: 82%;
+}
+
+.elevencol {
+width: 91.35%;
+}
+#plogoheader {
+	background-position:1em 1em;
+}
+div#featured {
+	padding-bottom:1.5em;
+}
+div#footer div.bevelfooter {
+	line-height:0;
+	margin-top:-1em;
+	position:relative;
+}
+div.greenbar {
+	line-height:1em;
+}
+.left {
+	margin-left:0;
+	padding-left:.9%;
+}
+.breadcrumb {
+	padding-left:0;
+}
+.breadcrumb span {
+	padding-left:1em;
+	margin-left:.9%;
+}
+
+a.btn_side img  {
+	display:none;
+}
+.featured {
+	background-image: url(/perspectives/images/featured_box_bg.jpg);
+	background-repeat: repeat-y;
+	background-size: contain;
+	background-position:center;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
+}
+div.feature_ds {
+	background-image: url(/perspectives/images/featured_box_ds.jpg);
+	background-repeat:no-repeat;
+	background-position:center bottom;
+	background-size:contain;
+	margin-right:-.3%;
+	padding:0;
+}
+.feature_top {
+	height:1em;
+	padding-bottom:0;
+}
+div.featured.left .feature_top {
+	margin-left:-1.8%;
+}
+div.featured.left div.feature_ds {
+	background-image: url(/perspectives/images/featured_box_ds.jpg);
+	background-repeat:no-repeat;
+	background-position:center bottom;
+	background-size:contain;
+	margin-left:-1.2%;
+	padding:0;
+}
+.featured p {
+	margin-left:3%;
+}
+p {
+	margin-right:3%;
+	padding-left:0;
+	padding-right:0;
+}
+p img {
+	margin-left:0;
+	margin-right:0;
+	padding-left:0;
+	padding-right:0;
+}
+h1 {
+	margin-left:3%;
+	margin-right:3%;
+	padding-left:0;
+	padding-right:0;
+}
+#testimonials_footer {
+	margin-bottom:-1em;
+}
+/* ============================= */
+/* ! Layout for tablet version   */
+/* ============================= */
+
+@media only screen and (min-width:481px) and (max-width: 900px) {
+	div.feature_ds.interiorpg {
+		display:none;
+	}
+	h2.rtcol {
+		background-position-x:5%;
+	}
+}

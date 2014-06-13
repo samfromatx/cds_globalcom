@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>CDS Global</title>
+		<link>http://www.cds-global.com</link>
+		<description>CDS Global is a customer-centric, technology-driven, global company that delivers effective solutions for our strategic partners across multiple industries.</description>
+		<language>en-us</language>
+		<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		<lastBuildDate>Mon, 5 November 2012 09:00:00 CST</lastBuildDate>
+		<copyright>2012 CDS Global, Inc. All rights reserved.</copyright>
+		
+		<image>
+			<url>http://www.cds-global.com/graphics/cdslogo.jpg</url>
+			<title>CDS Global</title>
+			<link>http://www.cds-global.com</link>
+		</image>
+		
+		<item>
+			<title>eEditions: Charting the Future of Digital Data Management</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/eeditions.html</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/eeditions.html</guid>
+			<description>CDS Global recently launched eEditions, the media industry’s first digital newsstand data management solution. For publishers, this innovative solution greatly reduces the burden of aggregating and organizing digital newsstand sales data into manageable, easy-to-analyze reports.</description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>2012 CDS Global Summit Inspires, Educates</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/summit.html</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/summit.html</guid>
+			<description>The 2012 CDS Global Summit featured nationally renowned speakers, CDS Global executives and Hearst insiders discussing the rapidly changing digital landscape and how companies can flourish in this period of great change. Breakout sessions offered industry-specific information and deep dives into specific challenges.</description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>A Message from Malcolm</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/malcolm.html</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/malcolm.html</guid>
+			<description>Your business is undoubtedly placing an increasing emphasis on digital as consumers demand ease of access and up-to-the-minute information. As purveyors of innovative technological solutions, CDS Global has extended its digital emphasis to Perspectives, bringing you content in an entirely Web-based format.</description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>CDS Global Celebrates 40 Years of Innovation</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/40years.html</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/40years.html</guid>
+			<description>On April 27, 2012, CDS Global launched a year-long celebration of 40 years of innovation and reinvention. The celebration kicked off with a global video broadcast. CDS Global’s teams around the world came together to hear from Chairman and CEO Malcolm Netburn; Don Ross, one of CDS Global’s founding members and a past president; and John Loughlin, executive vice president and general manager of Hearst Magazines.</description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>Events</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/events.html</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/events.html</guid>
+			<description></description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>News &amp; Notes</title>
+			<link>http://www.cds-global.com/perspectives/2012/november/news/</link>
+			<guid>http://www.cds-global.com/perspectives/2012/november/news/</guid>
+			<description></description>
+			<pubDate>Mon, 5 November 2012 09:00:00 CST</pubDate>
+		</item>
+		
+	</channel>
+</rss>
+

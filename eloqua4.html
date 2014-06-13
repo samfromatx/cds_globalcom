@@ -1,0 +1,204 @@
+
+<!--
+Project:  DLPrepop
+Version:  1.0.1
+
+Contents:
++ Eloqua Asynchronous Tracking Scripts
++ Checkbox Prepopulation
++ Web Data Lookup Scripts:
++- Email Address Lookup (from Visitor Cookie)
++- Form Field Value Lookup (from Contact/Datacard/Prospect/Company)
+
+Requirements:
++ A live instance of Eloqua
++ LOOKUP A:  One Visitor Data Lookup that returns Email Address.
++ LOOKUP B:  One Contact/Datacard/Prospect/Company Data Lookup that returns Form Values.
++ The Form HTML on this page must contain INPUT fields with IDs that match those pulled in LOOKUP B.
++ A Form in Eloqua with an HTML Name matching "EloquaFormID"
+
+Built by Christonpher Mapili
+The Custom HTML and Javascript in this file are a Functional Example/Demonstration Only and are not officially supported by Eloqua.
+Eloqua is not responsible for troubleshooting issues with this code.
+
+Date: Friday March 9 2012
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DLPrepop:  Visitor Cookie Data Lookup + Contact Data Lookup + Form Checkbox Prepop (built on top of Eloqua Asynchronous Tracking Scripts)</title>
+
+    <!-- SCRIPT SECTION 1:  Variables that need customizing based on your Instance of Eloqua-->
+  <script type="text/javascript">
+    // START --> MAKE YOUR CHANGES HERE
+    var EloquaSiteID = "1851";                  // The Site ID of your Eloqua Instance
+    var EloquaScript = "/elqNow/elqCfg.js";  // Path to elqCfg.min.js
+    var LookupIdVisitor = "67a215acdee14f9fae3b17784136c27a"; // LOOKUP A:  The ID of your Visitor Web Data Lookup
+    var LookupIdPrimary = "b25edf2517d04bea9ecdc4866011e11e"; // LOOKUP B:  The ID of your Contact/Datacard/Prospect/Company Web Data Lookup
+    var VisitorUniqueField = "V_Email_Address";         // Unique field's HTML Name from LOOKUP A (usually V_Email_Address)
+    var PrimaryUniqueField = "C_EmailAddress";          // Unique field's HTML Name from LOOKUP B (usually C_EmailAddress)
+    var EloquaFormID = "DLPrepopForm";              // The ID of your Eloqua Form
+    // END --> MAKE YOUR CHANGES HERE
+  </script>
+
+  <!-- SCRIPT SECTION 2:  Standard Eloqua Asyncronous Tracking Code | The unique values have been placed in Variables (EloquaSiteID and EloquaScript) -->
+    <script type="text/javascript">
+        var _elqQ = _elqQ || [];
+        _elqQ.push(['elqSetSiteId', EloquaSiteID]);
+        _elqQ.push(['elqTrackPageView']);
+
+        (function () {
+            function async_load() {
+                var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+                s.src = EloquaScript;
+                var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            }
+            if (window.addEventListener) window.addEventListener('DOMContentLoaded', async_load, false);
+            else if (window.attachEvent) window.attachEvent('onload', async_load);
+        })();
+    </script>
+
+  <!-- SCRIPT SECTION 3:  Eloqua Field Functions -->
+    <script type="text/javascript">
+    
+    function LoadFields(FormID) {
+    
+      var container, inputs, index;
+      
+      // Get the Form element
+      container = document.getElementById(FormID);
+      
+      // Find its child `input` elements
+      inputs = container.getElementsByTagName('input');
+      // Loops through every INPUT on the form
+      for (index = 0; index < inputs.length; index++) {
+        var LookupID = inputs[index].id;
+        var LookupValue = GetElqContentPersonalizationValue(LookupID);
+        // This value is used for CHECK BOX value comparisons
+        var LowerCaseValue = LookupValue.toLowerCase();
+  
+        // deal with inputs[index] element.  Compare to LookupID and LookupValue.
+
+        // Form Field Prepopulation
+        if (inputs[index].id == LookupID) {
+          if (inputs[index].type == "checkbox") {
+            // Place code here for CHECKBOX Inputs
+            if (LowerCaseValue == "on") inputs[index].checked=true;
+            else if (LowerCaseValue == "true") inputs[index].checked=true;
+            else if (LowerCaseValue == "y") inputs[index].checked=true;
+            else if (LowerCaseValue == "yes") inputs[index].checked=true;
+            else if (LowerCaseValue == "checked") inputs[index].checked=true;
+            else if (LowerCaseValue == "1") inputs[index].checked=true;
+          } else if (inputs[index].type == "radio") {
+            // Place code here for RADIO BUTTON Inputs
+          } else if (inputs[index].type == "select") {
+            // Place code here for SELECT LIST Inputs
+          } else if (inputs[index].type == "text") {
+            // Place code here for STANDARD TEXT Inputs
+            inputs[index].value = LookupValue;
+          } else {
+            // All Other Inputs = do nothing
+          } 
+        }
+      }
+    }
+    
+    </script>
+  
+  <!-- SCRIPT SECTION 4:  Eloqua Web Data Lookups -->
+    <script type="text/javascript">
+
+    // SetElqContent is triggered by the Data Lookup Scripts automatically.  The "FirstLookup" modification allows for the Visitor Lookup to trigger the second Lookup (Contact/Datacard/Prospect/Company)
+    var FirstLookup = true;
+        function SetElqContent() {
+            if (FirstLookup) {
+        //LOOKUP B:  Eloqua Contact/DataCard/Prospect/Company Data Lookup from Email Address
+        _elqQ.push(['elqDataLookup', escape(LookupIdPrimary), '<' + PrimaryUniqueField +'>' + GetElqContentPersonalizationValue(VisitorUniqueField) + '</' + PrimaryUniqueField + '>']);
+        FirstLookup = false;
+      } else {
+        //This is triggered the after Lookup B fires.  LoadFields starts the field prepoulation process.
+        LoadFields(EloquaFormID);
+      }
+        }
+
+    // LOOKUP A:  Eloqua Visitor Data Lookup from Cookie  -  Ensure VisitorUniqueField is pulled in the Profile View
+        _elqQ.push(['elqDataLookup', escape(LookupIdVisitor), '']);
+    
+    </script>
+  
+  <style type="text/css">
+    * { margin: 0; padding: 0; }
+    body { margin: 20px; font-family: Arial, Helvetica, sans-serif; }
+    h1, h2, h3, h4, h5 { margin-top: 14px; }
+    hr { border: 1px solid silver; }
+    p { margin: 8px; }
+    img { border: 0; }
+    #Footer { text-align: center; font-size: 10px; }
+    #ContainerSolid { border:1px solid black; margin: 10px; padding: 10px }
+    #ContainerDashed { border:1px dashed black; margin: 10px; padding: 10px }
+    #ContainerHTML { white-space: pre-wrap; }
+  </style>
+
+</head>
+
+<body>
+
+  <h1>DLPrepop</h1>
+  
+  <h3>+ Visitor Web Data Lookup (from Cookie)</h3>
+  <h3>+ Contact/Prospect/Company/Datacard Web Data Lookup (from Email Address)</h3>
+  <h3>+ Form Checkbox Prepopulation</h3>
+  <h3>+ Standard Text Input Prepopulation</h3>
+  
+  <br /><br />
+  
+  <hr />
+  
+  <p>The Custom HTML and Javascript in this file are a Functional Example/Demonstration Only and are not 
+  officially supported by Eloqua.  Eloqua is not responsible for troubleshooting issues with this code.</p>
+  
+  <hr />
+
+  <h2>Functional Example:</h2>
+
+  <p>Filling out this form and submitting will update your Contact Record.  A cookie placed in your browser 
+  will store a unique identifier that will be used the next time you visit this form.  The scripts on this 
+  page will pull your Email Address from your Visitor Record and trigger another Lookup. This next Lookup 
+  will use your Email Address to pull the values currently stored on your Eloqua Contact Record and Populate 
+  the Form Fields.  Checkboxes will also automatically be populated when the value returned is either true, 
+  1, on, yes, y, or checked (this can be modified in the code).</p>
+  
+  <div id="ContainerDashed">
+  
+    <!-- FORM SECTION:  Eloqua Form HTML with Unique IDs for each Field -->
+    <form id="DLPrepopForm" name="DLPrepopForm" method="post" action="http://now.eloqua.com/e/f2">
+  
+      
+      <input type="hidden" name="elqFormName" value="DLPrepopForm">
+      <input type="hidden" name="elqSiteID" value="1214">
+      <p>Email Address:<br/>
+        <input type="text" name="C_EmailAddress" id="C_EmailAddress"></p>
+        
+      <p>First Name:<br/>
+        <input type="text" name="C_FirstName" id="C_FirstName"></p>
+        
+      <p>Last Name:<br/>
+        <input type="text" name="C_LastName" id="C_LastName"></p>
+        
+      <p>Company:<br/>
+        <input type="text" name="C_Company" id="C_Company"></p>
+        
+      <p>Opt-In:
+        <input type="checkbox" name="C_OptIn" id="C_OptIn"></p>
+        
+      <p><input type="submit" value="Submit"></p>
+  
+    </form>
+
+  </div>
+  
+  
+  <p>View the source of this page to access the DLPrepop HTML and Javascript.</p>
+
+</body>
+</html>

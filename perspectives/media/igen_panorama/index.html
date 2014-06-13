@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+	<link rel="stylesheet" href="/css/reset.css" media="all" type="text/css" />
+	<link rel="stylesheet" href="/css/global.css" media="screen,projection" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="/perspectives/media/igen_panorama/css/thickbox.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/perspectives/media/igen_panorama/css/jquery.panorama.css" media="screen" />
+<script type="text/javascript" src="/perspectives/media/igen_panorama/js/jquery.js"></script>
+<script type="text/javascript" src="/perspectives/media/igen_panorama/js/jquery.panorama.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("img.advancedpanorama").panorama({
+	                auto_start: 0,
+			start_position: 0
+	         });
+	});
+</script>
+<script type="text/javascript" src="/perspectives/media/igen_panorama/js/jquery.advanced-panorama.js"></script>
+<script type="text/javascript" src="/perspectives/media/igen_panorama/js/thickbox.js"></script>
+<script type="text/javascript">
+	tb_pathToImage = "/perspectives/media/igen_panorama/images/loadingAnimation.gif";
+</script>
+<style  type="text/css">
+body {
+	xbackground: #595959;
+	xtext-align: center;
+	}
+h1 {
+	color: white;
+	margin-bottom: 2em;
+	font-family: Verdana;
+	font-weight: normal;
+	font-size: 25px;
+	}
+#page {
+	text-align: center;
+	color: white;
+	}
+#page a {
+	color: white;
+	}
+#page .panorama-viewport {
+	border: 1px solid #000000;
+	xmargin-left: auto;
+	xmargin-right: auto;
+	}
+#page p {
+	margin-bottom: 1em;
+	}
+.TB_overlayBG {
+	background-color: #595959;
+	}
+</style>
+</head>
+<body>
+<div id="page">
+	<img src="/perspectives/media/igen_panorama/images/igen.jpg" class="advancedpanorama" width="2252" height="474" usemap="igenmap" alt="" />
+	<map id="igenmap" name="igenmap">
+		<area shape="rect" coords="75,100,350,360" href="/perspectives/media/igen_panorama/images/paper_roll.jpg" alt="Paper Roll" class="thickbox"/>
+		<area shape="rect" coords="650,160,720,200" href="/perspectives/media/igen_panorama/images/control_panel.jpg" alt="Control Panel" class="thickbox"/>
+		<area shape="rect" coords="890,80,970,240" href="/perspectives/media/igen_panorama/images/ink_loading.jpg" alt="Ink Loading" class="thickbox"/>
+		<area shape="rect" coords="978,58,1102,248" href="/perspectives/media/igen_panorama/images/belt.jpg" alt="Belt" class="thickbox"/>
+		<area shape="rect" coords="1440,160,1560,220" href="/perspectives/media/igen_panorama/images/catch_tray.jpg" alt="Catch Tray" class="thickbox"/>
+		<area shape="rect" coords="1850,220,1950,300" href="/perspectives/media/igen_panorama/images/cutter_exit.jpg" alt="Cutter Exit" class="thickbox"/>
+		<area shape="rect" coords="2030,180,2140,260" href="/perspectives/media/igen_panorama/images/inside.jpg" alt="Inside" class="thickbox"/>
+	</map>
+</div>
+
+</body>
+</html>

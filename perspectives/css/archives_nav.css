@@ -1,0 +1,114 @@
+#perspectives_archive_menu {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	height: 20px;
+	position: relative;
+	z-index: 500;
+}
+#perspectives_archive_menu li {float:left; margin-right:1px;}
+#perspectives_archive_menu li a {
+	display: block;
+	float: left;
+	height: 20px;
+	line-height: 20px;
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #7bb801;
+	padding-top: 0;
+	padding-right: 15px;
+	padding-bottom: 0;
+	padding-left: 10px;
+}
+
+/* Default link styling */
+
+/* Style the list OR link hover. Depends on which browser is used */
+
+#perspectives_archive_menu li a:hover {
+	z-index: 12.5em;
+	position: relative;
+	color: #fff;
+	background-color: #7bb801;
+}
+#perspectives_archive_menu li:hover {position:relative; z-index:200;}
+
+#perspectives_archive_menu li:hover > a:link {
+	color: #fff;
+	background-color: #7bb801;
+}
+#perspectives_archive_menu li:hover > a.sub {
+	color: #fff;
+	background-color: #6da700;
+}
+
+#perspectives_archive_menu li.current a {color:#fff; background:#8dc73f;}
+
+#perspectives_archive_menu li a.sub {
+	background-color: #6da700;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+#perspectives_archive_menu :hover ul, #perspectives_archive_menu :hover ul :hover ul {
+	left: 0;
+	top: 20px;
+	width: 15em;
+	background-color: #fff;
+}
+
+/* keep the 'next' level invisible by placing it off screen. */
+#perspectives_archive_menu ul, #perspectives_archive_menu :hover ul ul, #perspectives_archive_menu ul ul, #perspectives_archive_menu :hover ul :hover ul ul,  #perspectives_archive_menu :hover ul :hover ul :hover ul{position:absolute; left:-9999em; top:-9999em; width:0; height:0; margin:0; padding:0; list-style:none;font-size:.875em;display:block;}
+
+#perspectives_archive_menu :hover ul :hover ul, #perspectives_archive_menu :hover ul :hover ul :hover ul
+{left:7.5em; top:-1px; background:#222; white-space:nowrap; width:12.5em; z-index:200; height:auto;}
+
+#perspectives_archive_menu :hover ul li {
+	margin: 0;
+	border-top: 1px dotted #588601;
+}
+#perspectives_archive_menu :hover ul li a {
+	width: 13.75em;
+	padding: 0;
+	text-indent: 10px;
+	color: #fff;
+	height: 30px;
+	line-height: 30px;
+	background-color: #7bb801;
+	font-size: 14px;
+	font-weight: normal;
+}
+#perspectives_archive_menu :hover ul li a.fly, #perspectives_archive_menu :hover ul :hover ul li a.leveltwo {
+	background-color: #67950E;
+}
+
+#perspectives_archive_menu :hover ul :hover, #perspectives_archive_menu :hover ul :hover ul :hover {background-color:#8dc73f; color:#fff;}
+#perspectives_archive_menu :hover ul :hover a.fly, #perspectives_archive_menu :hover ul :hover ul :hover a.leveltwo {
+	background-color: #8dc73f;
+	color: #fff;
+}
+
+#perspectives_archive_menu :hover ul li.currentsub a {background:#8dc73f; color:#fff;}
+#perspectives_archive_menu :hover ul li.currentsub a.fly {background:#8dc73f; color:#fff;}
+
+#perspectives_archive_menu :hover ul :hover ul li a {
+	width: 12.5em;
+	padding: 0;
+	text-indent: 10px;
+	color: #fff;
+	background-color: #67950E;
+}
+#perspectives_archive_menu :hover ul :hover ul :hover {background-color:#8dc73f; color:#fff;}
+
+#perspectives_archive_menu :hover ul :hover ul li.currentfly a,
+#perspectives_archive_menu :hover ul :hover ul li.currentfly a:hover {background:#8dc73f; color:#fff;}
+div.greenbar {
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+	padding: 0px;
+	max-height: 20px;
+	line-height: 0px;
+}

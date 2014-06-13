@@ -1,0 +1,161 @@
+/* ============================= */
+/* ! Layout for tablet version   */
+/* ============================= */
+
+@media only screen and (min-width:481px) and (max-width: 900px) {
+
+	body {
+	font-size: 0.8em;
+	}
+	.onecol, .twocol, .threecol, .fourcol, .fivecol, .sixcol, .sevencol, .eightcol, .ninecol, .tencol, .elevencol {
+	margin-right: 2.2%;
+	float: left;
+	min-height: 1px;
+}
+
+	.row .onecol {
+	width: 5.85%;
+	}
+	
+	.row .twocol {
+	width: 14.45%;
+	}
+	
+	.row .threecol {
+	width: 23.05%;
+	}
+	
+	.row .fourcol {
+	width: 48.1%;
+	}
+	
+	.row .fivecol {
+	width: 48.1%;
+	}
+	
+	.row .sixcol {
+		width: 92.35%;
+	}
+	
+	.row .sevencol {
+	width: 92.35%;
+	}
+	
+	.row .eightcol {
+	width: 92.35%;
+	}
+	
+	.row .ninecol {
+	width: 92.35%;
+	}
+	
+	.row .tencol {
+	width: 92.35%;
+	}
+	
+	.row .elevencol {
+	width: 92.35%;
+	}
+	
+	.row .twelvecol {
+	width: 100%;
+	float: left;
+	}
+	
+	.last {
+	margin-right: 0px;
+	}
+	.eightcol.left {
+		width: 98%;
+	}
+	div.fourcol.left {
+		width: 46.6%;
+	}
+	#rightcol .fourcol {
+	width:46.6%;
+	padding-left:.9%;
+	margin-right:2.2%;
+	}
+	#rightcol .fourcol.interiorpg {
+	width:100%;
+	padding-left:.9%;
+	margin-right:2.2%;
+	}
+
+	#rightcol {
+		width: 100%;
+		float:left;
+		margin-right:0px;
+	}
+	#leftcol {
+		width: 100%;
+		float:left;
+	}
+	#mainfeatured {
+		background-image:url(/perspectives/images/content_top_two_column.jpg);
+		background-repeat:no-repeat;
+		background-position:center bottom;
+		background-size:contain;
+	}
+	#mainfeatured .sixcol {
+		width:48.1%;
+	}
+	.wrapper {
+	background-image: url(/perspectives/images/ds.png);
+	background-repeat: repeat-y;
+	background-position: center center;
+	background-size:contain;
+	max-width:100%;
+	margin:0 auto;
+}
+#search {
+	display:none;
+}
+.copyright p {
+	padding-right:8%;
+}
+.smvideo {
+	display:none;
+}
+.lgvideo {
+	display:block;
+	background-color:#ccc;
+}
+#footer {
+	background-image: url(/perspectives/images/footer_bg.gif);
+	background-repeat: repeat-y;
+	background-position: center top;
+	background-size:contain;
+}
+.events_info {
+	width:60%;
+}
+#rightcol .twocol {
+	width:21%;
+	padding-left:3%;
+	line-height:1em;
+	padding-top:3%;
+	margin-right:0;
+}
+.notablet {
+	display:none;
+}
+#footer {
+	background-image: url(/perspectives/images/footer_bg_tablet.jpg);
+	background-repeat: repeat-y;
+	background-position: center top;
+	background-size:contain;
+}
+.mobile {
+	display:none;
+}
+/************************************style for March 2013 ************************************/
+div.dbsolutions_spacer {
+	display:block;
+	width:3.125em;
+	height:100%;
+	float:left;
+}
+table.dbsolutions_table {
+	width:90%;display:block;margin-left:auto;margin-right:auto; font-size:.9em; }
+}

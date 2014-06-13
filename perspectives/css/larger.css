@@ -1,0 +1,38 @@
+p {
+	font-size:1.2em;
+}
+h1 {
+	font-size:2.4em;
+	line-height:1.2em;
+}
+#leftcol .dashunderline h2 {
+	font-size:1.5em;
+}
+.bar-title {
+  font-size:1.5em;
+}
+.newsnotes p, .events p {
+	font-size: 1.3em;
+}
+.smlinks p {
+	font-size:1.3em;
+}
+.insidetwocolumnspan p {
+	font-size:1.375em;
+}
+.copyright p, #footer p {
+	font-size:.9em;
+}
+.eventcalendar {
+	font-size:1.1em;
+}
+#leftcol .insidetwocolumnspan h2 {
+	padding-left:1.6em;
+	font-size:1.3em;
+}
+.insidetwocolumnspan ul {
+	font-size:1.3em;
+}
+span.caldate {
+	font-size:1.2em;
+}

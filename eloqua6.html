@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+   <script type="text/javascript">
+        var _elqQ = _elqQ || [];
+_elqQ.push(['elqSetSiteId', '1851']);
+_elqQ.push(['elqTrackPageView']);
+_elqQ.push(['elqUseFirstPartyCookie', 'cds.local']);
+(function () 
+{
+function async_load() 
+{
+var s = document.createElement('script'); 
+s.type = 'text/javascript'; 
+s.async = true;
+s.src = '//img.en25.com/i/elqCfg.min.js';
+var x = document.getElementsByTagName('script')[0]; 
+x.parentNode.insertBefore(s, x);
+}
+if (window.attachEvent) { window.attachEvent('onload', async_load); }
+else { window.addEventListener('DOMContentLoaded', async_load, false); }
+})();
+    </script>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() { 
+  $( ".btn-info" ).click(function() {
+    $( "#elqForm" ).submit();
+    console.log("form submit");
+  });
+});
+
+  function SetElqContent(){ 
+ if (typeof this.GetElqContentPersonalizationValue === 'function'){
+      document.forms["elqForm"].elements["emailAddress"].value = GetElqContentPersonalizationValue("V_ElqEmailAddress")
+      document.forms["elqForm"].elements["firstName"].value = GetElqContentPersonalizationValue("V_ElqFirstName")
+      document.forms["elqForm"].elements["lastName"].value = GetElqContentPersonalizationValue("V_ElqLastName")
+  } 
+}
+  var timerId = null, timeout = 5;
+  function WaitUntilCustomerGUIDIsRetrieved() {
+  if (!!(timerId)) {
+  if (timeout == 0) {
+  return;
+  }
+  if (typeof this.GetElqCustomerGUID === 'function') {
+                 document.forms["elqForm"].elements["elqCustomerGUID"].value = GetElqCustomerGUID();
+  return;
+  }
+
+  timeout -= 1;
+  }
+  timerId = setTimeout("WaitUntilCustomerGUIDIsRetrieved()", 500);
+  return;
+  }
+                 window.onload = WaitUntilCustomerGUIDIsRetrieved;
+  _elqQ.push(['elqGetCustomerGUID']);
+_elqQ.push(['elqDataLookup', escape('67a215acdee14f9fae3b17784136c27a'),'']);
+
+</script>
+
+<!--<form  method="post" action="https://s1851.t.eloqua.com/e/f2" class="eloqua-form" target="eloqua-submit" name="elqForm" id="elqForm1">-->
+<form  method="post" action="https://s1851.t.eloqua.com/e/f2" class="eloqua-form" target="eloqua-submit" name="elqForm" id="elqForm">
+  <input type="text" name="firstName" placeholder="First Name" required data-api-name="C_FirstName" value="">
+  <input type="text" name="lastName" placeholder="Last Name" required data-api-name="C_LastName" value="">
+  <input type="email" name="emailAddress" placeholder="Email Address" required data-api-name="C_EmailAddress" value="">
+  <input type="hidden" name="elqSource" value="White-Paper:-Meeting-Customer-Expectations:-Do-utility-billing-and-payment-capabilities-measure-up?">
+<input type="hidden" name="LeadSource" value="Marketing_Campaign_White Paper">
+<input type="hidden" name="LeadSourceName" value="CDS-Global.com">
+<input type="hidden" name="LSMostRecent" value="Marketing_Campaign_White Paper">
+<input type="hidden" name="LSNameMostRecent" value="CDS-Global.com">
+  <input type="hidden" name="elqFormName" value="cds-global-resources" />
+  <input type="hidden" name="elqSiteId" value="1851" />
+  <input type="text" name="elqCustomerGUID" value="">
+  <input type="hidden" name="elqCookieWrite" value="0">
+  <input type="submit" value="Submit">
+</form>
+<br><br>
+<a href="/content/uploads/2013/12/DS_ProspectInsights.pdf" class="btn btn-info" target="_blank" onclick="document.getElementById('elqForm').submit();">Download the Data Sheet: onclick</a><br><br>
+<a href="/content/uploads/2013/12/DS_ProspectInsights.pdf" class="btn btn-info" target="_blank" id="pdflink">Download the Data Sheet: Prospect Insights</a>
+<iframe name="eloqua-submit" style="display: none"></iframe>
+</body>
+</html>

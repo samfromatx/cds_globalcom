@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script type="text/javascript" src="/scripts/flashembed.min.js"></script>
+</head>
+
+<body>
+<script>
+	flashembed("videoplayer", 
+	/* first argument supplies standard Flash parameters. See full list: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_12701 */
+	{
+		src:'/perspectives/media/flash/FlowPlayerClassic.swf',
+		width: 600, 
+		height: 462
+		//height: 464
+		//height: 475
+	},
+	/* second argument is Flowplayer specific configuration. See full list: http://flowplayer.org/player/configuration.html */
+	{config: {  
+		autoPlay: false,
+		loop: false,
+		autoBuffering: true,
+		showStopButton: true,
+		controlBarBackgroundColor:'0x000000',
+		controlBarGloss: 'low',
+		initialScale: 'orig',
+		videoFile: '/perspectives/media/flash/malcolm_0713_640x480.flv',
+		splashImageFile: '/perspectives/images/video/malcolm_0713_640x480.png'
+	}} 
+);
+</script>
+<div id="videoplayer"></div>
+			<!--#include virtual="/includes/tracking.html" -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Christopher Ross <info@thisismyurl.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in function
+#: easy-popular-posts.php:100
+msgid "Auto Copyright by Christopher Ross"
+msgstr "Auto Copyright von Christopher Ross"
+
+#. Text in function
+#: easy-popular-posts.php:215
+msgid "Easy Popular Posts by Christopher Ross"
+msgstr "Easy Popular Beiträge von Christopher Ross"
+
+#. Text in echo
+#: easy-popular-posts.php:337
+msgid "Include Credit link"
+msgstr "Enthalten Link"
+
+#. Text in function
+#: easy-popular-posts.php:215
+#: easy-popular-posts.php:112
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. Text in function
+#: easy-popular-posts.php:114
+msgid "This plugin has no settings. To use the plugun effectively, please consult the"
+msgstr "Dieses Plugin hat keine Einstellungen. Zur Verwendung der plugun effektiv, konsultieren Sie bitte die"
+
+#. Text in echo
+#: easy-popular-posts.php:332
+msgid "Title"
+msgstr "Titel"
+
+#. Text in function
+#: easy-popular-posts.php:114
+msgid "readme file"
+msgstr "Readme-Datei"
+

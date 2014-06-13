@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Subscribe to Perspectives</title>
+    	<!-- Page Specific CSS AND Javascript-->
+    <script type="text/javascript">
+    var a = Math.ceil(Math.random() * 10);
+    var b = Math.ceil(Math.random() * 10);       
+    var c = a + b
+    function DrawBotBoot()
+    {
+        document.write("What is "+ a + " + " + b +"? ");
+        document.write("<input id='BotBootInput' type='text' maxlength='2' size='2'/>");
+    }    
+    function ValidBotBoot(){
+        var d = document.getElementById('BotBootInput').value;
+        if (d == c) {return true;}
+		else {
+			alert("Please enter the correct answer to submit this form");        
+        return false; }
+        
+    }
+	function validateForm()
+	{
+	var x=document.forms["elqFormName"]["name"].value;
+	if (x==null || x=="")
+	  {
+	  alert("Name must be filled out");
+	  return false;
+	  }
+	  
+	var x=document.forms["elqFormName"]["business"].value;
+	if (x==null || x=="")
+	  {
+	  alert("Company name must be filled out");
+	  return false;
+	  }
+
+	  var x=document.forms["elqFormName"]["email"].value;
+	  var atpos=x.indexOf("@");
+	  var dotpos=x.lastIndexOf(".");
+	  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+	    {
+	    alert("Not a valid e-mail address");
+	    return false;
+	  }
+	}
+    </script>
+	
+<!--#include virtual="/perspectives/2013/may/includes/header.html" -->
+	<div id="mainfeatured" class="row">
+    	<div class="twelvecol breadcrumb left"><br class="mobile clear">
+        	<!--#include virtual="/perspectives/includes/breadcrumbs.html" --> &rsaquo;&rsaquo; Subscribe to <em>Perspectives</em>
+            <br class="clear"><br class="mobile clear">
+        </div>
+    </div>
+    <div id="featured" class="row">
+    	<div id="leftcol">
+            <div class="dashunderline"> 
+                <div class="fsp">
+                	<a href="#" onClick="setActiveStyleSheet('larger'); return false;" class="larger">A</a> <a href="#" onClick="setActiveStyleSheet('reset'); return false;" class="reset">A</a> <a href="#" class="print">PRINT</a>
+                </div>
+                <!-- AddThis Button BEGIN -->
+                <!--#include virtual="/perspectives/includes/addthis.html"-->
+                <!-- AddThis Button END -->
+            </div>
+            <div class="eightcol contact left">
+            	<h1>Subscribe to <em>Perspectives</em></h1>
+                <div elqid="283" elqtype="UserForm" elqformname="2012Q1NAGMPerspectivesOptInPassthrough-13492065336"><div><form method="post" name="2012Q1NAGMPerspectivesOptInPassthrough-13492065336" action="https://s1851.t.eloqua.com/e/f2" id="form283" class="niceform"><input value="2012Q1NAGMPerspectivesOptInPassthrough-13492065336" type="hidden" name="elqFormName"><input value="1851" type="hidden" name="elqSiteId"><input name="elqCampaignId" type="hidden"><div id="formElement0" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">First Name<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="fname" value="" type="text" name="C_FirstName" class=""></div></div><div id="formElement1" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">Last Name<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="lname" value="" type="text" name="C_LastName" class=""></div></div><div id="formElement2" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">Email Address<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="email" value="" type="text" name="C_EmailAddress" class=""></div></div><div id="formElement3" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">Company<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="company" value="" type="text" name="C_Company" class=""></div></div><div id="formElement4" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">Phone<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="businessphone" value="" type="text" name="C_BusPhone" class=""></div></div><div id="formElement5" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><label style="display: block; line-height: 150%; padding: 1px 0pt 3px; float: left;  margin: 0pt 15px 0pt 0pt; word-wrap: break-word">What is value of 7 +3?<span style="color: red !important; display: inline; float: none; font-weight: bold; margin: 0pt 0pt 0pt; padding: 0pt 0pt 0pt">*</span></label><div class="form-input-wrapper"><input id="captchatext" value="" type="text" name="Captchatext" class=""></div><label style="color: #444444; display: block; font-size: 10px; line-height: 10px; padding: 6px 0pt 3px; margin: 0 0 0 35%; clear: both">spell answer</label></div><div id="formElement6" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; clear: both"><div class="form-input-wrapper"><input id="leadsource" value="Inbound - Contact Me form (Web)" name="C_Lead_Source___Original1" type="hidden"></div></div><div id="formElement7" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; clear: both"><div class="form-input-wrapper"><input id="perspectivesoptin" value="Perspectives Opt-in" name="C_Lead_Source_Name1" type="hidden"></div></div><div id="formElement8" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; clear: both"><div class="form-input-wrapper"><input id="contactme_inbound" value="Inbound - Contact Me form (Web)" name="C_Lead_Source___Most_Recent1" type="hidden"></div></div><div id="formElement9" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; clear: both"><div class="form-input-wrapper"><input id="most_recent" value="Perspectives Opt-in" name="C_Lead_Source___Most_Recent_Name1" type="hidden"></div></div><div id="formElement10" class="sc-view form-design-field sc-static-layout sc-regular-size" style="left: 0px; right: 0px; top: 0px; bottom: 0px; padding: 6px 5px 9px 9px; clear: both"><div class="form-input-wrapper"><input id="subbtn" value="Submit" type="submit"></div></div></form>	<script src="https://img.en25.com/i/livevalidation_standalone.compressed.js" type="text/javascript"></script>
+				<script type="text/javascript">
+				var field0 = new LiveValidation("fname", {validMessage: "", onlyOnBlur: true});
+				field0.add(Validate.Presence, {failureMessage:"This field is required"});
+				var field1 = new LiveValidation("lname", {validMessage: "", onlyOnBlur: true});
+				field1.add(Validate.Presence, {failureMessage:"This field is required"});
+				var field2 = new LiveValidation("email", {validMessage: "", onlyOnBlur: true});
+				field2.add(Validate.Email, {failureMessage:"A valid email address is required"});
+				field2.add(Validate.Presence, {failureMessage:"This field is required"});
+				var field3 = new LiveValidation("company", {validMessage: "", onlyOnBlur: true});
+				field3.add(Validate.Presence, {failureMessage:"This field is required"});
+				var field4 = new LiveValidation("businessphone", {validMessage: "", onlyOnBlur: true});
+				field4.add(Validate.Presence, {failureMessage:"This field is required"});
+				var field5 = new LiveValidation("captchatext", {validMessage: "", onlyOnBlur: true});
+				field5.add(Validate.Presence, {failureMessage:"This field is required"});
+                </script>		</div>
+                </div>
+            </div>
+       </div>
+		<!--#include virtual="/perspectives/2013/may/includes/right_rail.html"-->
+   	</div>
+<!--#include virtual="/perspectives/2013/may/includes/footer.html" -->

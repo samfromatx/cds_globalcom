@@ -1,0 +1,60 @@
+* {
+	color: #000000 !important;
+}
+
+html {
+	font-size: 13px;
+}
+
+.printonly {
+	display: block;
+	margin: 5px 0;
+}
+
+nav, #tools, aside, .social, .addthis_toolbox, .logo, .icon, form, .pagination, .listing .resources .more, .main>.content::after, .banner, .breadcrumbs {
+	display: none !important;
+}
+
+header, .section-nav, .listing li {
+	background-color: transparent !important;
+}
+
+.main>.content header {
+	margin-bottom: 0;
+}
+
+.primary, .primary .content {
+	width: 94%;
+	margin: 0 3%;
+}
+
+.content header h1 {
+	margin: 0 !important;
+	line-height: 1.5em !important;
+}
+
+.listing.featured li>*:not(.icon), .listing li>*:not(.icon) {
+	margin-left: 0px;
+}
+
+.listing li p {
+	display: block !important;
+}
+
+footer {
+background-color: transparent;
+padding: 30px 10px 10px 10px;
+clear: both;
+}
+
+.widget {
+	font-size: 13px;
+}
+.home .features .widget {
+width: 100% !important;
+float: left;
+}
+
+.owl-carousel {
+	display: block !important;
+}

@@ -1,0 +1,5 @@
+{
+	"name": "alexluke/easy-popular-posts",
+	"description": "An easy to use WordPress function to add popular posts to any WordPress theme. Forked from http://wordpress.org/plugins/easy-popular-posts/",
+	"type": "wordpress-plugin"
+}

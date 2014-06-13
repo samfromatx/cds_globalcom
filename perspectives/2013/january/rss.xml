@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>CDS Global</title>
+		<link>http://www.cds-global.com</link>
+		<description>CDS Global is a customer-centric, technology-driven, global company that delivers effective solutions for our strategic partners across multiple industries.</description>
+		<language>en-us</language>
+		<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		<lastBuildDate>Mon, 7 January 2013 09:00:00 CST</lastBuildDate>
+		<copyright>2013 CDS Global, Inc. All rights reserved.</copyright>
+		
+		<image>
+			<url>http://www.cds-global.com/graphics/cdslogo.jpg</url>
+			<title>CDS Global</title>
+			<link>http://www.cds-global.com</link>
+		</image>
+		
+		<item>
+			<title>eHub: Your Digital Entitlement Engine</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/ehub.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/ehub.html</guid>
+			<description>Learn how eHub, CDS Global's online subscription billing and entitlement management platform meets the demands of the digital marketplace across industries. See just a few of the many ways eHub can help monetize your digital assets in Chief Product Officer Kristin Runayn's demonstration.</description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>Message from Malcolm</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/malcolm.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/malcolm.html</guid>
+			<description>CDS Global's Chairman and CEO Malcolm Netburn discusses how technology is like oxygen – at the center of our business – and essential for survival.</description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>Client Q and A</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/clientqa.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/clientqa.html</guid>
+			<description>Read a fun, informative Q and A with Monica Ray, executive vice president of consumer marketing at Conde Nast.</description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>Postal Perspectives</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/postal.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/postal.html</guid>
+			<description>The U.S. Postal Service has a number of changes planned for implementation in January 2013. This summary highlights changes that are pertinent to CDS Global mailers.</description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		<item>
+			<title>Product Management Corner</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/pmcorner.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/pmcorner.html</guid>
+			<description>Learn about CDS Global's new and upcoming features to make your business run moother, such as continuously updated product roadmaps and enhancements to our Web Service Gateway, Trigger Marketing, Prospect Database and more.</description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		<item>
+			<title>Events</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/events.html</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/events.html</guid>
+			<description></description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		
+		<item>
+			<title>News &amp; Notes</title>
+			<link>http://www.cds-global.com/perspectives/2013/january/news/</link>
+			<guid>http://www.cds-global.com/perspectives/2013/january/news/</guid>
+			<description></description>
+			<pubDate>Mon, 7 January 2013 09:00:00 CST</pubDate>
+		</item>
+		
+	</channel>
+</rss>
+

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /graphics/
+Disallow: /elqNow/
+Disallow: /media/
+Disallow: /tours/
+Disallow: /*.wp-login.php$

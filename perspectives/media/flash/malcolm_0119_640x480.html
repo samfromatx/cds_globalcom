@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+<body>
+
+<script type="text/javascript" src="/scripts/flowplayer-3.2.2.min.js"></script>
+<a href="/perspectives/media/flash/malcolm_0119_640x480.flv" style="display:block;width:600px;height:360px" id="player"></a>
+<script language="JavaScript">
+	flowplayer("player", "/media/flash/flowplayer-3.2.2.swf", {
+		plugins:{
+			controls:{
+				timeColor:'#ffffff',
+				borderRadius:'0px',
+				slowForward:true,
+				bufferGradient:'none',
+				backgroundColor:'rgba(0, 0, 0, 0)',
+				volumeSliderGradient:'none',
+				slowBackward:false,
+				timeBorderRadius:20,
+				progressGradient:'none',
+				time:true,
+				height:26,
+				volumeColor:'rgba(123, 184, 0, 1)',
+				tooltips:{
+					marginBottom:5,
+					volume:true,
+					scrubber:true,
+					buttons:false
+					},
+				opacity:1,
+				fastBackward:false,
+				timeFontSize:12,
+				bufferColor:'#a3a3a3',
+				border:'0px',
+				volumeSliderColor:'#ffffff',
+				buttonColor:'#ffffff',
+				mute:true,
+				autoHide:{
+					enabled:true,
+					hideDelay:904,
+					hideStyle:'fade',
+					mouseOutDelay:500,
+					hideDuration:400,
+					fullscreenOnly:false
+					},
+				backgroundGradient:'none',
+				width:'100pct',
+				display:'block',
+				sliderBorder:'1px solid rgba(128, 128, 128, 0.7)',
+				buttonOverColor:'#ffffff',
+				fullscreen:true,
+				timeBgColor:'rgb(0, 0, 0, 0)',
+				scrubberBarHeightRatio:0.2,
+				bottom:0,
+				stop:true,
+				zIndex:1,
+				sliderColor:'#000000',
+				scrubberHeightRatio:0.6,
+				tooltipTextColor:'#ffffff',
+				sliderGradient:'none',
+				timeBgHeightRatio:0.8,
+				volumeSliderHeightRatio:0.6,
+				name:'controls',
+				timeSeparator:' ',
+				volumeBarHeightRatio:0.2,
+				left:'50pct',
+				tooltipColor:'rgba(0, 0, 0, 0)',
+				playlist:false,
+				durationColor:'rgba(123, 184, 0, 1)',
+				play:true,
+				fastForward:true,
+				timeBorder:'0px solid rgba(0, 0, 0, 0.3)',
+				progressColor:'rgba(123, 184, 0, 1)',
+				volume:true,
+				scrubber:true,
+				volumeBorder:'1px solid rgba(128, 128, 128, 0.7)',
+				builtIn:false
+				}
+			},
+		clip: {
+    		autoPlay: false,
+			autoBuffering: true
+    		},
+		gatracker: {
+				url: "/media/flash/flowplayer.analytics-3.2.0.swf",
+				labels: {
+					start: "Start",	
+					play: "Play",	
+					pause: "Pause",	
+					resume: "Resume",	
+					seek: "Seek",	
+					stop: "Stop",	
+					finish: "Finish",	
+					mute: "Mute",	
+					unmute: "Unmute",	
+					fullscreen: "Full Screen",	
+					fullscreenexit: "Full Screen Exit"	
+				},
+				googleId: "UA-668234-1" // your Google Analytics id here
+			}
+		}
+	);
+</script>
+
+<!--#include virtual="/includes/tracking.html" -->
+</body>
+</html>

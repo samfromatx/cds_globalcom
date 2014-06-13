@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Christopher Ross <info@thisismyurl.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in echo
+#: common.php:21
+msgid "Becoming a Fan on Facebook"
+msgstr ""
+
+#. Text in echo
+#: common.php:16
+msgid "Developing this plugin cost me hours of work. If you like it, please support it. You can help by:"
+msgstr ""
+
+#. Text in echo
+#: common.php:20
+msgid "Following me on Twitter"
+msgstr ""
+
+#. Text in echo
+#: common.php:13
+msgid "Help support this plugin"
+msgstr ""
+
+#. Text in echo
+#: common.php:65
+msgid "Latest posts from Christopher Ross"
+msgstr ""
+
+#. Text in echo
+#: common.php:19
+msgid "Rating it at WordPress.org"
+msgstr ""
+
+#. Text in function
+#: common.php:71
+msgid "A special thank you to the following people for donating to support my plugin work."
+msgstr ""
+
+#. Text in function
+#: common.php:104
+msgid "Have you enjoyed using this plugin? Why not try out my other great WordPress plugins."
+msgstr ""
+
+#. Text in function
+#: common.php:104
+msgid "Other Great Plugins"
+msgstr ""
+
