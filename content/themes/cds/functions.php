@@ -138,7 +138,6 @@ function cds_init() {
     register_taxonomy('resource_type', 'resource', array(
         'public' => false,
     ));
-    wp_insert_term('Overview', 'resource_type', array('slug' => 'resource-overview'));
     wp_insert_term('Benchmarking Report', 'resource_type', array('slug' => 'benchmarking-report'));
     wp_insert_term('Forward Report', 'resource_type', array('slug' => 'forward-report'));
     wp_insert_term('Data Sheet', 'resource_type', array('slug' => 'data-sheet'));
