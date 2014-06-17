@@ -62,7 +62,8 @@ setup_postdata($post);
 
                 <?php foreach($filters as $name => $filter): ?>
                 <div class="dropdown">
-                    <select name="<?php echo $name; ?>">
+                    <label for="<?php echo $name; ?>" class="hidefromscreen"><?php if ($name == "type") {echo("Select Resource Type");} else {echo("Select Industry");} ?></label>
+                    <select name="<?php echo $name; ?>" id="<?php echo $name; ?>">
                         <option value=""><?php echo $filter['label']; ?></option>
                         <?php foreach($filter['items'] as $key => $item): ?>
                             <option value="<?php echo $key; ?>" <?php selected($filter_params[$name], $key); ?>>

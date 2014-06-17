@@ -23,7 +23,7 @@ class LatestPostWidget extends WP_Widget {
                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     <?php the_excerpt(); ?>
                     <p class="byline">By <?php the_author(); ?></p>
-                    <a class="arrow" href="<?php the_permalink(); ?>"></a>
+                    <a class="arrow" href="<?php the_permalink(); ?>"><span class="hidefromscreen">Click arrow</span></a>
                 </div>
             <?php
         }

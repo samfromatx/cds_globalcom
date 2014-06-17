@@ -17,7 +17,7 @@
     <script src="/content/themes/cds/javascripts/ie9.js"></script>
     <![endif]-->
     <?php wp_head(); ?>
-    <a href="https://plus.google.com/103871200619595329856" rel="publisher"></a>
+    <a href="https://plus.google.com/103871200619595329856" rel="publisher" class="hidefromscreen">Google Plus</a>
 </head>
 <body <?php body_class(); ?>>
     <!-- Google Tag Manager -->
@@ -29,12 +29,6 @@
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-N5XJNT');</script>
     <!-- End Google Tag Manager -->
-    <?php
-        //$_SESSION['utm_campaign'] = $_GET['utm_campaign'];
-        //$utmCookie = "hello";
-        //setcookie("utmcampaign", "hello", (time()+3600), "/"); //For 1 hour
-        //echo $_COOKIE["utmcampaign"];
-    ?>
     <nav>
         <?php wp_nav_menu(array(
             'theme_location' => 'primary',
@@ -47,7 +41,8 @@
         <div id="tools">
             <div class="menu-button"></div>
             <div class="country dropdown">
-                <select>
+                <label for="cdsglobal_country" class="hidefromscreen">Country:</label>
+                <select id="cdsglobal_country">
                     <option value="">United States</option>
                     <option value="http://www.cdsglobal.ca/">Canada</option>
                     <option value="http://www.cdsglobal.co.uk/">United Kingdom</option>
@@ -63,7 +58,7 @@
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
                     CDS Global
-                </a>                
+                </a>
             </div>
             <div class="printonly">
                 <img src="/content/themes/cds/images/logo.png" width="151" height="75" alt="CDS Global - A Hearst Company Logo" />

@@ -40,6 +40,7 @@ Template Name: Contact Form
                    <!-- <form method="post" action="/content/themes/cds/partials/contact_process.php" class="contact" target="eloqua-submit">-->
                     <form method="post" action="https://s1851.t.eloqua.com/e/f2" class="contact" target="eloqua-submit">
                         <div>
+                            <label for="formsubject" class="hidefromscreen">Subject:</label>
                             <select name="subject" required class="contact-dropdown" id="formsubject">
                                 <option value="">Subject</option>
                                 <option>Customer Service</option>
@@ -49,6 +50,7 @@ Template Name: Contact Form
                                 <option>Career</option>
                                 <option>Other</option>
                             </select>
+                            <label for="formcustomer" class="hidefromscreen">Customer:</label>
                             <select name="customer_service" class="contact-dropdown" id="formcustomer">
                                 <option value="">Select one</option>
                                 <option>Cancel subscription</option>
@@ -59,11 +61,16 @@ Template Name: Contact Form
                                 <option>Subscription notice</option>
                             </select>
                         </div>
-                            <input type="email" name="emailAddress" placeholder="Email Address" required />
-                            <input type="text" name="firstName" placeholder="First Name" required />
-                            <input type="text" name="lastName" placeholder="Last Name" required />
-                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" />
-                            <textarea rows="6" name="comments" placeholder="Comments"></textarea>
+                            <label for="formemailAddress" class="hidefromscreen">Email Address:</label>
+	                            <input type="email" name="emailAddress" placeholder="Email Address" id="formemailAddress" required />
+	                        <label for="formfirstName" class="hidefromscreen">First Name:</label>
+	                            <input type="text" name="firstName" placeholder="First Name" id="formfirstName" required />
+	                        <label for="formlastName" class="hidefromscreen">Last Name:</label>
+	                            <input type="text" name="lastName" placeholder="Last Name" id="formlastName" required />
+	                        <label for="forminboundOriginator" class="hidefromscreen">How Did You Hear About Us:</label>
+	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" />
+	                        <label for="formComments" class="hidefromscreen">Comments:</label>
+                            	<textarea rows="6" name="comments" placeholder="Comments" id="formComments"></textarea>
                         <div>
                             <input value="cds-global-contact" type="hidden" name="elqFormName" />
                             <input value="1851" type="hidden" name="elqSiteId" />

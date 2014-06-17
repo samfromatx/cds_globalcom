@@ -9,7 +9,7 @@
     $solutiontitle = the_title();
     $featured = get_post_meta(get_the_ID(), 'featured_resource', true);
     $featuredarray = explode(',', $featured);
-    
+
     $temp = $post;
     $featuredquery = new WP_Query( array( 'post_type' => 'resource', 'post__in' => $featuredarray, 'orderby' => 'menu_order title', 'order' => 'ASC' ) );
     if ($featuredquery->have_posts()): ?>
@@ -25,11 +25,11 @@
                 </li>
             <?php } ?>
         </ul>
-    <?php endif; 
+    <?php endif;
     wp_reset_postdata();
     $post = $temp;
     ?>
- 
+
     <?php
     $filters = get_post_meta(get_the_ID(), 'resource_filters', true);
     if ($filters && $filters = array_filter($filters)):
@@ -60,7 +60,8 @@
             <form class="resource-filter inline">
                 <label>Filter by:</label>
                 <div class="dropdown">
-                    <select name="type">
+                    <label for="formresourceTypes" class="hidefromscreen">Select Resource Type:</label>
+                    <select name="type" id="formresourceTypes">
                         <option value="">All Resource Types</option>
                         <?php foreach (get_terms('resource_type') as $term): ?>
                             <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>

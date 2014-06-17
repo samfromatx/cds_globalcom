@@ -225,14 +225,16 @@ $(document).ready(function() {
 
                 switch ($field['type']):
                     case 'select': ?>
-                        <select name="<?php echo $name; ?>" required data-api-name="<?php echo $field['apiName']; ?>">
+                        <label for="form<?php echo $name; ?>" class="hidefromscreen"><?php echo $name; ?>:</label>
+                        <select name="<?php echo $name; ?>" required data-api-name="<?php echo $field['apiName']; ?>" id="form<?php echo $name; ?>">
                             <option value=""><?php echo $field['displayName']; ?></option>
                             <?php foreach ($field['options'] as $name => $display): if (!$name) continue; ?>
                                 <option value="<?php echo $name; ?>"><?php echo $display; ?></option>
                             <?php endforeach; ?>
                         </select>
                     <?php break; default: ?>
-                        <input type="<?php echo $field['type']; ?>" name="<?php echo $name; ?>" placeholder="<?php echo $field['displayName']; ?>" required data-api-name="<?php echo $field['apiName']; ?>">
+                        <label for="form<?php echo $name; ?>" class="hidefromscreen"><?php echo $name; ?>:</label>
+                        <input type="<?php echo $field['type']; ?>" name="<?php echo $name; ?>" placeholder="<?php echo $field['displayName']; ?>" required data-api-name="<?php echo $field['apiName']; ?>" id="form<?php echo $name; ?>">
                 <?php endswitch;
             endforeach; ?>
 
@@ -242,14 +244,16 @@ $(document).ready(function() {
 
                 switch ($field2['type']):
                     case 'select': ?>
-                        <select name="<?php echo $name2; ?>" required data-api-name="<?php echo $field2['apiName']; ?>">
+                        <label for="form<?php echo $name2; ?>" class="hidefromscreen"><?php echo $name2; ?>:</label>
+                        <select name="<?php echo $name2; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" id="form<?php echo $name2; ?>">
                             <option value=""><?php echo $field2['displayName']; ?></option>
                             <?php foreach ($field2['options'] as $name2 => $display): if (!$name2) continue; ?>
                                 <option value="<?php echo $name2; ?>"><?php echo $display; ?></option>
                             <?php endforeach; ?>
                         </select>
                     <?php break; default: ?>
-                        <input type="<?php echo $field2['type']; ?>" class="prog1-field" name="<?php echo $name2; ?>" placeholder="<?php echo $field2['displayName']; ?>" required data-api-name="<?php echo $field2['apiName']; ?>">
+                        <label for="form<?php echo $name2; ?>" class="hidefromscreen"><?php echo $name2; ?>:</label>
+                        <input type="<?php echo $field2['type']; ?>" class="prog1-field" name="<?php echo $name2; ?>" placeholder="<?php echo $field2['displayName']; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" id="form<?php echo $name2; ?>">
                 <?php endswitch;
             endforeach; ?>
         </div>
@@ -260,23 +264,24 @@ $(document).ready(function() {
 
                 switch ($field3['type']):
                     case 'select': ?>
-                        <select name="<?php echo $name3; ?>" required data-api-name="<?php echo $field3['apiName']; ?>">
+                        <label for="form<?php echo $name3; ?>" class="hidefromscreen"><?php echo $name3; ?>:</label>
+                        <select name="<?php echo $name3; ?>" required data-api-name="<?php echo $field3['apiName']; ?>" id="form<?php echo $name3; ?>">
                             <option value=""><?php echo $field3['displayName']; ?></option>
                             <?php foreach ($field3['options'] as $name3 => $display): if (!$name3) continue; ?>
                                 <option value="<?php echo $name3; ?>"><?php echo $display; ?></option>
                             <?php endforeach; ?>
                         </select>
                     <?php break; default: ?>
-                        <input type="<?php echo $field3['type']; ?>" class="prog1-field" name="<?php echo $name3; ?>" placeholder="<?php echo $field3['displayName']; ?>" required data-api-name="<?php echo $field3['apiName']; ?>">
+                        <label for="form<?php echo $name3; ?>" class="hidefromscreen"><?php echo $name3; ?>:</label>
+                        <input type="<?php echo $field3['type']; ?>" class="prog1-field" name="<?php echo $name3; ?>" placeholder="<?php echo $field3['displayName']; ?>" required data-api-name="<?php echo $field3['apiName']; ?>" id="form<?php echo $name3; ?>">
                 <?php endswitch;
             endforeach; ?>
         </div>
         <div id="CA" class="formtext" style="display:none;">
         	<input type="hidden" name="PermissionDate" value="<?php echo date("m/d/Y"); ?>" />
-        	<input type="checkbox" name="OptInCheckbox">&nbsp;&nbsp;By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</div>
+        	<input type="checkbox" name="OptInCheckbox" id="formOptInCA">&nbsp;&nbsp;<label for="formOptInCA">By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</label></div>
         <div id="GB" class="formtext" style="display:none;">
-        	<input type="checkbox" name="OptInCheckbox"> &nbsp;&nbsp;By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.  I also authorize CDS Global to store cookies on my browser.
-        </div>
+        	<input type="checkbox" name="OptInCheckbox" id="formOptInGB"> &nbsp;&nbsp;<label for="formOptInGB">By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.  I also authorize CDS Global to store cookies on my browser.</label></div>
 
         <script>
         /*
