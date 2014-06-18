@@ -25,7 +25,7 @@ Template Name: Contact Form
                 </header>
             <?php endif; ?>
 
-            <div class="primary">
+            <div class="primary" role="main">
                 <nav>
                     <ul>
                         <?php $children = get_pages(array('parent' => $top_level->ID, 'sort_column' => 'menu_order'));
@@ -41,7 +41,7 @@ Template Name: Contact Form
                     <form method="post" action="https://s1851.t.eloqua.com/e/f2" class="contact" target="eloqua-submit">
                         <div>
                             <label for="formsubject" class="hidefromscreen">Subject:</label>
-                            <select name="subject" required class="contact-dropdown" id="formsubject">
+                            <select name="subject" required class="contact-dropdown" id="formsubject" aria-required="true">
                                 <option value="">Subject</option>
                                 <option>Customer Service</option>
                                 <option>Sales</option>
@@ -51,7 +51,7 @@ Template Name: Contact Form
                                 <option>Other</option>
                             </select>
                             <label for="formcustomer" class="hidefromscreen">Customer:</label>
-                            <select name="customer_service" class="contact-dropdown" id="formcustomer">
+                            <select name="customer_service" class="contact-dropdown" id="formcustomer" aria-required="true">
                                 <option value="">Select one</option>
                                 <option>Cancel subscription</option>
                                 <option>Change address</option>
@@ -62,11 +62,11 @@ Template Name: Contact Form
                             </select>
                         </div>
                             <label for="formemailAddress" class="hidefromscreen">Email Address:</label>
-	                            <input type="email" name="emailAddress" placeholder="Email Address" id="formemailAddress" required />
+	                            <input type="email" name="emailAddress" placeholder="Email Address" id="formemailAddress" required aria-required="true" aria-invalid="true" />
 	                        <label for="formfirstName" class="hidefromscreen">First Name:</label>
-	                            <input type="text" name="firstName" placeholder="First Name" id="formfirstName" required />
+	                            <input type="text" name="firstName" placeholder="First Name" id="formfirstName" required aria-required="true" />
 	                        <label for="formlastName" class="hidefromscreen">Last Name:</label>
-	                            <input type="text" name="lastName" placeholder="Last Name" id="formlastName" required />
+	                            <input type="text" name="lastName" placeholder="Last Name" id="formlastName" required aria-required="true" />
 	                        <label for="forminboundOriginator" class="hidefromscreen">How Did You Hear About Us:</label>
 	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" />
 	                        <label for="formComments" class="hidefromscreen">Comments:</label>

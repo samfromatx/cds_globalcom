@@ -1,4 +1,4 @@
-<aside class="secondary sidebar">
+<aside class="secondary sidebar" role="complementary">
     <?php
         // If this is a leaf page, include the CTA buttons
         global $children;

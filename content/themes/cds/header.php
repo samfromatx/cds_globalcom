@@ -29,7 +29,7 @@
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-N5XJNT');</script>
     <!-- End Google Tag Manager -->
-    <nav>
+    <nav role="navigation">
         <?php wp_nav_menu(array(
             'theme_location' => 'primary',
             'container' => false,
@@ -54,7 +54,7 @@
                 <li><a href="/about/contact">Contact CDS Global</a></li>
             </ul>
         </div>
-        <header>
+        <header role="banner">
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
                     CDS Global

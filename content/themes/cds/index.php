@@ -19,7 +19,7 @@
             </h1>
         </div>
         <div class="content">
-        <div class="primary">
+        <div class="primary" role="main">
         <?php while (have_posts()): the_post(); ?>
             <?php if ($image = get_the_post_thumbnail()): ?>
             <div class="list has-image">

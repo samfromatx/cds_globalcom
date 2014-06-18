@@ -1,9 +1,9 @@
-        <footer>
+        <footer role="contentinfo">
             <div class="social">
                 <ul>
                     <li><a href="https://twitter.com/cdsglobal" target="_blank" class="twitter">Twitter</a></li>
                     <li><a href="https://www.facebook.com/CDSGlobal" target="_blank" class="facebook">Facebook</a></li>
-                    <li><a href="http://www.linkedin.com/company/cds-global" target="_blank" class="linkedin">LinkedIn</a></li>                    
+                    <li><a href="http://www.linkedin.com/company/cds-global" target="_blank" class="linkedin">LinkedIn</a></li>
                     <li><a href="http://instagram.com/cdsglobalinc" target="_blank" class="instagram">Instagram</a></li>
                     <li><a href="http://slideshare.net/cdsglobalinc" target="_blank" class="slideshare">SlideShare</a></li>
                     <li><a href="http://www.youtube.com/user/CDSGlobal" target="_blank" class="youtube">YouTube</a></li>
@@ -48,7 +48,7 @@
             }
         });
     </script>
-    
+
 <?php wp_footer(); ?>
 </body>
 </html>
