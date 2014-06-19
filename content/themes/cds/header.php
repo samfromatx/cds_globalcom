@@ -9,8 +9,8 @@
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>">
-    <link rel="stylesheet" href="/content/themes/cds/print.css" media="print">
+    <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>?v=<?php echo date("mdy-H:i"); ?>">
+    <link rel="stylesheet" href="/content/themes/cds/print.css?v=<?php echo date("mdy-H:i"); ?>" media="print">
     <script src="<?php echo get_stylesheet_directory_uri(); ?>/javascripts/modernizr.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!--[if lt IE 9]>
