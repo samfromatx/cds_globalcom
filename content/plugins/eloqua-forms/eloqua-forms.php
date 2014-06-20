@@ -175,42 +175,7 @@ function eloqua_form($post_id = false) {
     $fieldNamesProg2 = explode(',', get_post_meta($post_id, 'eloqua-form-fields-prog-2', true));
     $fieldNamesProg2 = array_filter($fieldNamesProg2);
 ?>
-<script type="text/javascript">
-/*
-$(document).ready(function() {
-    elqVEmail = localStorage.getItem("elqVEmail");
-    elqProg2 = localStorage.getItem("elqProg2");
-    if ((elqVEmail == "" || elqVEmail == null ) && ( elqProg2 == "false" || elqProg2 == "" || elqProg2 == null )) {
-        $('#prog1').hide();
-        $('#prog1 input, #prog1 select').each(function() {
-            $(this).removeAttr('required');
-        });
-        $('#prog2').hide();
-        $('#prog2 input, #prog2 select').each(function() {
-            $(this).removeAttr('required');
-        });
-    } else if (elqVEmail != "" && elqProg2 == "false") {
-        $('#prog2').hide();
-        $("#prog2 input, #prog2 select, input[name='emailAddress']").each(function() {
-            $(this).removeAttr('required');
-        });
-        console.log("if 2");
-    } else if (elqVEmail != "" && elqProg2 == "true") {
-        $('#prog1').hide();
-        $("#prog1 input, #prog1 select, input[name='emailAddress']").each(function() {
-            $(this).removeAttr('required');
-        });
-        console.log("if 3");
-    }
 
-    $( "#elqForm" ).submit(function( event ) {
-        if (elqVEmail != "" && elqProg2 == "false") {
-            localStorage.setItem("elqProg2", "true");
-        }
-    });
-});
-*/
-</script>
 <?php
 
     $adminFields = get_post_meta($post_id, 'eloqua-form-hidden', true);
@@ -226,7 +191,7 @@ $(document).ready(function() {
                 switch ($field['type']):
                     case 'select': ?>
                         <label for="form<?php echo $name; ?>" class="hidefromscreen"><?php echo $name; ?>:</label>
-                        <select name="<?php echo $name; ?>" required data-api-name="<?php echo $field['apiName']; ?>" id="form<?php echo $name; ?>">
+                        <select name="<?php echo $name; ?>" required data-api-name="<?php echo $field['apiName']; ?>" data-prog-stage="prog0" id="form<?php echo $name; ?>">
                             <option value=""><?php echo $field['displayName']; ?></option>
                             <?php foreach ($field['options'] as $name => $display): if (!$name) continue; ?>
                                 <option value="<?php echo $name; ?>"><?php echo $display; ?></option>
@@ -234,7 +199,7 @@ $(document).ready(function() {
                         </select>
                     <?php break; default: ?>
                         <label for="form<?php echo $name; ?>" class="hidefromscreen"><?php echo $name; ?>:</label>
-                        <input type="<?php echo $field['type']; ?>" name="<?php echo $name; ?>" placeholder="<?php echo $field['displayName']; ?>" required data-api-name="<?php echo $field['apiName']; ?>" id="form<?php echo $name; ?>">
+                        <input type="<?php echo $field['type']; ?>" name="<?php echo $name; ?>" placeholder="<?php echo $field['displayName']; ?>" required data-api-name="<?php echo $field['apiName']; ?>" data-prog-stage="prog0" id="form<?php echo $name; ?>">
                 <?php endswitch;
             endforeach; ?>
 
@@ -245,7 +210,7 @@ $(document).ready(function() {
                 switch ($field2['type']):
                     case 'select': ?>
                         <label for="form<?php echo $name2; ?>" class="hidefromscreen"><?php echo $name2; ?>:</label>
-                        <select name="<?php echo $name2; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" id="form<?php echo $name2; ?>">
+                        <select name="<?php echo $name2; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" data-prog-stage="prog1" id="form<?php echo $name2; ?>">
                             <option value=""><?php echo $field2['displayName']; ?></option>
                             <?php foreach ($field2['options'] as $name2 => $display): if (!$name2) continue; ?>
                                 <option value="<?php echo $name2; ?>"><?php echo $display; ?></option>
@@ -253,7 +218,7 @@ $(document).ready(function() {
                         </select>
                     <?php break; default: ?>
                         <label for="form<?php echo $name2; ?>" class="hidefromscreen"><?php echo $name2; ?>:</label>
-                        <input type="<?php echo $field2['type']; ?>" class="prog1-field" name="<?php echo $name2; ?>" placeholder="<?php echo $field2['displayName']; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" id="form<?php echo $name2; ?>">
+                        <input type="<?php echo $field2['type']; ?>" class="prog1-field" name="<?php echo $name2; ?>" placeholder="<?php echo $field2['displayName']; ?>" required data-api-name="<?php echo $field2['apiName']; ?>" data-prog-stage="prog1" id="form<?php echo $name2; ?>">
                 <?php endswitch;
             endforeach; ?>
         </div>
@@ -265,7 +230,7 @@ $(document).ready(function() {
                 switch ($field3['type']):
                     case 'select': ?>
                         <label for="form<?php echo $name3; ?>" class="hidefromscreen"><?php echo $name3; ?>:</label>
-                        <select name="<?php echo $name3; ?>" required data-api-name="<?php echo $field3['apiName']; ?>" id="form<?php echo $name3; ?>">
+                        <select name="<?php echo $name3; ?>" required data-api-name="<?php echo $field3['apiName']; ?>" data-prog-stage="prog2" id="form<?php echo $name3; ?>">
                             <option value=""><?php echo $field3['displayName']; ?></option>
                             <?php foreach ($field3['options'] as $name3 => $display): if (!$name3) continue; ?>
                                 <option value="<?php echo $name3; ?>"><?php echo $display; ?></option>
@@ -273,7 +238,7 @@ $(document).ready(function() {
                         </select>
                     <?php break; default: ?>
                         <label for="form<?php echo $name3; ?>" class="hidefromscreen"><?php echo $name3; ?>:</label>
-                        <input type="<?php echo $field3['type']; ?>" class="prog1-field" name="<?php echo $name3; ?>" placeholder="<?php echo $field3['displayName']; ?>" required data-api-name="<?php echo $field3['apiName']; ?>" id="form<?php echo $name3; ?>">
+                        <input type="<?php echo $field3['type']; ?>" class="prog1-field" name="<?php echo $name3; ?>" placeholder="<?php echo $field3['displayName']; ?>" required data-api-name="<?php echo $field3['apiName']; ?>"  data-prog-stage="prog2" id="form<?php echo $name3; ?>">
                 <?php endswitch;
             endforeach; ?>
         </div>
@@ -282,26 +247,6 @@ $(document).ready(function() {
         	<input type="checkbox" name="OptInCheckbox" id="formOptInCA">&nbsp;&nbsp;<label for="formOptInCA">By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</label></div>
         <div id="GB" class="formtext" style="display:none;">
         	<input type="checkbox" name="OptInCheckbox" id="formOptInGB"> &nbsp;&nbsp;<label for="formOptInGB">By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global its products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.  I also authorize CDS Global to store cookies on my browser.</label></div>
-
-        <script>
-        /*
-        $(document).ready(function() {
-	        $('select[name="country"]').change(function() {
-	        	if ($(this).val() == 'CA') {
-		        	$('#GB').hide();
-		        	$('#GB input').prop('required', false);
-		        	$('#CA').show();
-					$('#CA input').prop('required', true);
-	        	} else {
-		        	$('#CA').hide();
-				    $('#GB').hide();
-				    $('#CA input').prop('required', false);
-				    $('#GB input').prop('required', false);
-	        	}
-			});
-		});
-		*/
-        </script>
 
         </div>
         <div>
