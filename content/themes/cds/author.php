@@ -40,12 +40,13 @@ endif;
                     </dl>
                 <?php endif; ?>
                 </div>
-                
+
             </div>
 
 
         <div class="primary">
-        <?php while (have_posts()): the_post(); ?>
+
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
             <?php if ($image = get_the_post_thumbnail()): ?>
             <div class="list has-image">
                 <div class="image">
@@ -61,7 +62,10 @@ endif;
                     <a class="more" href="<?php the_permalink(); ?>">Read More</a>
                 </div>
             </div>
-        <?php endwhile; ?>
+        <?php endwhile; else: ?>
+        <p><?php _e('No posts by this author.'); ?></p>
+
+    <?php endif; ?>
         <nav class="pagination">
             <div class="next"><?php next_posts_link('Older posts'); ?></div>
             <div class="previous"><?php previous_posts_link('Newer posts'); ?></div>
