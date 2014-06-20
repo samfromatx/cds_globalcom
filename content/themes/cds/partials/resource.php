@@ -1,5 +1,5 @@
 <?php if (is_single()): ?>
-    <article class="primary" style="width:95%;">
+    <article class="primary-wide" role="main">
         <h1><?php the_title(); ?></h1>
         <?php the_content(); ?>
         <?php eloqua_form(); ?>
