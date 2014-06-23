@@ -77,6 +77,7 @@ function cds_init() {
             'rewrite' => array('slug' => 'about/news', 'with_front' => false),
             'supports' => array(
                 'title',
+                'author',
                 'editor',
                 'excerpt',
                 'thumbnail',
@@ -94,6 +95,7 @@ function cds_init() {
             'rewrite' => array('slug' => 'events', 'with_front' => false),
             'supports' => array(
                 'title',
+                'author',
                 'editor',
                 'thumbnail',
                 'excerpt',
@@ -127,6 +129,7 @@ function cds_init() {
             'rewrite' => array('slug' => 'resources', 'with_front' => false),
             'supports' => array(
                 'title',
+                'author',
                 'editor',
                 'thumbnail',
                 'excerpt',
