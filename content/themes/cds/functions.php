@@ -561,12 +561,12 @@ apply_filters( 'wpseo_sitemap_page-sitemap_change_freq', 'daily', 'http://www.cd
 add_action('init', 'setUTMCookie');
 function setUTMCookie() {
     if (!$_COOKIE["utmcampaign"] || $_GET['utm_campaign']) {
-        setcookie('utmcampaign', $_GET['utm_campaign'], time()+3600*24, COOKIEPATH, COOKIE_DOMAIN); //For 24 hours
+        setcookie('utmcampaign', $_GET['utm_campaign'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
     if (!$_COOKIE["utmmedium"] || $_GET['utm_medium']) {
-        setcookie('utmmedium', $_GET['utm_medium'], time()+3600*24, COOKIEPATH, COOKIE_DOMAIN); //For 24 hours
+        setcookie('utmmedium', $_GET['utm_medium'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
     if (!$_COOKIE["utmsource"] || $_GET['utm_source']) {
-        setcookie('utmsource', $_GET['utm_source'], time()+3600*24, COOKIEPATH, COOKIE_DOMAIN); //For 24 hours
+        setcookie('utmsource', $_GET['utm_source'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
 }
