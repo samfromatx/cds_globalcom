@@ -68,7 +68,7 @@ Template Name: Contact Form
 	                        <label for="formlastName" class="hidefromscreen">Last Name:</label>
 	                            <input type="text" name="lastName" placeholder="Last Name" id="formlastName" required aria-required="true" />
 	                        <label for="forminboundOriginator" class="hidefromscreen">How Did You Hear About Us:</label>
-	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" />
+	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" aria-required="false" />
 	                        <label for="formComments" class="hidefromscreen">Comments:</label>
                             	<textarea rows="6" name="comments" placeholder="Comments" id="formComments"></textarea>
                         <div>
