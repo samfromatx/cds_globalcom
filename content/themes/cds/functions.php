@@ -173,6 +173,7 @@ function cds_get_post_type_labels($singular, $plural, $overrides = array()) {
 }
 
 function cds_add_metaboxes() {
+    add_meta_box('resource_priority', 'Resource Priority', 'cds_resource_priority_metabox', 'resource', 'side', 'core');
     add_meta_box('resource_type', 'Type', 'cds_resource_type_metabox', 'resource', 'side', 'core');
     add_meta_box('resource_industry', 'Industry', 'cds_resource_industry_metabox', 'resource', 'side', 'core');
     add_meta_box('resource_solution', 'Solution', 'cds_resource_solution_metabox', 'resource', 'side', 'core');
@@ -233,6 +234,21 @@ function cds_resource_solution_metabox($resource) {
     echo $select;
 }
 
+function cds_resource_priority_metabox($resource) {
+
+    $values = get_post_custom( $resource->ID );
+    $selected = isset( $values['resource_priority'] ) ? esc_attr( $values['resource_priority'][0] ) : "3";
+    ?>
+    <select name="resource_priority" id="resource_priority" class="widefat">
+        <option value="1" <?php selected( $selected, '1' ); ?>>Very High</option>
+        <option value="2" <?php selected( $selected, '2' ); ?>>High</option>
+        <option value="3" <?php selected( $selected, '3' ); ?>>Medium</option>
+        <option value="3" <?php selected( $selected, '4' ); ?>>Low</option>
+        <option value="3" <?php selected( $selected, '5' ); ?>>Very Low</option>
+    </select>
+    <?php
+}
+
 function cds_featured_resource_metabox() {
     global $post;
     // Noncename needed to verify where the data originated
@@ -282,6 +298,9 @@ function cds_save_resource_meta($resource_id) {
         $values  = array_map('sanitize_text_field', $_REQUEST['solution']);
         update_post_meta($resource_id, 'solution', $values);
     }
+
+     if( isset( $_POST['resource_priority'] ) )
+        update_post_meta( $resource_id, 'resource_priority', esc_attr( $_POST['resource_priority'] ) );
 }
 add_action('save_post', 'cds_save_resource_meta');
 

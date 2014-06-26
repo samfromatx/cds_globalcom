@@ -86,9 +86,16 @@ setup_postdata($post);
             <?php
                 if (have_posts()): ?>
                 <ul class="listing resources">
-                        <?php while (have_posts()): the_post();
+                        <?php
+                        global $wp_query;
+                        $args = array_merge( $wp_query->query_vars, array( 'meta_key' => 'resource_priority', 'orderby' => 'meta_value date', 'order' => 'ASC DESC') );
+                        query_posts( $args );
+
+                        while (have_posts()): the_post();
                             get_template_part('partials/resource', get_post_format());
-                        endwhile; ?>
+                        endwhile;
+
+                        wp_reset_query(); ?>
                 </ul>
                 <nav class="pagination">
                     <div class="previous"><?php previous_posts_link('Previous page'); ?></div>
