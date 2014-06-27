@@ -6,26 +6,58 @@
 <article class="primary">
     <?php the_content(); ?>
     <?php
-    $solutiontitle = the_title();
-    $featured = get_post_meta(get_the_ID(), 'featured_resource', true);
-    $featuredarray = explode(',', $featured);
+    //$solutiontitle = the_title();
+    //$featured = get_post_meta(get_the_ID(), 'featured_resource', true);
+    //$featuredarray = explode(',', $featured);
 
     $temp = $post;
-    $featuredquery = new WP_Query( array( 'post_type' => 'resource', 'post__in' => $featuredarray, 'orderby' => 'menu_order title', 'order' => 'ASC' ) );
+    //$featuredquery = new WP_Query( array( 'post_type' => 'resource', 'post__in' => $featuredarray, 'orderby' => 'menu_order title', 'order' => 'ASC' ) );
+
+
+    //$featuredquery = new WP_Query( array( 'post_type' => 'resource', 'meta_key' => 'resource_priority', 'meta_value' => array(1,2), 'orderby' => 'meta_value date', 'order' => 'ASC DESC' ) );
+
+
+
+    $filters = get_post_meta(get_the_ID(), 'resource_filters', true);
+    if ($filters && $filters = array_filter($filters)):
+        $featured_params = array(
+            'post_type' => 'resource',
+            'nopaging' => true,
+            // excluded posts that are in featured section
+            //'post__not_in' => explode(',', $featured),
+            'meta_key' => 'resource_priority',
+            'meta_value' => array(1,2),
+            'orderby' => 'meta_value date',
+            'order' => 'ASC DESC'
+        );
+        if ($filters['type'])
+            $featured_params['resource_type'] = $filters['type'];
+        if ($filters['industry'])
+            $featured_params['meta_query'][] = array(
+                'key' => 'industry',
+                'value' => $filters['industry'],
+                'compare' => 'LIKE',
+            );
+        if ($filters['solution'])
+            $featured_params['meta_query'][] = array(
+                'key' => 'solution',
+                'value' => $filters['solution'],
+                'compare' => 'LIKE',
+            );
+
+    $featuredquery = new WP_Query($featured_params);
+
     if ($featuredquery->have_posts()): ?>
-        <ul class="listing featured resources">
+        <h3>Top Resources - <?php the_title(); ?></h3>
+        <ul class="listing resources">
             <?php while ($featuredquery->have_posts()) {
-                $featuredquery->the_post(); ?>
-               <li <?php post_class(); ?>>
-                    <a class="icon ifeatured" href="<?php the_permalink(); ?>"><i class="icon ifeatured"></i></a>
-                    <h3>
-                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    </h3>
-                    <?php the_excerpt(); ?>
-                </li>
-            <?php } ?>
+                    $featuredquery->the_post();
+                    get_template_part('partials/resource', get_post_format());
+                } ?>
         </ul>
+        <hr class="fadeline" style="margin: 40px 0;" />
     <?php endif;
+    endif;
     wp_reset_postdata();
     $post = $temp;
     ?>
@@ -37,7 +69,11 @@
             'post_type' => 'resource',
             'nopaging' => true,
             // excluded posts that are in featured section
-            'post__not_in' => explode(',', $featured),
+            //'post__not_in' => explode(',', $featured),
+            'meta_key' => 'resource_priority',
+            'meta_value' => array(3,4,5),
+            'orderby' => 'meta_value date',
+            'order' => 'ASC DESC'
         );
         if ($filters['type'])
             $resource_params['resource_type'] = $filters['type'];
@@ -55,6 +91,7 @@
             );
 
         $query = new WP_Query($resource_params);
+        //$query = new WP_Query( array( 'meta_key' => 'resource_priority', 'meta_value' => array(1,2), 'orderby' => 'meta_value date', 'order' => 'ASC DESC' ));
         if ($query->have_posts()): ?>
             <h3>Other Resources</h3>
             <form class="resource-filter inline">
@@ -69,12 +106,12 @@
                     </select>
                 </div>
             </form>
-            <ul class="listing resources">
+            <ul class="listing featured resources">
                     <?php while ($query->have_posts()) {
                         $query->the_post();
                         // Don't show more than 5 posts in this loop, we'll hide them in a separate container below
                         if ($query->current_post > 4) break;
-                        get_template_part('partials/resource', get_post_format());
+                        get_template_part('partials/resource-listing-small', get_post_format());
                     } ?>
             </ul>
             <div class="pagination">
@@ -82,10 +119,10 @@
                     <a href="#more">Show more resources</a>
                 </div>
             </div>
-            <ul class="listing resources more">
+            <ul class="listing featured resources more">
                     <?php while ($query->have_posts()) {
                         $query->the_post();
-                        get_template_part('partials/resource', get_post_format());
+                        get_template_part('partials/resource-listing-small', get_post_format());
                     } ?>
             </ul>
         <?php endif; ?>
