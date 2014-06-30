@@ -1,13 +1,14 @@
 <?php
-/**
- * Plugin Name: Search Autocomplete
- * Plugin URI: http://hereswhatidid.com/search-autocomplete/
- * Description: Adds jQuery Autocomplete functionality to the default WordPress search box.
- * Version: 2.1.3
- * Author: Gabe Shackle
- * Author URI: http://hereswhatidid.com
- * License: GPLv2 or later
- */
+
+/*
+Plugin Name: Search Autocomplete
+Plugin URI: http://hereswhatidid.com/search-autocomplete/
+Description: Adds jQuery Autocomplete functionality to the default WordPress search box.
+Version: 2.1.4
+Author: Gabe Shackle
+Author URI: http://hereswhatidid.com
+License: GPLv2 or later
+*/
 class SearchAutocomplete {
 	protected static $options_field = "sa_settings";
 	protected static $options_field_ver = "sa_settings_ver";
@@ -44,8 +45,9 @@ class SearchAutocomplete {
 	);
 
 	var $pluginUrl,
-			$defaults,
-			$options;
+		$defaults,
+		$script_mode = 'min',
+		$options;
 
 	public function __construct() {
 		$this->initVariables();
@@ -59,9 +61,11 @@ class SearchAutocomplete {
 
 	public function initVariables() {
 		$this->pluginUrl = plugin_dir_url( __FILE__ );
-		$options         = get_option( self::$options_field );
 
+		$options         = get_option( self::$options_field );
 		$this->options = ( $options !== false ) ? wp_parse_args( $options, self::$options_default ) : self::$options_default;
+
+		$this->script_mode = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.dev' : '.min';
 	}
 
 	public function initScripts() {
@@ -74,7 +78,7 @@ class SearchAutocomplete {
 			wp_enqueue_style( 'SearchAutocomplete-theme', plugins_url( 'css' . $this->options['autocomplete_theme'], __FILE__ ), array(), '1.9.2' );
 		}
 		if ( wp_script_is( 'jquery-ui-autocomplete', 'registered' ) ) {
-			wp_enqueue_script( 'SearchAutocomplete', plugins_url( 'js/search-autocomplete.min.js', __FILE__ ), array( 'jquery-ui-autocomplete' ), '1.0.0', true );
+			wp_enqueue_script( 'SearchAutocomplete', plugins_url( 'js/search-autocomplete' . $this->script_mode . '.js', __FILE__ ), array( 'jquery-ui-autocomplete' ), '1.0.0', true );
 		}
 		else {
 			wp_register_script( 'jquery-ui-autocomplete', plugins_url( 'js/jquery-ui-1.9.2.custom.min.js', __FILE__ ), array( 'jquery-ui' ), '1.9.2', true );
@@ -285,7 +289,7 @@ class SearchAutocomplete {
 		<p class="description">
 			<?php _e( "Any valid CSS selector will work.", "search-autocomplete" ); ?><br>
 			<?php _e( "The default search box for TwentyTwelve, TwentyEleven, and TwentyTen is '#s'.", "search-autocomplete" ); ?><br>
-			<?php _e( "The default search box for TwentyThirteen is '[name=\"s\"]'.", "search-autocomplete" ); ?>
+			<?php _e( "The default search box for TwentyThirteen is '[name=\"#s\"]'.", "search-autocomplete" ); ?>
 		</p>
 	<?php
 	}

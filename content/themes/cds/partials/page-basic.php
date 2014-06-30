@@ -18,8 +18,8 @@
 
 
 
-    $filters = get_post_meta(get_the_ID(), 'resource_filters', true);
-    if ($filters && $filters = array_filter($filters)):
+    $filters2 = get_post_meta(get_the_ID(), 'resource_filters', true);
+    if ($filters2):
         $featured_params = array(
             'post_type' => 'resource',
             'nopaging' => true,
@@ -30,15 +30,15 @@
             'orderby' => 'meta_value date',
             'order' => 'ASC DESC'
         );
-        if ($filters['type'])
-            $featured_params['resource_type'] = $filters['type'];
-        if ($filters['industry'])
+        //if ($filters2['type'])
+            //$featured_params['resource_type'] = $filters['type'];
+        if ($filters2['industry'])
             $featured_params['meta_query'][] = array(
                 'key' => 'industry',
                 'value' => $filters['industry'],
                 'compare' => 'LIKE',
             );
-        if ($filters['solution'])
+        if ($filters2['solution'])
             $featured_params['meta_query'][] = array(
                 'key' => 'solution',
                 'value' => $filters['solution'],
