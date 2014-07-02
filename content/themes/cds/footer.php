@@ -10,7 +10,7 @@
                     <li><a href="http://vine.co/cdsglobal" target="_blank" class="vineico">Vine</a></li>
                     <li><a href="https://plus.google.com/103871200619595329856" rel="publisher" target="_blank" class="gplus">Google+</a></li>
                     <li><a href="https://vimeo.com/cdsglobal" target="_blank" class="vimeoico">Vimeo</a></li>
-                    <li><a href="<?php bloginfo('rss2_url'); ?>" target="_blank" class="rss">RSS</a></li>
+                    <li><a href="/feed/?post_type[]=posts&post_type[]=resource&post_type[]=news&post_type[]=ajde_events&post_type[]=page" target="_blank" class="rss">RSS</a></li>
                 </ul>
             </div>
             Copyright <?php echo date('Y'); ?> CDS Global, Inc. All rights reserved.
