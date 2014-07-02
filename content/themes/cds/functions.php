@@ -589,3 +589,111 @@ function setUTMCookie() {
         setcookie('utmsource', $_GET['utm_source'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
 }
+
+add_action( 'restrict_manage_posts', 'priority_admin_posts_filter_restrict_manage_posts' );
+/**
+ * First create the dropdown
+ * make sure to change POST_TYPE to the name of your custom post type
+ *
+ * @author Ohad Raz
+ *
+ * @return void
+ */
+function priority_admin_posts_filter_restrict_manage_posts(){
+    $type = 'resource';
+    if (isset($_GET['post_type'])) {
+        $type = $_GET['post_type'];
+    }
+
+    //only add filter to post type you want
+    if ('resource' == $type){
+        //change this to the list of values you want to show
+        //in 'label' => 'value' format
+        $values = array(
+            'Very High' => '1',
+            'High' => '2',
+            'Medium' => '3',
+            'Low' => '4',
+            'Very Low' => '5',
+        );
+        ?>
+        <select name="priority_filter">
+        <option value=""><?php _e('All Priorities ', 'priority'); ?></option>
+        <?php
+            $current_v = isset($_GET['priority_filter'])? $_GET['priority_filter']:'';
+            foreach ($values as $label => $value) {
+                printf
+                    (
+                        '<option value="%s"%s>%s</option>',
+                        $value,
+                        $value == $current_v? ' selected="selected"':'',
+                        $label
+                    );
+                }
+        ?>
+        </select>
+        <?php
+    }
+}
+
+
+add_filter( 'parse_query', 'resource_priority_posts_filter' );
+/**
+ * if submitted filter by post meta
+ *
+ * make sure to change META_KEY to the actual meta key
+ * and POST_TYPE to the name of your custom post type
+ * @author Ohad Raz
+ * @param  (wp_query object) $query
+ *
+ * @return Void
+ */
+function resource_priority_posts_filter( $query ){
+    global $pagenow;
+    $type = 'resource';
+    if (isset($_GET['post_type'])) {
+        $type = $_GET['post_type'];
+    }
+    if ( 'resource' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['priority_filter']) && $_GET['priority_filter'] != '') {
+        $query->query_vars['meta_key'] = 'resource_priority';
+        $query->query_vars['meta_value'] = $_GET['priority_filter'];
+    }
+}
+
+add_filter('manage_resource_posts_columns', 'resource_table_head');
+function resource_table_head( $defaults ) {
+    $defaults['resource_priority']  = 'Priority';
+    //$defaults['ticket_status']    = 'Ticket Status';
+    //$defaults['venue']   = 'Venue';
+    //$defaults['author'] = 'Added By';
+    return $defaults;
+}
+
+add_action( 'manage_resource_posts_custom_column', 'resource_table_content', 10, 2 );
+
+function resource_table_content( $column_name, $post_id ) {
+    if ($column_name == 'resource_priority') {
+    $resource_priority = get_post_meta( $post_id, 'resource_priority', true );
+        $values = array(
+            'Very High' => '1',
+            'High' => '2',
+            'Medium' => '3',
+            'Low' => '4',
+            'Very Low' => '5',
+        );
+        foreach ($values as $label => $value) {
+                if ($resource_priority == $value) {
+                    echo $label;
+                }
+            }
+    }
+    /*if ($column_name == 'ticket_status') {
+    $status = get_post_meta( $post_id, '_bs_meta_event_ticket_status', true );
+    echo $status;
+    }
+
+    if ($column_name == 'venue') {
+    echo get_post_meta( $post_id, '_bs_meta_event_venue', true );
+    }*/
+
+}
