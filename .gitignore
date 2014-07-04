@@ -4,5 +4,4 @@ config.codekit
 local-config.php
 prod-config.php
 stage-config.php
-
-cds_globalcom/
+searchreplacedb2.php
