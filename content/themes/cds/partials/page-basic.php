@@ -36,13 +36,13 @@
 
     if ($featuredquery->have_posts()): ?>
         <h3>Top Resources - <?php the_title(); ?></h3>
-        <ul class="listing resources">
+        <ul class="listing resources featured">
             <?php while ($featuredquery->have_posts()) {
                     $featuredquery->the_post();
                     get_template_part('partials/resource', get_post_format());
                 } ?>
         </ul>
-        <hr class="fadeline" style="margin: 40px 0;" />
+        <hr class="dashedline" style="margin-top:30px; margin-bottom:60px;" />
     <?php endif;
     endif;
     wp_reset_postdata();
@@ -90,7 +90,7 @@
                     </select>
                 </div>
             </form>
-            <ul class="listing featured resources">
+            <ul class="listing resources other-resources">
                     <?php while ($query->have_posts()) {
                         $query->the_post();
                         // Don't show more than 5 posts in this loop, we'll hide them in a separate container below
@@ -103,7 +103,7 @@
                     <a href="#more">Show more resources</a>
                 </div>
             </div>
-            <ul class="listing featured resources more">
+            <ul class="listing resources other-resources more">
                     <?php while ($query->have_posts()) {
                         $query->the_post();
                         get_template_part('partials/resource-listing-small', get_post_format());
