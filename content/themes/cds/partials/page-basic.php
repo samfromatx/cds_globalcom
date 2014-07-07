@@ -22,13 +22,13 @@
         if ($filters2['industry'])
             $featured_params['meta_query'][] = array(
                 'key' => 'industry',
-                'value' => $filters['industry'],
+                'value' => $filters2['industry'],
                 'compare' => 'LIKE',
             );
         if ($filters2['solution'])
             $featured_params['meta_query'][] = array(
                 'key' => 'solution',
-                'value' => $filters['solution'],
+                'value' => $filters2['solution'],
                 'compare' => 'LIKE',
             );
 

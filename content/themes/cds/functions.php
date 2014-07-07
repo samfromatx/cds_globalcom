@@ -248,6 +248,25 @@ function cds_resource_priority_metabox($resource) {
     <?php
 }
 
+function cds_save_resource_meta($resource_id) {
+    if ($_POST['post_type'] != 'resource')
+        return;
+
+    if (isset($_REQUEST['industry'])) {
+        $values  = array_map('sanitize_text_field', $_REQUEST['industry']);
+        update_post_meta($resource_id, 'industry', $values);
+    }
+
+    if (isset($_REQUEST['solution'])) {
+        $values  = array_map('sanitize_text_field', $_REQUEST['solution']);
+        update_post_meta($resource_id, 'solution', $values);
+    }
+
+     if( isset( $_POST['resource_priority'] ) )
+        update_post_meta( $resource_id, 'resource_priority', esc_attr( $_POST['resource_priority'] ) );
+}
+add_action('save_post', 'cds_save_resource_meta');
+
 function cds_resource_filter_metabox($page) {
     $selected = get_post_meta($page->ID, 'resource_filters', true);
     if (!$selected)
