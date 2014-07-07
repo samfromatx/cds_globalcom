@@ -6,32 +6,19 @@
 <article class="primary">
     <?php the_content(); ?>
     <?php
-    //$solutiontitle = the_title();
-    //$featured = get_post_meta(get_the_ID(), 'featured_resource', true);
-    //$featuredarray = explode(',', $featured);
 
     $temp = $post;
-    //$featuredquery = new WP_Query( array( 'post_type' => 'resource', 'post__in' => $featuredarray, 'orderby' => 'menu_order title', 'order' => 'ASC' ) );
-
-
-    //$featuredquery = new WP_Query( array( 'post_type' => 'resource', 'meta_key' => 'resource_priority', 'meta_value' => array(1,2), 'orderby' => 'meta_value date', 'order' => 'ASC DESC' ) );
-
-
 
     $filters2 = get_post_meta(get_the_ID(), 'resource_filters', true);
     if ($filters2):
         $featured_params = array(
             'post_type' => 'resource',
             'nopaging' => true,
-            // excluded posts that are in featured section
-            //'post__not_in' => explode(',', $featured),
             'meta_key' => 'resource_priority',
             'meta_value' => array(1,2),
             'orderby' => 'meta_value date',
             'order' => 'ASC DESC'
         );
-        //if ($filters2['type'])
-            //$featured_params['resource_type'] = $filters['type'];
         if ($filters2['industry'])
             $featured_params['meta_query'][] = array(
                 'key' => 'industry',
@@ -68,8 +55,6 @@
         $resource_params = array(
             'post_type' => 'resource',
             'nopaging' => true,
-            // excluded posts that are in featured section
-            //'post__not_in' => explode(',', $featured),
             'meta_key' => 'resource_priority',
             'meta_value' => array(3,4,5),
             'orderby' => 'meta_value date',
@@ -91,7 +76,6 @@
             );
 
         $query = new WP_Query($resource_params);
-        //$query = new WP_Query( array( 'meta_key' => 'resource_priority', 'meta_value' => array(1,2), 'orderby' => 'meta_value date', 'order' => 'ASC DESC' ));
         if ($query->have_posts()): ?>
             <h3>Other Resources</h3>
             <form class="resource-filter inline">
