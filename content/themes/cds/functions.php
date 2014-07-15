@@ -551,6 +551,9 @@ function setUTMCookie() {
     if (!$_COOKIE["utmsource"] || $_GET['utm_source']) {
         setcookie('utmsource', $_GET['utm_source'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
+    if (!$_COOKIE["utmcontent"] || $_GET['utm_content']) {
+        setcookie('utmcontent', $_GET['utm_content'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+    }
 }
 
 add_action( 'restrict_manage_posts', 'priority_admin_posts_filter_restrict_manage_posts' );
