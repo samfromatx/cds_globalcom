@@ -183,6 +183,10 @@ function cds_add_metaboxes() {
     add_meta_box('event_location', 'Location', 'cds_event_location_metabox', 'event', 'side', 'default');
 
     add_meta_box('resource_filter', 'Resources', 'cds_resource_filter_metabox', 'page', 'side', 'default');
+
+    add_meta_box('twitter_cookie', 'Twitter Tailored Audience ID', 'cds_twitter_cookie_metabox', 'page', 'side', 'default');
+    add_meta_box('twitter_cookie', 'Twitter Tailored Audience ID', 'cds_twitter_cookie_metabox', 'resource', 'side', 'default');
+    add_meta_box('twitter_cookie', 'Twitter Tailored Audience ID', 'cds_twitter_cookie_metabox', 'ajde_events', 'side', 'default');
 }
 add_action('add_meta_boxes', 'cds_add_metaboxes');
 
@@ -266,6 +270,7 @@ function cds_save_resource_meta($resource_id) {
         update_post_meta( $resource_id, 'resource_priority', esc_attr( $_POST['resource_priority'] ) );
 }
 add_action('save_post', 'cds_save_resource_meta');
+
 
 function cds_resource_filter_metabox($page) {
     $selected = get_post_meta($page->ID, 'resource_filters', true);
@@ -353,6 +358,22 @@ function cds_save_event_meta($event_id) {
         update_post_meta($event_id, 'event_location', sanitize_text_field($_REQUEST['event_location']));
 }
 add_action('save_post', 'cds_save_event_meta');
+
+function cds_twitter_cookie_metabox($post) {
+
+        $values = get_post_custom( $post->ID );
+         $text = $values['twitter_cookie'][0];
+    ?>
+    <input class="widefat" type="text" name="twitter_cookie" value="<?php echo $text; ?>" />
+    <?php
+}
+function cds_save_twitter_cookie_meta($page_id) {
+
+    if (isset($_REQUEST['twitter_cookie']))
+        update_post_meta($page_id, 'twitter_cookie', sanitize_text_field($_REQUEST['twitter_cookie']));
+
+}
+add_action('save_post', 'cds_save_twitter_cookie_meta');
 
 function cds_nav_menu_args($args = array()) {
     // div is the default, override that to nav
