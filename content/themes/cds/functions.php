@@ -5,6 +5,7 @@ include 'widgets/latest-post.php';
 include 'widgets/upcoming-events.php';
 include 'widgets/industries.php';
 include 'widgets/locations.php';
+include 'widgets/optin.php';
 include 'widgets/twitter.php';
 include 'widgets/youtube.php';
 include 'widgets/vimeo.php';
