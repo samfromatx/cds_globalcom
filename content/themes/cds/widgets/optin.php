@@ -13,7 +13,7 @@ class OptinWidget extends WP_Widget {
     public function widget($args, $instance) {
         ?>
         <div class="optinwidget widget single">
-            <div class="optinwidget-banner hidetextfromscreen">Be The First To Hear!</div>
+            <div class="optinwidget-banner"><img src="/content/uploads/2014/07/optin_widget_banner.png" alt="Be The First To Hear!"  /></div>
             <div class="optinwidget-text">
                 <p><?php echo $instance['optin_text'] ?></p>
                 <p><strong><?php echo $instance['optin_text_b'] ?></strong></p>
