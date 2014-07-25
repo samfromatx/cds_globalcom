@@ -179,12 +179,25 @@ function eloqua_form($post_id = false) {
 <?php
 
     $adminFields = get_post_meta($post_id, 'eloqua-form-hidden', true);
+    $terms = get_the_terms($post->ID, 'resource_type');
+
+    if ( $terms && ! is_wp_error( $terms ) ) :
+
+    	$resourceType = array();
+
+    	foreach ( $terms as $term ) {
+    		$resourceType[] = $term->name;
+    	}
+
+    	$on_resourceType = join( ", ", $resourceType );
+
+    endif;
     ?>
 
 
     <form method="post" action="<?php echo $eloquaForm['action']; ?>" class="eloqua-form" target="eloqua-submit" id="elqForm">
         <div>
-            <label>Fill out the form to learn more...</label><br>
+            <label><strong>Fill out the form below to access the <?php echo $on_resourceType; ?>!</strong></label><br><br>
             <?php foreach ($fieldNames as $name):
                 $field = $eloquaForm['fields'][$name];
 
