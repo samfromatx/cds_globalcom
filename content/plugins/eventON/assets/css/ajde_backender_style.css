@@ -51,7 +51,10 @@
 		border-width:  15px 15px 15px 0;
 	}
 
-#ajde_customization td, #ajde_customization{margin:0; padding:0; border:none; border-spacing:0}
+#ajde_customization td, #ajde_customization{
+	margin:0; padding:0; border:none; border-spacing:0;
+	position: relative;
+}
 #acus_left, #acus_right{border:1px solid #d9d7d7;border-bottom-width: 3px;}
 #acus_left{
 	min-height:auto;
@@ -256,30 +259,9 @@ h4.acus_subheader{font:italic 16px georgia; margin:0;color:#5d5d5d; padding: 0;}
 .acus_radio input{width:15px; text-align:left;}
 
 
-.yesno_row{position:relative;min-height:26px}
-.yesno_row span{	
-	padding-left:77px;
-	padding-top:4px;
-	display:block; 
-}
-.yesno_row .acus_yn_btn{
-	position:absolute;
-}
 
-.acus_yn_btn{
-	background:url(../images/ajde_backender/yes_no_btn.png) left top no-repeat;
-	height:26px;
-	width:68px;
-	display:inline-block; cursor:pointer;
-	outline:none;
-}
-.acus_yn_btn:focus{outline:none}
-.acus_yn_btn.btn_at_no{
-	opacity:0.6;
-	background-position: 0 -26px;
-}
-.acus_yn_btn.btn_at_no:hover{opacity:1}
-
+.yesno_row span.field_name{	padding-left: 80px; line-height: 1.8;}
+.yesno_row .evo_yn_btn{position: absolute; padding: 0;}
 
 
 /* -- hidden section */
@@ -367,7 +349,7 @@ h4.acus_subheader{font:italic 16px georgia; margin:0;color:#5d5d5d; padding: 0;}
 	#evcal_002{position: relative;}
 	.fa_icons_selection{
 		background-color: #fff;
-		height:150px; width: 180px;
+		height:200px; width: 385px;
 		padding: 0px;
 		-webkit-box-shadow: 0px 0px 19px 1px rgba(123, 122, 122, 0.5);
 		box-shadow: 0px 0px 19px 1px rgba(123, 122, 122, 0.5);
@@ -381,15 +363,15 @@ h4.acus_subheader{font:italic 16px georgia; margin:0;color:#5d5d5d; padding: 0;}
 		width: 0px;
 		height: 0px;
 		border-style: solid;
-		border-width: 15px 15px 0 0;
-		border-color: #000 transparent transparent transparent;
+		border-width: 12px 10px 0 10px;
+		border-color: #000000 transparent transparent transparent;
 		position: absolute;
 		bottom: 0; left: 0;
 		margin-bottom: -15px;
-		margin-left: -3px;
+		margin-left: 70px;
 	}
 	.fa_icons_selection .fai_in{
-		height:150px; width: 180px;
+		height:200px; width: 385px;
 		overflow: auto;
 	}
 	
@@ -398,12 +380,14 @@ h4.acus_subheader{font:italic 16px georgia; margin:0;color:#5d5d5d; padding: 0;}
 		background-color: #eeeeee;
 	}
 	.fa_icons_selection ul li{
+		display: inline-block;
 		cursor: pointer;
 		margin: 0;
-		padding: 4px 8px;
+		padding: 9px;
 	}
 	.fa_icons_selection ul li i{
-		font-size: 18px; margin-right: 10px;
+		font-size: 28px; 
+		width: 28px;
 	}
 
 

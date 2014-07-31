@@ -65,6 +65,8 @@ function eventon_edit_event_columns( $existing_columns ) {
 	$columns["repeat"] = '<img src="' . AJDE_EVCAL_URL . '/assets/images/icons/evo_repeat.png" alt="' . __( 'Event Repeat', 'eventon' ) . '" title="' . __( 'Event Repeat', 'eventon' ) . '" class="tips" />';;
 	//$columns["date"] = __( 'Date', 'eventon' );
 
+	$columns = apply_filters('evo_event_columns', $columns);	
+
 	return array_merge( $columns, $existing_columns );
 }
 
@@ -77,13 +79,17 @@ add_filter( 'manage_edit-ajde_events_columns', 'eventon_edit_event_columns' );
  * @param mixed $column
  * @return void
  */
-function eventon_custom_event_columns( $column ) {
+function eventon_custom_event_columns( $column , $post_id) {
 	global $post, $eventon;
 
 	//if ( empty( $ajde_events ) || $ajde_events->id != $post->ID )
 		//$ajde_events = get_product( $post );
 
 	switch ($column) {
+		case has_filter("evo_column_type_{$column}"):
+				$content = apply_filters("evo_column_type_{$column}", $post_id);
+				echo $content;
+			break;
 		case "thumb" :
 			//echo '<a href="' . get_edit_post_link( $post->ID ) . '">' . $ajde_events->get_image() . '</a>';
 		break;
@@ -249,7 +255,7 @@ function eventon_custom_event_columns( $column ) {
 		break;
 	}
 }
-add_action('manage_ajde_events_posts_custom_column', 'eventon_custom_event_columns', 2 );
+add_action('manage_ajde_events_posts_custom_column', 'eventon_custom_event_columns', 10, 2 );
 
 
 
@@ -260,6 +266,7 @@ function eventon_custom_events_sort($columns) {
 	$custom = array(
 		'event_start_date'		=> 'evcal_start_date',
 		'event_end_date'		=> 'evcal_end_date',
+		'event_location'		=> 'event_location',
 		'name'					=> 'title',
 		'evo_featured'			=> 'featured',
 		//'repeat'				=> 'repeat',
@@ -293,9 +300,9 @@ function eventon_custom_event_orderby( $vars ) {
 				'orderby' 	=> 'meta_value'
 			) );
 		endif;
-		if ( 'repeat' == $vars['orderby'] ) :
+		if ( 'event_location' == $vars['orderby'] ) :
 			$vars = array_merge( $vars, array(
-				'meta_key' 	=> 'evcal_rep_freq',
+				'meta_key' 	=> 'evcal_location',
 				'orderby' 	=> 'meta_value'
 			) );
 		endif;

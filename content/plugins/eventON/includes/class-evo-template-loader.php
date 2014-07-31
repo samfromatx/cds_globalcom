@@ -13,7 +13,7 @@ class EVO_Template_Loader {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_filter( 'template_include', array( $this, 'template_loader' ) );
+		add_filter( 'template_include', array( $this, 'template_loader' ) , 99);
 	}
 
 
@@ -56,7 +56,9 @@ class EVO_Template_Loader {
 			$file 	= 'archive-ajde_events.php';
 			$paths[] 	= AJDE_EVCAL_PATH . '/templates/';
 		}
+		//echo (get_post_type() == 'ajde_events' )? 't':'nada';
 		
+
 		// FILE Exist
 		if ( $file ) {
 			
@@ -66,6 +68,8 @@ class EVO_Template_Loader {
 					$template = $path.$file;	
 					break;
 				}
+
+
 			}		
 			
 				
@@ -75,7 +79,7 @@ class EVO_Template_Loader {
 			}
 		}
 		
-		
+		// /print_r($template);
 		
 		return $template;
 	}

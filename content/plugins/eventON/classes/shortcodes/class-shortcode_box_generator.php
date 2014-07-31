@@ -15,12 +15,28 @@
 class eventon_admin_shortcode_box{
 	
 	private $_in_select_step=false;
+	private $evopt;
 
 	function __construct(){
-	
+		$this->evopt =  get_option('evcal_options_evcal_1');
 	}
 	
 	public function shortcode_default_field($key){
+
+		$options_1 = $this->evopt;
+
+		// event type 3
+			 if(!empty($options_1['evcal_ett_3']) && $options_1['evcal_ett_3']=='yes' && !empty($options_1['evcal_eventt3'])){
+			 	$__event_tt3 = array(
+					'name'=>'Event Type 3',
+					'type'=>'eventtype',
+					'guide'=>'Event Type 3 category IDs - seperate by commas (eg. 3,12)',
+					'placeholder'=>'eg. 3, 12',
+					'var'=>'event_type_3',
+					'default'=>'0'
+				);
+			 }else{ $__event_tt3 = array(); }
+
 		
 		$SC_defaults = array(
 			'cal_id'=>array(
@@ -49,6 +65,16 @@ class eventon_admin_shortcode_box{
 				'type'=>'YN',
 				'var'=>'hide_past',
 				'default'=>'no'
+			),'hide_past_by'=>array(
+				'name'=>'Hide Past Events by',
+				'guide'=>'You can choose which date (start or end) to use to decide when to clasify them as past events.',
+				'type'=>'select',
+				'var'=>'hide_past_by',
+				'default'=>'ee',
+				'options'=>array( 
+					'ss'=>'Start Date/time',
+					'ee'=>'End Date/Time',
+				)
 			),
 			'ft_event_priority'=>array(
 				'name'=>'Feature event priority',
@@ -80,15 +106,14 @@ class eventon_admin_shortcode_box{
 				'placeholder'=>'eg. 3, 12',
 				'var'=>'event_type',
 				'default'=>'0'
-			),
-			'event_type_2'=>array(
+			),'event_type_2'=>array(
 				'name'=>'Event Type 2',
 				'type'=>'eventtype',
 				'guide'=>'Event Type 2 category IDs - seperate by commas (eg. 3,12)',
 				'placeholder'=>'eg. 3, 12',
 				'var'=>'event_type_2',
 				'default'=>'0'
-			),
+			),'event_type_3'=>$__event_tt3,
 			'fixed_month'=>array(
 				'name'=>'Fixed Month',
 				'type'=>'text',
@@ -166,11 +191,41 @@ class eventon_admin_shortcode_box{
 				'guide'=>'Select this option to override event colors with event type colors, if they exists',
 				'var'=>'etc_override',
 				'default'=>'no',
+			),'only_ft'=>array(
+				'name'=>'Show only featured events',
+				'type'=>'YN',
+				'guide'=>'Display only featured events in the calendar',
+				'var'=>'only_ft',
+				'default'=>'no',
 			),'jumper'=>array(
 				'name'=>'Show jump months option',
 				'type'=>'YN',
 				'guide'=>'Display month jumper on the calendar',
 				'var'=>'jumper',
+				'default'=>'no',
+			),'accord'=>array(
+				'name'=>'Accordion effect on eventcards','type'=>'YN',
+				'guide'=>'This will close open events when new one clicked','var'=>'accord','default'=>'no',
+			),'sort_by'=>array(
+				'name'=>'Default Sort by',
+				'type'=>'select',
+				'guide'=>'Sort calendar events by on load',
+				'var'=>'sort_by',
+				'default'=>'sort_date',
+				'options'=>array( 
+					'sort_date'=>'Date','sort_title'=>'Title',
+				)
+			),'expand_sortO'=>array(
+				'name'=>'Expand sort options by default',
+				'type'=>'YN',
+				'guide'=>'This will expand sort options section on load for calendar.',
+				'var'=>'exp_so',
+				'default'=>'no',
+			),'rtl'=>array(
+				'name'=>'Right-to-left text on calendar',
+				'type'=>'YN',
+				'guide'=>'This will change text alignment to Right-to-left for languages like Arabic.',
+				'var'=>'rtl',
 				'default'=>'no',
 			)
 
@@ -180,6 +235,7 @@ class eventon_admin_shortcode_box{
 	
 	}
 	
+	// INTERPRET shortcode from array
 	public function shortcode_interpret($var){
 		global $eventon;
 		$line_class = array('fieldline');
@@ -195,6 +251,8 @@ class eventon_admin_shortcode_box{
 		// select step class
 		if($this->_in_select_step){ $line_class[]='ss_in'; }
 
+
+		if(!empty($var['type'])):
 
 		switch($var['type']){
 			// custom type and its html pluggability
@@ -260,9 +318,9 @@ class eventon_admin_shortcode_box{
 				"<div class='".implode(' ', $line_class)."'>
 					<p class='label'>
 						<select class='evoPOSH_select' codevar='".$var['var']."'>";
-						
+						$default = (!empty($var['default']))? $var['default']: null;
 						foreach($var['options'] as $valf=>$val){
-							echo "<option value='".$valf."'>".$val."</option>";
+							echo "<option value='".$valf."' ".( $default==$valf? 'selected="selected"':null).">".$val."</option>";
 						}		
 						
 						echo 
@@ -293,7 +351,9 @@ class eventon_admin_shortcode_box{
 
 			case 'close_select_step':	echo "</div>";	$this->_in_select_step=false; break;
 			
-		}
+		}// end switch
+
+		endif;
 
 		// afterstatement
 		if(!empty($var['afterstatement'])){
@@ -317,20 +377,27 @@ class eventon_admin_shortcode_box{
 				'code'=>'add_eventon',
 				'variables'=>apply_filters('eventon_basiccal_shortcodebox', array(
 					$this->shortcode_default_field('show_et_ft_img')
-					,$this->shortcode_default_field('hide_past')
 					,$this->shortcode_default_field('ft_event_priority')
+					,$this->shortcode_default_field('only_ft')
+					,$this->shortcode_default_field('hide_past')	
+					,$this->shortcode_default_field('hide_past_by')	
+					,$this->shortcode_default_field('sort_by')
 					,$this->shortcode_default_field('event_count')
 					,$this->shortcode_default_field('month_incre')
 					,$this->shortcode_default_field('event_type')
 					,$this->shortcode_default_field('event_type_2')
+					,$this->shortcode_default_field('event_type_3')
+					,$this->shortcode_default_field('etc_override')
 					,$this->shortcode_default_field('fixed_mo_yr')
 					,$this->shortcode_default_field('cal_id')
 					,$this->shortcode_default_field('event_order')
 					,$this->shortcode_default_field('lang')
 					,$this->shortcode_default_field('UIX')
-					,$this->shortcode_default_field('evc_open')
-					,$this->shortcode_default_field('etc_override')
+					,$this->shortcode_default_field('evc_open')					
 					,$this->shortcode_default_field('jumper')
+					,$this->shortcode_default_field('expand_sortO')
+					,$this->shortcode_default_field('accord')
+					,$this->shortcode_default_field('rtl')
 				))
 			),
 			array(
@@ -364,8 +431,9 @@ class eventon_admin_shortcode_box{
 						'var'=>'show_year',
 						'default'=>'no',
 					),$this->shortcode_default_field('ft_event_priority'),
+					$this->shortcode_default_field('only_ft'),
 					$this->shortcode_default_field('etc_override'),
-					$this->shortcode_default_field('jumper'),
+					$this->shortcode_default_field('accord'),
 					
 				)
 			)
@@ -400,12 +468,23 @@ class eventon_admin_shortcode_box{
 					<?php
 						foreach($shortcode_guide_array as $options){
 							
-							if(!empty($options['variables'])) {
+							if(!empty($options['variables']) ) {
 							
 								echo "<div id='".$options['id']."' class='step2_in' style='display:none'>";
 								
-								foreach($options['variables'] as $var){									
-									echo $this->shortcode_interpret($var);
+								// each shortcode option variable row
+								foreach($options['variables'] as $var){
+
+									if($var == 'event_type_3' && is_array($var) && count($var)>0){
+										$options_1 = $this->evopt;
+
+										// event type 3
+										if(!empty($options_1['evcal_ett_3']) && $options_1['evcal_ett_3']=='yes' && !empty($options_1['evcal_eventt3'])){
+											echo $this->shortcode_interpret($var);
+										}
+									}else{
+										echo $this->shortcode_interpret($var);
+									}
 								}									
 								
 								echo "</div>";

@@ -2,7 +2,7 @@
 /**
  * Language Settings 
  *
- * @version		2.2.9
+ * @version		2.2.10
  * @package		EventON/settings
  * @category	Settings
  * @author 		AJDE
@@ -19,18 +19,29 @@
 		$_ett_lang_ar[$x]= array('label'=>$event_type_names[$x],'name'=>'evcal_lang_et'.$x);		
 	}
 
+// Custom meta fields
+	$_cmd_lang_ar = array();
+	$cmd_verify = evo_retrieve_cmd_count($evopt);
+	for($x=1; $x< ($cmd_verify+1); $x++){
+
+		$label = $evopt['evcal_ec_f'.$x.'a1'];
+		$_cmd_lang_ar[$x]= array('label'=>$label,'name'=>'evcal_cmd_'.$x);		
+	}
+
+
+// MAIN ARRAY
 $eventon_custom_language_array = array(
 	array('type'=>'togheader','name'=>'General Calendar'),
 
-	array(
-		'label'=>'No Events',
-		'name'=>'evcal_lang_noeve',
-		'legend'=>''
-	),array(
-		'label'=>'All Day',
-		'name'=>'evcal_lang_allday',
-		'legend'=>''
-	),array('type'=>'togend'),
+		array(
+			'label'=>'No Events',
+			'name'=>'evcal_lang_noeve',
+			'legend'=>''
+		),array(
+			'label'=>'All Day',
+			'name'=>'evcal_lang_allday',
+			'legend'=>''
+		),array('type'=>'togend'),
 	array(
 		'type'=>'togheader',
 		'name'=>'Calendar Header'
@@ -72,7 +83,7 @@ $eventon_custom_language_array = array(
 		$_ett_lang_ar[1],
 		$_ett_lang_ar[2],
 		( !empty($_ett_lang_ar[3])? $_ett_lang_ar[3]: null),
-		( !empty($_ett_lang_ar[4])? $_ett_lang_ar[4]: null),
+		( !empty($_ett_lang_ar[4])? $_ett_lang_ar[4]: null),		
 
 	array('type'=>'togend'),
 	array('type'=>'togheader','name'=>'Event Card'),
@@ -153,15 +164,30 @@ $eventon_custom_language_array = array(
 		'label'=>'Learn More link text',
 		'name'=>'evcal_evcard_learnmore2',
 		'legend'=>'for meetup'
-	),array(
-		'label'=>'Add to your calendar',
-		'name'=>'evcal_evcard_addics',
-		'legend'=>'Text for the button that allow downloading ICS file for events'
 	),
 
+	array('type'=>'subheader','label'=>'Add to calendar Section'),
+
+		array(
+			'label'=>'Calendar','name'=>'evcal_evcard_calncal',			
+		),array(
+			'label'=>'GoogleCal','name'=>'evcal_evcard_calgcal',			
+		),array(
+			'label'=>'Add to your calendar',
+			'name'=>'evcal_evcard_addics',
+			'legend'=>'Alt text for add to calendar button'
+		),array(
+			'label'=>'Add to google calendar',
+			'name'=>'evcal_evcard_addgcal',
+			'legend'=>'Alt text for add to google calendar button'
+		),
 	array('type'=>'togend'),
-	
-	
+
+	( !empty($_cmd_lang_ar[1])? $_cmd_lang_ar[1]: null),
+	( !empty($_cmd_lang_ar[2])? $_cmd_lang_ar[2]: null),
+	( !empty($_cmd_lang_ar[3])? $_cmd_lang_ar[3]: null),
+
+	array('type'=>'togend'),
 	
 );
 ?>

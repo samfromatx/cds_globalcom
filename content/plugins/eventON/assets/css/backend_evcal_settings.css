@@ -118,38 +118,53 @@
 
 
 
-/*-- addons ---*/
-	.evo_addons_list{
-		margin-bottom:20px;
-		margin-top:10px
+/*
+	ADDONS and license 
+	version 2.2.12
+*/
+	.evo_addons_page{
+		padding: 5px;
 	}
-	.evo_addons_list h5{
-		font: bold 14px 'open sans';
-		color:#383838;
-		margin:0;
-		background-repeat:no-repeat;
-		padding:8px 0 8px 40px;
-		height:19px;
+	.evo_addons_page .addon >*{		color: #444444;}
+	.evo_addons_page .addon{		
+		float: left;
+		padding: 20px;
+		background-color: #eadacb;
+		height: 280px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box; /* Firefox 28 and earlier*/
+		width: 25%;
+		border:5px solid #fff;
+		border-radius: 8px
 	}
-	.evo_addons_list h5 span{color:#9c9c9c;font-weight:normal}
-	.evo_addons_list p{ 
-		margin-top:0px;
-		font-style:italic
+	.evo_addons_page .addon.activated{background-color: #B6D6E6;}
+	.evo_addons_page .addon.justactivate{background-color: #B2DCEC;}
+	.evo_addons_page .addon.activated.hasupdate{background-color: #E0AEA2;}
+	.evo_addons_page .addon:hover{opacity: 0.8;}
+	.evo_addons_page .addon.donthaveit{
+		background-color: #e7e7e7;
 	}
+	.evo_addons_page .addon.main{
+		background-color: #e2c0a1;
+		width: 50%;
+	}
+	.evo_addons_page .addon h2{font-size: 22px;}
+	.evo_addons_page .addon.main h2{
+		font-weight: 600;
+	}
+	.evo_addons_page .version{font-size: 20px;margin: 0;padding: 0;}
+	.evo_addons_page .version span{ opacity: 0.4;}
+	.evo_addons_page .action{padding-top: 10px;}
+	.evo_addons_page .links a{color: #444444; text-decoration: none; font-size: 13px;}
+	.evo_addons_page .links a:hover, .evo_addons_page .links span:hover{text-decoration: underline;}
+	.eventon_guide_btn{cursor: pointer;}
 
-	.evoaddon_box{
-		float:left; display:block;
-		margin-bottom:3px;
-		width:50%;
+	@media (max-width: 768px){
+		.evo_addons_page .addon{padding: 10px;}
 	}
-	.evoa_boxe{
-		margin-right:3px;
-		background-color:#fff;
-		border:1px solid #dadada;
-		padding:15px;
-		min-height:150px;
+	@media (max-width: 680px){
+		.evo_addons_page .addon{width: 50%;}
 	}
-
 
 
 
@@ -270,55 +285,14 @@
 		padding-bottom: 4px;
 		font-size:11px;
 		color:#925b25;
-		padding-left: 20px;
+		padding-left: 160px;
 		font-style: italic;
 	}
+	.evoLANG_subheader{
+		color: #fff; padding: 5px 0; text-transform: uppercase;
+	}
+	.evoLANG_subsec{padding-left: 10px; padding-bottom: 10px;}
 
-	/** licenses **/
-		.licenses_list{
-			background-color:#dfa872;
-			color:#fff;
-			padding:25px 30px;
-			margin-bottom:20px;
-			text-align: center;
-		}
-		.licenses_list h2.heading, .eventon_addons h2.heading a, .eventon_settings_page h2.heading{	
-			text-shadow:none;
-			font:300 24px 'open sans';
-			text-decoration:none
-		}
-		.licenses_list p.versions{text-align: center;}
-		.licenses_list h2.heading{
-			color:#fff;text-align: center;
-		}
-		.licenses_list h2.heading em{
-			color:#eccbab;
-			font-style:italic;
-		}
-		.licenses_list .evo_admin_btn.btn_noBG:hover{
-			color:#d54e21
-		}
-		.licenses_list .evo_admin_btn.btn_noBG{
-			color:#9c642d;
-		}
-		.licenses_list .evo_admin_btn.btn_prime{
-			background-color:#d89f67
-		}
-
-		.licenses_list .padb10{
-			padding-bottom:10px;
-		}
-		.versions .version{font-size:36px;		}
-		.versions .version.remote{
-			opacity:0.4;
-		}
-		.versions .version.remote:hover{
-			opacity:0.7
-		}
-		.versions .version em{
-			font-size:12px;
-			display:block;
-		}
 
 
 
@@ -373,29 +347,26 @@
 		z-index: 9999;
 	}
 	.evo_support_box{
-		border:1px solid #b8b8b8;
 		border-radius:3px;
 		padding:20px;
 		margin-bottom:20px;
-		background-color:#fff;
+		background-color:#F3F3F3;
 		display:block;
 		color:#333;
 		text-decoration:none
 	}	
-	.evo_support_box:hover{
-		-webkit-box-shadow:  1px 1px 4px 1px #c4c4c4;        
-	    box-shadow:  1px 1px 4px 1px #c4c4c4;
-	}
-	.evo_support_box:hover, .evo_support_box h3:hover{
-		color:#333;
-	}
+	.evo_support_box:hover{background-color: #DFDFDF;}
+	
+	#evcal_5 h3{color: #616161}
 	.js .postbox.evcal_admin_meta .evo_support_box h3{
 		margin-bottom:10px;
 		cursor:pointer;
 	}
-	.evo_support_box.special{
-		background-color:#efe3d7
-	}
+	.evo_support_box.special{	background-color:#F0DFBB;	}
+	.evo_support_box.special:hover{	background-color:#F6DA9E;	}
+	.evo_support_box.twitter{	background-color:#8AC7E4;	}
+	.evo_support_box.twitter:hover{	background-color:#66C1EC;	}
+	.evo_support_box.twitter >*{color: #fff!important}
 	.evo_support_box p{
 		font-size:14px;
 		color:#747474
@@ -403,3 +374,4 @@
 
 
 
+.clear{clear:both}

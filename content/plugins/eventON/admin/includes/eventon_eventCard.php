@@ -69,14 +69,15 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 				}else{
 					$more_code=''; $evo_more_active_class = '';
 				}
-								
+				
+
 				
 				$OT.="<div class='evorow evcal_evdata_row bordb evcal_event_details".$end_row_class."'>
 						".$object->excerpt."
 						<span class='evcal_evdata_icons'><i class='fa ".get_eventON_icon('evcal__fai_001', 'fa-align-justify',$evOPT )."'></i></span>
 						<div class='evcal_evdata_cell ".$evo_more_active_class."'>".$more_code."<div class='eventon_full_description'>
 								<h3 class='padb5 evo_h3'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_details','Event Details')."</h3><div class='eventon_desc_in' itemprop='description'>
-								". ( ($__content_filter)? apply_filters('the_content__',$object->fulltext):$object->fulltext) ."</div><div class='clear'></div>
+								". ( (!$__content_filter)? apply_filters('the_content',$object->fulltext):$object->fulltext) ."</div><div class='clear'></div>
 
 							</div>
 						</div>
@@ -139,10 +140,11 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 			// Featured image
 			case 'ftimage':
 				
-				$__hoverclass = (!empty($object->hovereffect) && $object->hovereffect!='yes')? ' imghover':null;
-				$__zoom_cursor = (!empty($evOPT['evo_ftim_mag']) && $evOPT['evo_ftim_mag']=='yes')? ' imgCursor':null;
+				$__hoverclass = (!empty($object->hovereffect) && $object->hovereffect!='yes')? ' evo_imghover':null;
+				$__fullheight = (!empty($object->fullheight) && $object->fullheight=='yes')? ' evo_fullheight':null;
+				$__zoom_cursor = (!empty($evOPT['evo_ftim_mag']) && $evOPT['evo_ftim_mag']=='yes')? ' evo_imgCursor':null;
 
-				$OT.= "<div class='evorow evcal_evdata_img evo_metarow_fimg".$end_row_class.$__hoverclass.$__zoom_cursor."' imgheight='".$object->img[2]."' imgwidth='".$object->img[1]."'  style='background-image: url(".$object->img[0].")'>".$end."</div>";
+				$OT.= "<div class='evorow evcal_evdata_img evo_metarow_fimg".$end_row_class.$__hoverclass.$__fullheight.$__zoom_cursor."' imgheight='".$object->img[2]."' imgwidth='".$object->img[1]."'  style='background-image: url(".$object->img[0].")'>".$end."</div>";
 				
 			break;
 			
@@ -186,10 +188,11 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 						<div class='evcal_evdata_cell'>							
 							<h3 class='evo_h3'>".$evOPT['evcal_ec_f'.$object->x.'a1']."</h3>";
 					if($object->type=='button'){
-						$OT .="<a href='".$object->valueL."' class='evcal_btn'>".$object->value."</a>";
+						$_target = (!empty($object->_target) && $object->_target=='yes')? 'target="_blank"':null;
+						$OT .="<a href='".$object->valueL."' {$_target} class='evcal_btn evo_cusmeta_btn'>".$object->value."</a>";
 					}else{
 						$OT .="<div class='evo_custom_content evo_data_val'>". 
-						( ($__content_filter)? apply_filters('the_content__', $object->value): $object->value)."</div>";
+						( (!$__content_filter)? apply_filters('the_content', $object->value): $object->value)."</div>";
 					}
 						$OT .="</div>".$end."</div>";
 				
@@ -201,6 +204,8 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 
 				//$__ics_data_vars = "data-start='{$object->estart}' data-end='{$object->eend}' data-location='{$object->eloc}' data-summary='{$object->etitle}' data-stamp='{$object->estamp}'";
 				$__ics_url =admin_url('admin-ajax.php').'?action=eventon_ics_download&event_id='.$object->event_id.'&sunix='.$object->estart.'&eunix='.$object->eend;
+
+				$__googlecal_link = eventon_get_addgoogle_cal($object);
 
 				// learn more and ICS
 				if( !empty($object->learnmorelink) && !empty($evOPT['evo_ics']) && $evOPT['evo_ics']=='yes'){
@@ -215,12 +220,10 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 								<h3 class='evo_h3'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_learnmore2','Learn More')."</h3>
 							</span>
 						</a>						
-						<a href='".$__ics_url."' class='evo_ics evcal_col50 dark1 evo_clik_row' >
-							<span class='evcal_evdata_row ' >
-								<span class='evcal_evdata_icons'><i class='fa ".get_eventON_icon('evcal__fai_008', 'fa-calendar-o',$evOPT )."'></i></span>													
-								<h3 class='evo_h3'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addics','Add to your calendar')."</h3>
-							</span>
-						</a></div></div>
+						<div class='evo_ics evcal_col50 dark1 evo_clik_row' >
+							<a href='".$__ics_url."' class='evo_ics_nCal' title='".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addics','Add to your calendar')."'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_calncal','Calendar')."</a>
+							<a href='".$__googlecal_link."' target='_blank' class='evo_ics_gCal' title='".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addgcal','Add to google calendar')."'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_calgcal','GoogleCal')."</a>
+						</div></div></div>
 					".$end."</div>";
 				
 				// only learn more
@@ -234,12 +237,12 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 
 				// only ICS
 				}else if(!empty($evOPT['evo_ics']) && $evOPT['evo_ics']=='yes'){
-					$OT.="<div class='evorow bordb'>";
+					$OT.="<div class='evorow bordb '>";
 
-					$OT.="<a href='".$__ics_url."' class='evo_ics evcal_evdata_row evo_clik_row dark1' >
-						<span class='evcal_evdata_icons'><i class='fa ".get_eventON_icon('evcal__fai_008', 'fa-calendar-o',$evOPT )."'></i></span>													
-						<h3 class='evo_h3'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addics','Add to your calendar')."</h3>
-					</a>
+					$OT.="<p href='".$__ics_url."' class='evo_ics evoCol_100 evcal_evdata_row evo_clik_row dark1' >
+						<a href='".$__ics_url."' class='evo_ics_nCal' title='".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addics','Add to your calendar')."'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_calncal','Calendar')."</a>
+							<a href='".$__googlecal_link."' target='_blank' class='evo_ics_gCal' title='".eventon_get_custom_language($evoOPT2, 'evcal_evcard_addgcal','Add to google calendar')."'>".eventon_get_custom_language($evoOPT2, 'evcal_evcard_calgcal','GoogleCal')."</a>
+					</p>
 					".$end."</div>";
 				}
 			

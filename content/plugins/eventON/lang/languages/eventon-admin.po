@@ -1,68 +1,78 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eventON\n"
-"POT-Creation-Date: 2014-01-30 10:05-0800\n"
-"PO-Revision-Date: 2014-01-30 10:06-0800\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-05-05 10:11-0800\n"
+"PO-Revision-Date: 2014-05-05 10:14-0800\n"
+"Last-Translator: Ashan Perera <ashanster@gmail.com>\n"
 "Language-Team: AJDE <info@ashanjay.com>\n"
 "Language: english\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
 "X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: eventon-ajax.php:188
+#: eventon-ajax.php:249
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: eventon-ajax.php:190
+#: eventon-ajax.php:251
 msgid "You have taken too long. Please go back and retry."
 msgstr ""
 
-#: eventon-core-functions.php:559
+#: eventon-core-functions.php:668 eventon-core-functions.php:669
 msgid "Add New "
 msgstr ""
 
-#: eventon-core-functions.php:560
+#: eventon-core-functions.php:670
 msgid "Edit "
 msgstr ""
 
-#: eventon-core-functions.php:561
+#: eventon-core-functions.php:671
 msgid "New "
 msgstr ""
 
-#: eventon-core-functions.php:562
+#: eventon-core-functions.php:672
 msgid "All "
 msgstr ""
 
-#: eventon-core-functions.php:563
+#: eventon-core-functions.php:673
 msgid "View "
 msgstr ""
 
-#: eventon-core-functions.php:564
+#: eventon-core-functions.php:674
 msgid "Search "
 msgstr ""
 
-#: eventon-core-functions.php:565 eventon-core-functions.php:566
+#: eventon-core-functions.php:675 eventon-core-functions.php:676
 msgid "No "
 msgstr ""
 
-#: eventon.php:281
-msgid "Event Location"
+#: eventon.php:266
+msgid "There is a new version of "
 msgstr ""
 
-#: eventon.php:323
-msgid "This is where you can add new events to your calendar."
+#: eventon.php:267 admin/eventon-admin-init.php:72
+#, php-format
+msgid "View version %s Details"
 msgstr ""
 
-#: admin/ajde_backender.php:205
+#: eventon.php:269
+msgid ""
+" Download the new version from <a href=\"http://www.myeventon.com/my-account/"
+"\" target=\"_blank\">My Account</a> at myeventon.com."
+msgstr ""
+
+#: admin/ajde_backender.php:224
 msgid "Font Style"
 msgstr ""
 
-#: admin/ajde_backender.php:216
+#: admin/ajde_backender.php:235
 msgid "Font Size"
 msgstr ""
 
@@ -102,6 +112,19 @@ msgstr ""
 msgid "EventON - Event Calendar"
 msgstr ""
 
+#: admin/eventon-admin-init.php:71
+msgid "There is a new version of Gravity Forms available."
+msgstr ""
+
+#: admin/eventon-admin-init.php:74
+msgid "<a href=\""
+msgstr ""
+
+#: admin/eventon-admin-install.php:52
+msgctxt "page_slug"
+msgid "events"
+msgstr ""
+
 #: admin/eventon-admin-install.php:52
 msgid "Events"
 msgstr ""
@@ -126,31 +149,35 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: admin/eventon-admin-settings.php:102
+#: admin/eventon-admin-settings.php:107
 msgid "Action failed. Please refresh the page and retry."
 msgstr ""
 
-#: admin/eventon-admin-settings.php:174 admin/eventon-admin-settings.php:340
+#: admin/eventon-admin-settings.php:183 admin/eventon-admin-settings.php:363
 #: admin/includes/settings_advanced_tab.php:55
 #: admin/includes/settings_styles_tab.php:13
 msgid "Save Changes"
 msgstr ""
 
-#: admin/eventon-admin-settings.php:215
+#: admin/eventon-admin-settings.php:220
 msgid "Type in custom language text for front-end calendar"
 msgstr ""
 
-#: admin/eventon-admin-settings.php:221
+#: admin/eventon-admin-settings.php:226
 msgid ""
 "You can use this to save upto 2 different languages for customized text. "
 "Once saved use the shortcode to show calendar text in that customized "
 "language. eg. [add_eventon lang='L2']"
 msgstr ""
 
-#: admin/eventon-admin-settings.php:222
+#: admin/eventon-admin-settings.php:227
 msgid ""
 "Please use the below fields to type in custom language text that will be "
 "used to replace the default language text on the front-end of the calendar."
+msgstr ""
+
+#: admin/eventon-admin-settings.php:314
+msgid "ashanjay"
 msgstr ""
 
 #: admin/eventon-admin-taxonomies.php:18
@@ -160,59 +187,67 @@ msgid ""
 "categories listed click the \"screen options\" link at the top of the page."
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:34
+#: admin/eventon-admin-taxonomies.php:46
 msgid "ID"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:57
+#: admin/eventon-admin-taxonomies.php:66 admin/eventon-admin-taxonomies.php:83
+msgid "Color"
+msgstr ""
+
+#: admin/eventon-admin-taxonomies.php:68 admin/eventon-admin-taxonomies.php:88
+msgid "Pick a color"
+msgstr ""
+
+#: admin/eventon-admin-taxonomies.php:122
 msgid "Name"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:58
+#: admin/eventon-admin-taxonomies.php:123
 msgid "Address"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:60
+#: admin/eventon-admin-taxonomies.php:124
+msgid "Lon/Lat"
+msgstr ""
+
+#: admin/eventon-admin-taxonomies.php:126
 msgid "Slug"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:61
-msgid "Posts"
-msgstr ""
-
-#: admin/eventon-admin-taxonomies.php:90
-#: admin/eventon-admin-taxonomies.php:117
+#: admin/eventon-admin-taxonomies.php:161
+#: admin/eventon-admin-taxonomies.php:188
 msgid "Location Address"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:92
-#: admin/eventon-admin-taxonomies.php:120
+#: admin/eventon-admin-taxonomies.php:163
+#: admin/eventon-admin-taxonomies.php:191
 msgid "Enter a location address"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:95
-#: admin/eventon-admin-taxonomies.php:125
-#: admin/post_types/ajde_events_meta_boxes.php:382
+#: admin/eventon-admin-taxonomies.php:166
+#: admin/eventon-admin-taxonomies.php:196
+#: admin/post_types/ajde_events_meta_boxes.php:400
 msgid "Longitude"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:97
-#: admin/eventon-admin-taxonomies.php:128
+#: admin/eventon-admin-taxonomies.php:168
+#: admin/eventon-admin-taxonomies.php:199
 msgid "(Optional) longitude for address"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:100
-#: admin/eventon-admin-taxonomies.php:133
-#: admin/post_types/ajde_events_meta_boxes.php:381
+#: admin/eventon-admin-taxonomies.php:171
+#: admin/eventon-admin-taxonomies.php:204
+#: admin/post_types/ajde_events_meta_boxes.php:399
 msgid "Latitude"
 msgstr ""
 
-#: admin/eventon-admin-taxonomies.php:102
-#: admin/eventon-admin-taxonomies.php:136
+#: admin/eventon-admin-taxonomies.php:173
+#: admin/eventon-admin-taxonomies.php:207
 msgid "(Optional) latitude for address"
 msgstr ""
 
-#: admin/includes/settings_addons_tab.php:99
+#: admin/includes/settings_addons_tab.php:98
 msgid ""
 "Activate your copy of EventON to get free automatic plugin updates direct to "
 "your site!"
@@ -271,166 +306,166 @@ msgstr ""
 msgid "Event Name"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:61 admin/post_types/ajde_events.php:368
+#: admin/post_types/ajde_events.php:59 admin/post_types/ajde_events.php:435
+msgid "Location"
+msgstr ""
+
+#: admin/post_types/ajde_events.php:62 admin/post_types/ajde_events.php:382
 msgid "Start Date"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:62 admin/post_types/ajde_events.php:393
+#: admin/post_types/ajde_events.php:63 admin/post_types/ajde_events.php:409
 msgid "End Date"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:63 admin/post_types/ajde_events.php:431
+#: admin/post_types/ajde_events.php:64 admin/post_types/ajde_events.php:449
 msgid "Featured"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:64
+#: admin/post_types/ajde_events.php:65
 msgid "Event Repeat"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:114
+#: admin/post_types/ajde_events.php:115
 msgid "Edit this item"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:114
+#: admin/post_types/ajde_events.php:115
 msgid "Edit"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:115
+#: admin/post_types/ajde_events.php:116
 msgid "Edit this item inline"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:115
+#: admin/post_types/ajde_events.php:116
 msgid "Quick&nbsp;Edit"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:119
+#: admin/post_types/ajde_events.php:120
 msgid "Restore this item from the Trash"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:119
+#: admin/post_types/ajde_events.php:120
 msgid "Restore"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:121
+#: admin/post_types/ajde_events.php:122
 msgid "Move this item to the Trash"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:121
+#: admin/post_types/ajde_events.php:122
 msgid "Trash"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:123
+#: admin/post_types/ajde_events.php:124
 msgid "Delete this item permanently"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:123
+#: admin/post_types/ajde_events.php:124
 msgid "Delete Permanently"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:128
+#: admin/post_types/ajde_events.php:129
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:128
+#: admin/post_types/ajde_events.php:129
 msgid "Preview"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:130
+#: admin/post_types/ajde_events.php:131
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:130
+#: admin/post_types/ajde_events.php:131
 msgid "View"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:215
+#: admin/post_types/ajde_events.php:226
 msgid "Toggle featured"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:217
+#: admin/post_types/ajde_events.php:228
 msgid "Yes"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:219
+#: admin/post_types/ajde_events.php:230
 msgid "No"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:313
+#: admin/post_types/ajde_events.php:325
 msgid "Make a duplicate from this event"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:314
+#: admin/post_types/ajde_events.php:326
 msgid "Duplicate"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:340
+#: admin/post_types/ajde_events.php:352
 msgid "Duplicate this event"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:361
+#: admin/post_types/ajde_events.php:375
 msgid "Event Data"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:370
-#: admin/post_types/ajde_events_meta_boxes.php:183
+#: admin/post_types/ajde_events.php:384
+#: admin/post_types/ajde_events_meta_boxes.php:182
 msgid "Event Start Date"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:374
+#: admin/post_types/ajde_events.php:388
 msgid "Start Time"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:377
+#: admin/post_types/ajde_events.php:391
 msgid "Event Start Hour"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:381
+#: admin/post_types/ajde_events.php:395
 msgid "Event Start Minutes"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:385
+#: admin/post_types/ajde_events.php:400
 msgid "Event Start AM/PM"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:395
-#: admin/post_types/ajde_events_meta_boxes.php:237
+#: admin/post_types/ajde_events.php:411
+#: admin/post_types/ajde_events_meta_boxes.php:236
 msgid "Event End Date"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:399
+#: admin/post_types/ajde_events.php:415
 msgid "End Time"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:402
+#: admin/post_types/ajde_events.php:418
 msgid "Event End Hour"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:406
+#: admin/post_types/ajde_events.php:422
 msgid "Event End Minutes"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:410
+#: admin/post_types/ajde_events.php:427
 msgid "Event End AM/PM"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:417
-msgid "Location"
-msgstr ""
-
-#: admin/post_types/ajde_events.php:419
-#: admin/post_types/ajde_events_meta_boxes.php:378
+#: admin/post_types/ajde_events.php:437
+#: admin/post_types/ajde_events_meta_boxes.php:396
 msgid "Event Location Address"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:423
-#: admin/post_types/ajde_events_meta_boxes.php:553
+#: admin/post_types/ajde_events.php:441
+#: admin/post_types/ajde_events_meta_boxes.php:593
 msgid "Organizer"
 msgstr ""
 
-#: admin/post_types/ajde_events.php:425
-#: admin/post_types/ajde_events_meta_boxes.php:406
+#: admin/post_types/ajde_events.php:443
+#: admin/post_types/ajde_events_meta_boxes.php:424
 msgid "Event Organizer"
 msgstr ""
 
@@ -438,71 +473,72 @@ msgstr ""
 msgid "Click here to pick a color"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:176
+#: admin/post_types/ajde_events_meta_boxes.php:175
 msgid "All Day Event"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:224
+#: admin/post_types/ajde_events_meta_boxes.php:223
 msgid "Select a Time"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:239
+#: admin/post_types/ajde_events_meta_boxes.php:238
 msgid "Select a Date"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:281
+#: admin/post_types/ajde_events_meta_boxes.php:280
 msgid "Select the Time"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:290
+#: admin/post_types/ajde_events_meta_boxes.php:289
 msgid "Hide End Time from calendar"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:304
+#: admin/post_types/ajde_events_meta_boxes.php:305
 msgid "Repeating event"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:372
+#: admin/post_types/ajde_events_meta_boxes.php:390
 msgid "Choose already saved location or type new one below"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:377
+#: admin/post_types/ajde_events_meta_boxes.php:395
 msgid "Event Location Name"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:389
+#: admin/post_types/ajde_events_meta_boxes.php:407
 msgid "Generate Google Map from the address"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:434
+#: admin/post_types/ajde_events_meta_boxes.php:452
 msgid "Open in new window"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:437
+#: admin/post_types/ajde_events_meta_boxes.php:455
 msgid "Type the URL address"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:469
+#: admin/post_types/ajde_events_meta_boxes.php:487
+#: admin/post_types/ajde_events_meta_boxes.php:538
 msgid "Open in New window"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:534
+#: admin/post_types/ajde_events_meta_boxes.php:574
 msgid "Time and Date"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:543
+#: admin/post_types/ajde_events_meta_boxes.php:583
 msgid "Location and Venue"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:562
+#: admin/post_types/ajde_events_meta_boxes.php:602
 msgid "User Interaction for event click"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:572
+#: admin/post_types/ajde_events_meta_boxes.php:612
 msgid "Learn more about event link"
 msgstr ""
 
-#: admin/post_types/ajde_events_meta_boxes.php:830
+#: admin/post_types/ajde_events_meta_boxes.php:870
 msgid "Paypal Link to purchase event tickets."
 msgstr ""
 
@@ -518,8 +554,20 @@ msgstr ""
 msgid "(Copy)"
 msgstr ""
 
-#: classes/widgets/class-evo-widget-main.php:309
+#: classes/shortcodes/class-shortcode_box_generator.php:385
+msgid "Select option below to customize shortcode variable values"
+msgstr ""
+
+#: classes/widgets/class-evo-widget-main.php:326
 msgid "Paste the eventON shortcode to execute"
+msgstr ""
+
+#: includes/class-evo-post-types.php:52
+msgid "Event Location"
+msgstr ""
+
+#: includes/class-evo-post-types.php:115
+msgid "This is where you can add new events to your calendar."
 msgstr ""
 
 #: lang/strings.php:16

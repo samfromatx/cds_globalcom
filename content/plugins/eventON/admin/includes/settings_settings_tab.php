@@ -1,10 +1,11 @@
 <?php
 /**
  *	Build settings to work with AJDE backendender setup
- *	version: 2.1
+ *	version: 2.2.10
  **/
 	
 	
+
 	/**
 		EventCard Rearranging order STUFF
 	**/
@@ -16,6 +17,8 @@
 			'gmap'=>'<p val="gmap">Google Maps</p>',
 			'learnmoreICS'=>'<p val="learnmoreICS">Learn More & Add to your calendar</p>',		
 		));
+
+
 		
 		//get directions
 		if($evcal_opt[1]['evo_getdir']=='yes')
@@ -31,9 +34,11 @@
 		
 		// custom fields
 		for($x=1; $x<4; $x++){
-			if( !empty($evcal_opt[1]['evcal_ec_f'.$x.'a1']))
+			if( !empty($evcal_opt[1]['evcal_ec_f'.$x.'a1']) && !empty($evcal_opt[1]['evcal_af_'.$x]) && $evcal_opt[1]['evcal_af_'.$x]=='yes')
 				$rearrange_items['customfield'.$x] = '<p val="customfield'.$x.'">'.$evcal_opt[1]['evcal_ec_f'.$x.'a1'].'</p>';
 		}
+
+		//print_r($rearrange_items);
 		$_saved_order = (!empty($evcal_opt[1]['evoCard_order']))? 
 			array_filter(explode(',',$evcal_opt[1]['evoCard_order']))
 			:null;
@@ -96,7 +101,7 @@
 				array('id'=>'evcal_fcx','type'=>'hiddensection_open','name'=>'Calendar Header', 'display'=>'none'),
 					array('id'=>'fs_sort_options','type'=>'fontation','name'=>'Sort Options Text',
 						'variations'=>array(
-							array('id'=>'evcal__sot', 'name'=>'Default State', 'type'=>'color', 'default'=>'ededed'),
+							array('id'=>'evcal__sot', 'name'=>'Default State', 'type'=>'color', 'default'=>'B8B8B8'),
 							array('id'=>'evcal__sotH', 'name'=>'Hover State', 'type'=>'color', 'default'=>'d8d8d8'),
 						)
 					),array('id'=>'fs_calhead','type'=>'fontation','name'=>'Jump Months Button',
@@ -202,7 +207,30 @@
 		}
 
 		
+	// Event Top items array
+		function eventon_get_eventop_settings($evcal_opt){
+			global $eventon;
 
+			$num = evo_calculate_cmd_count($evcal_opt[1]);
+			
+			$arr = array(
+				'time'=>'Event Time (to and from)',
+				'location'=>'Event Location Address',
+				'locationame'=>'Event Location Name',
+				'eventtype'=>'Event Type Value',
+				'dayname'=>'Event Day Name (Only for one day events)',
+				'organizer'=>'Event Organizer',
+			);
+
+			// add custom fields
+			for($x=1; $x < ($num+1); $x++){
+				if(!empty($evcal_opt[1]['evcal_af_'.$x])  && $evcal_opt[1]['evcal_af_'.$x]=='yes' && !empty($evcal_opt[1]['evcal_ec_f'.$x.'a1']) ){
+					$arr['cmd'.$x] = $evcal_opt[1]['evcal_ec_f'.$x.'a1'];					
+				}else{ break;}
+			}
+
+			return $arr;
+		}
 
 
 
@@ -224,12 +252,21 @@
 						'local_time'=>'Hide events past current local time',
 						'today_date'=>'Hide events past today\'s date')
 				),
-				array('id'=>'evcal_cal_hide_past','type'=>'end_afterstatement'),
-				array('id'=>'evcal_hide_sort','type'=>'yesno','name'=>'Hide Sort Bar on Calendar'),
-				array('id'=>'evcal_dis_conFilter','type'=>'yesno','name'=>'Disable Content Filter','legend'=>'This will disable to use of the_content filter on event details and custom field values.'),
+				array('id'=>'evcal_cal_hide_past','type'=>'end_afterstatement'),				
+				array('id'=>'evcal_dis_conFilter','type'=>'yesno','name'=>'Disable Content Filter','legend'=>'This will disable to use of the_content filter on event details and custom field values.'),				
 				
 				array('id'=>'evo_usewpdateformat','type'=>'yesno','name'=>'Use WP default Date format in eventON calendar', 'legend'=>'Select this option to use the default WP Date format through out eventON calendar. Default format: yyyy/mm/dd'),
+
+				array('id'=>'evo_googlefonts','type'=>'yesno','name'=>'Disable google web fonts', 'legend'=>'This will stop loading all google fonts used in eventon calendar.'),
 				
+				array('id'=>'evo_schema','type'=>'yesno','name'=>'Remove schema data from calendar', 'legend'=>'Schema microdata helps in google and other search engines find events in special event data format. With this option you can remove those microdata from showing up on front-end calendar.'),
+
+				array('id'=>'evcal_lmtcheks','type'=>'yesno','name'=>'Limit eventon remote update checkings', 'legend'=>'If your wp-admin loads slow turn this own to reduce number of times eventon check updates from our server'),
+
+				array('id'=>'evcal_css_head','type'=>'yesno','name'=>'Write dynamic styles to header', 'legend'=>'If making changes to appearances dont reflect on front-end try this option. This will write those dynamic styles inline to page header'),
+
+				//array('id'=>'evo_wpml','type'=>'yesno','name'=>'Activate WPML compatibility', 'legend'=>'This will activate WPML compatibility features.'),
+
 				array('id'=>'evcal_header_format','type'=>'text','name'=>'Calendar Header month/year format. <i>(<b>Allowed values:</b> m = month name, Y = 4 digit year, y = 2 digit year)</i>' , 'default'=>'m, Y'),
 								
 				
@@ -275,6 +312,7 @@
 			'tab_name'=>'Sorting and Filtering',
 			'top'=>'4',
 			'fields'=>array(
+				array('id'=>'evcal_hide_sort','type'=>'yesno','name'=>'Hide Sort Bar on Calendar'),
 				array('id'=>'evcal_sort_options', 'type'=>'checkboxes','name'=>'Event sorting options to show on Calendar <i>(Note: Event Date will be default sorting option that will be always on)</i>',
 					'options'=>array(
 						'title'=>'Event Main Title',
@@ -323,15 +361,7 @@
 			'tab_name'=>'EventTop',
 			'fields'=>array(
 				array('id'=>'evcal_top_fields', 'type'=>'checkboxes','name'=>'Additional data fields for eventTop: <i>(NOTE: <b>Event Name</b> and <b>Event Date</b> are default fields)</i>',
-						'options'=> apply_filters('eventon_eventop_fields', array(
-							'time'=>'Event Time (to and from)',
-							'location'=>'Event Location Address',
-							'locationame'=>'Event Location Name',
-							'eventtype'=>'Event Type Value',
-							'monthname'=>'Event Start Month eg. SEP',
-							'dayname'=>'Event Day Name (Only for one day events)',
-							'organizer'=>'Event Organizer',
-						)),
+						'options'=> apply_filters('eventon_eventop_fields', eventon_get_eventop_settings($evcal_opt)),
 				),
 			)
 		),array(
@@ -339,6 +369,13 @@
 			'name'=>'EventCard Settings (EventCard is the full event details card)',
 			'tab_name'=>'EventCard',
 			'fields'=>array(
+				array('id'=>'evo_timeF','type'=>'yesno','name'=>'Allow universal event time format on eventCard','legend'=>'This will change the time format on eventCard to be a universal set format regardless of the month events span for.','afterstatement'=>'evo_timeF'),
+					array('id'=>'evo_timeF','type'=>'begin_afterstatement'),
+					array('id'=>'evo_timeF_v','type'=>'text','name'=>'Time Format', 'default'=>'F j(l) g:ia'),
+					array('id'=>'evcal_api_mu_note','type'=>'note',
+						'name'=>'Acceptable date/time values: php <a href="http://php.net/manual/en/function.date.php" target="_blank">date()</a> '),
+					array('id'=>'evo_timeF','type'=>'end_afterstatement'),
+				
 				array('id'=>'evo_ics','type'=>'yesno','name'=>'Show ICS download to your calendar','legend'=>'This will allow users to download each event as ICS file which can be imported to their calendar of choice.'),
 				
 				array('id'=>'evo_getdir','type'=>'yesno','name'=>'Show get directions to text field','legend'=>'This will add an input field to eventCard that will allow user to type in their address and get directions to event location in a new window.'),
@@ -352,6 +389,8 @@
 
 				array('id'=>'evcal_sh001','type'=>'subheader','name'=>'Featured Image'),
 				array('id'=>'evo_ftimghover','type'=>'yesno','name'=>'Disable hover effect on featured image','legend'=>'Remove the hover moving animation effect from featured image on event.'),
+				array('id'=>'evo_ftimg_fullheight','type'=>'yesno','name'=>'Show featured image at 100% height', ),
+
 				array('id'=>'evo_ftimgheight','type'=>'text','name'=>'Set event featured image height (value in pixels)', 'default'=>'eg. 400'),
 				array('id'=>'evo_ftim_mag','type'=>'yesno','name'=>'Show magnifying glass over featured image','legend'=>'This will convert the mouse cursor to a magnifying glass when hover over featured image. <br/><br/><img src="'.AJDE_EVCAL_URL.'/assets/images/ajde_backender/cursor_mag.jpg"/>'),
 				
@@ -396,7 +435,7 @@
 
 				
 
-				array('id'=>'evcal__note','type'=>'note','name'=>'You can add upto 3 additional custom meta fields for each event using the below fields. (* Required values)'),
+				array('id'=>'evcal__note','type'=>'note','name'=>'You can add upto 3 additional custom meta fields for each event using the below fields. <br/><b>NOTE: </b>Once new data field is activated go to <b>myEventon> Settings> EventCard</b> and rearrange the order of this new field and save changes for it to show on front-end. <br/>(* Required values)'),
 				
 				array('id'=>'evcal_af_1','type'=>'yesno','name'=>'Activate Additional Field #1','legend'=>'This will activate additional event meta field.','afterstatement'=>'evcal_af_1'),
 				array('id'=>'evcal_af_1','type'=>'begin_afterstatement'),

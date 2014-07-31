@@ -3,12 +3,12 @@ jQuery(document).ready(function($) {
     tinymce.create('tinymce.plugins.eventon_shortcode_button', {
          init : function(ed, url) {
              ed.addButton('eventon_shortcode_button', {
-                'class': 'eventon_popup_trig eventon_shortcode_button',
                 title : 'Add EventON Calendar',
                 onclick : function() {
-                   
-                    
-                   
+                  $('.eventon_popup.eventon_shortcode').addClass('active').show().animate({'margin-top':'0px','opacity':1}).fadeIn();
+
+                  $('html, body').animate({scrollTop:0}, 700);
+                  $('#evo_popup_bg').show();
                 }
              });
           },
@@ -26,4 +26,6 @@ jQuery(document).ready(function($) {
     });
 
     tinymce.PluginManager.add('eventon_shortcode_button', tinymce.plugins.eventon_shortcode_button);
+
+
 });

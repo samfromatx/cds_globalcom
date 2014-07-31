@@ -301,7 +301,7 @@ class EvcalWidget_SC extends WP_Widget{
 	function EvcalWidget_SC(){
 		$widget_ops = array('classname' => 'EvcalWidget_SC', 
 			'description' => 'EventON shortcode executor in the widget.' );
-		$this->WP_Widget('EvcalWidget_SC', 'eventON Shortcode executor', $widget_ops);
+		$this->WP_Widget('EvcalWidget_SC', 'eventON Shortcode executor (ESE)', $widget_ops);
 	}
 
 

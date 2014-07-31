@@ -8,7 +8,7 @@
  * @author 		AJDE
  * @category 	Admin
  * @package 	EventON/Admin/Settings
- * @version     1.0.2
+ * @version     2.2.10
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -67,6 +67,18 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 						$evcal_options[$pf] =$pv;
 					}					
 				}
+
+
+				// General settings page - write styles to head option
+				if($focus_tab=='evcal_1' && isset($_POST['evcal_css_head']) && $_POST['evcal_css_head']=='yes'){
+
+					ob_start();
+					include(AJDE_EVCAL_PATH.'/assets/css/dynamic_styles.php');
+
+					$evo_dyn_css = ob_get_clean();
+					
+					update_option('evo_dyn_css', $evo_dyn_css);
+				}
 				
 				//language tab
 				if($focus_tab=='evcal_2'){
@@ -85,7 +97,12 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 					update_option('evcal_options_evcal_2', $new_lang_opt);
 					
 				}else{
+					// store custom meta box count
+					$cmd_count = evo_calculate_cmd_count();
+					$evcal_options['cmd_count'] = $cmd_count;
+
 					update_option('evcal_options_'.$focus_tab, $evcal_options);
+
 				}
 				
 				// STYLES
@@ -112,6 +129,7 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 		$evcal_opt[$current_tab_number] = get_option('evcal_options_'.$focus_tab);			
 
 		//print_r(get_option('_evo_licenses'));
+		//print_r($evcal_opt[1]);
 
 // TABBBED HEADER		
 ?>
@@ -247,6 +265,19 @@ switch ($focus_tab):
 						echo "<p class='evcal_lang_p'><input type='text' name='".$pre_var_name.$x."' class='evcal_lang' value='";
 						echo (!empty($lang_options[$pre_var_name.$x]))?  $lang_options[$pre_var_name.$x]: $month_3l; echo "'/></p>";
 					}
+
+					echo "<p class='clear' style='padding-top:5px'></p>";
+
+					// 1 letter month names
+					for($x=1; $x<13; $x++){
+						
+						$pre_var_name = 'evo_lang_1Lm_';
+						$month_3l = substr($eventon_months[$x],0,1);
+						
+						echo "<p class='evcal_lang_p'><input type='text' name='".$pre_var_name.$x."' class='evcal_lang' value='";
+						echo (!empty($lang_options[$pre_var_name.$x]))?  $lang_options[$pre_var_name.$x]: $month_3l; echo "'/></p>";
+					}
+					echo "<p class='clear' style='padding-top:5px'></p>";
 					
 				?><p style='clear:both'></p>			
 			</div>
@@ -313,6 +344,8 @@ switch ($focus_tab):
 						<div class='evo_settings_togbox'>";
 				}else if(!empty($cl['type']) && $cl['type']=='togend'){
 					echo '</div>';
+				}else if(!empty($cl['type']) && $cl['type']=='subheader'){
+					echo '<div class="evoLANG_subheader">'.$cl['label'].'</div><div class="evoLANG_subsec">';
 				}else{
 
 					$val = (!empty($lang_options[$cl['name']]))?  $lang_options[$cl['name']]: '';

@@ -27,11 +27,18 @@
 			$('.evo_popin').css({'margin-top':cur_window_top});
 			
 			$('.evo_pop_body').html('');
+
+			var event_list = this.closest('.eventon_events_list');
 			var content = this.siblings('.event_description').html();
 			var content_front = this.html();
 			
 			var _content = $(content).not('.evcal_close');
 			
+
+			// RTL
+			if(event_list.hasClass('evortl')){
+				$('.evo_popin').addClass('evortl');
+			}
 		
 			$('.evo_pop_body').append('<div class="evopop_top">'+content_front+'</div>').append(_content);
 			

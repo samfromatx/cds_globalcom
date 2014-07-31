@@ -3,7 +3,7 @@
  * EVO_generator class.
  *
  * @class 		EVO_generator
- * @version		2.2.9
+ * @version		2.2.13
  * @package		EventON/Classes
  * @category	Class
  * @author 		AJDE
@@ -40,57 +40,55 @@ class EVO_generator {
 	private $event_types = 3;
 	
 	
-	/**
-	 *	Construction function
-	 */
-	public function __construct(){
-		
-		
-		/** set class wide variables **/
-		$options_1 = get_option('evcal_options_evcal_1');
-		$this->evopt1= (!empty($options_1))? $options_1:null;
-		$this->evopt2= get_option('evcal_options_evcal_2');		
-		
-		$this->is_eventcard_open = (!empty($this->evopt1['evo_opencard']) && $this->evopt1['evo_opencard']=='yes')? true:false;
-		
-		// set reused values
-		$this->evcal_hide_sort = (!empty($this->evopt1['evcal_hide_sort']))? $this->evopt1['evcal_hide_sort']:null;
-		
-		// load google maps api only on frontend
-		add_action( 'init', array( $this, 'init' ) );		
-		
-		$this->google_maps_load = get_option('evcal_gmap_load');
-		//add_action('wp_enqueue_scripts', array($this, 'load_evo_styles'));
+	/**	Construction function	 */
+		public function __construct(){
+			
+			
+			/** set class wide variables **/
+			$options_1 = get_option('evcal_options_evcal_1');
+			$this->evopt1= (!empty($options_1))? $options_1:null;
+			$this->evopt2= get_option('evcal_options_evcal_2');		
+			
+			$this->is_eventcard_open = (!empty($this->evopt1['evo_opencard']) && $this->evopt1['evo_opencard']=='yes')? true:false;
+			
+			// set reused values
+			$this->evcal_hide_sort = (!empty($this->evopt1['evcal_hide_sort']))? $this->evopt1['evcal_hide_sort']:null;
+			
+			// load google maps api only on frontend
+			add_action( 'init', array( $this, 'init' ) );		
+			
+			//$this->google_maps_load = get_option('evcal_gmap_load');
+			//add_action('wp_enqueue_scripts', array($this, 'load_evo_styles'));
 
-		
-	}
+			
+		}
 	
-	function init(){	
-		add_action( 'init', array( $this, 'load_google_maps_api' ) );
+		function init(){	
+			add_action( 'init', array( $this, 'load_google_maps_api' ) );
 
-		$this->verify_eventtypes();
-		$this->reused();
-		
-	}
+			$this->verify_eventtypes();
+			$this->reused();
+			
+		}
 	
 
 	// the reused variables and other things within the calendar
-	function reused(){
-		$lang = (!empty($this->shortcode_args['lang']))? $this->shortcode_args['lang']: 'L1';
+		function reused(){
+			$lang = (!empty($this->shortcode_args['lang']))? $this->shortcode_args['lang']: 'L1';
 
 
-		// for each event type category
-		$ett_i18n_names = evo_get_localized_ettNames( $lang, $this->evopt1, $this->evopt2);
+			// for each event type category
+			$ett_i18n_names = evo_get_localized_ettNames( $lang, $this->evopt1, $this->evopt2);
 
-		for($x = 1; $x< $this->event_types ; $x++){
-			$ab = ($x==1)? '':$x;			
-			
-			$this->lang_array['et'.$ab] = $ett_i18n_names[$x];
+			for($x = 1; $x< $this->event_types ; $x++){
+				$ab = ($x==1)? '':$x;			
+				
+				$this->lang_array['et'.$ab] = $ett_i18n_names[$x];
+			}
+			 		
+			$this->lang_array['no_event'] = eventon_get_custom_language($this->evopt2, 'evcal_lang_noeve','No Events',$lang);
+
 		}
-		 		
-		$this->lang_array['no_event'] = eventon_get_custom_language($this->evopt2, 'evcal_lang_noeve','No Events');
-
-	}
 
 	// load scripts
 		function load_evo_files(){
@@ -106,14 +104,16 @@ class EVO_generator {
 				if(!empty($this->evopt1['evcal_gmap_disable_section']) && $this->evopt1['evcal_gmap_disable_section']=='complete'){
 					
 					
-					update_option('evcal_gmap_load',false);
+					//update_option('evcal_gmap_load',false);
+					$this->google_maps_load = false;
 					
 					wp_enqueue_script( 'eventon_init_gmaps_blank');
 					wp_enqueue_script( 'eventon_init_gmaps');
 				}else{
 					
 					
-					update_option('evcal_gmap_load',true);
+					//update_option('evcal_gmap_load',true);
+					$this->google_maps_load = true;
 					
 					wp_enqueue_script( 'eventon_init_gmaps');
 				}
@@ -121,7 +121,9 @@ class EVO_generator {
 			}else {
 				
 				
-				update_option('evcal_gmap_load',true);
+				//update_option('evcal_gmap_load',true);
+				$this->google_maps_load = true;
+
 				wp_enqueue_script( 'evcal_gmaps');
 				wp_enqueue_script('eventon_init_gmaps');
 				
@@ -160,16 +162,17 @@ class EVO_generator {
 
 			$args = array(			
 				'cal_id'=>'1',
-				'sort_by'=>'sort_date',
 				'event_count'=>0,
 				'month_incre'=>0,			
 				'number_of_events'=>5,
 				'focus_start_date_range'=>'',
 				'focus_end_date_range'=>'',
+				'sort_by'=>'sort_date',
 				'filters'=>'',
 				'fixed_month'=>0,
 				'fixed_year'=>0,
-				'hide_past'=>'no',			
+				'hide_past'=>'no',
+				'hide_past_by'=>'ee',			
 				'show_et_ft_img'=>'no',
 				'event_order'=>'ASC',
 				'ft_event_priority'=>'no',
@@ -183,7 +186,13 @@ class EVO_generator {
 				'ux_val'=>'0', 			// user interaction to override default user interaction values
 				'etc_override'=>'no',	// even type color override the event colors
 				'jumper'=>'no'	,		// month jumper
-				'wpml_lang'=>'',		// WPML lanuage
+				'accord'=>'no',			// accordion
+				'only_ft'=> 'no',		// only featured events
+				'exp_so'=>'no',		// expand sort options by default
+				'rtl'=>'no',		// right to left text
+				'wpml_l1'=>'',		// WPML lanuage L1 = en
+				'wpml_l2'=>'',		// WPML lanuage L2 = nl
+				'wpml_l3'=>'',		// WPML lanuage L3 = es
 			);
 
 			// each event type category
@@ -289,6 +298,8 @@ class EVO_generator {
 			// SHORTCODE
 			$args = $this->shortcode_args;
 			extract($args);
+
+			
 			
 			// FUNCTION
 			$defaults = array(
@@ -311,9 +322,12 @@ class EVO_generator {
 			
 			//BASE settings to pass to calendar
 			
-			$eventcard_open = ($this->is_eventcard_open)? 'eventcard="1"':null;		
+			$eventcard_open = ($this->is_eventcard_open)? 'eventcard="1"':null;	
+
+			// right to left 
+				$rtl = (!empty($args['rtl']) && $args['rtl'] =='yes')? 'evortl':null;
 			
-			$__cal_classes=apply_filters('eventon_cal_class',array('ajde_evcal_calendar'));
+			$__cal_classes=apply_filters('eventon_cal_class',array('ajde_evcal_calendar', $rtl));
 			
 			$cal_header_title = get_eventon_cal_title_month($focused_month_num, $focused_year, $args['lang']);
 
@@ -330,12 +344,13 @@ class EVO_generator {
 				'mapformat'=> (($this->evopt1['evcal_gmap_format']!='')?$this->evopt1['evcal_gmap_format']:'roadmap'),
 				'mapzoom'=>(($this->evopt1['evcal_gmap_zoomlevel']!='')?$this->evopt1['evcal_gmap_zoomlevel']:'12'),
 				'ev_cnt'=>$args['event_count'],
-				'sort_by'=>'sort_date',
+				'sort_by'=>$args['sort_by'],
 				'filters_on'=>$this->filters,
 				'range_start'=>$range_start,
 				'range_end'=>$range_end,
 				'send_unix'=>( ($send_unix)?'1':'0'),
 				'ux_val'=>( (!empty($ux_val) && $ux_val!='0' )? $ux_val: '0'.$ux_val),
+				'accord'=>( (!empty($accord) && $accord== 'yes' )? '1': '0'),
 			));
 			foreach ($cdata as $f=>$v){
 				$_cd .='data-'.$f.'="'.$v.'" ';
@@ -358,31 +373,29 @@ class EVO_generator {
 
 				if($jumper=='yes'){
 					$content.= "<div class='evo-jumper'><span class='evo-jumper-btn'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_jumpmonths','Jump Months')."</span>
-						<div class='evo_j_container' style='display:none' >
+						<div class='evo_j_container' style='display:none' m='{$focused_month_num}' y='{$focused_year}'>
 							<div class='evo_j_months evo_j_dates' val='m'>
 								<p class='legend'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_jumpmonthsM','Month').": ";
 
 						// months list
-						$__months = array('J','F','M','A','M','J','J','A','S','O','N','D');				
+						$__months = eventon_get_oneL_months($this->evopt2['L1']);				
 						$count = 1;
 						foreach($__months as $m){
-							$_current = ($focused_month_num == $count)? 'class="current"':null;
+							$_current = ($focused_month_num == $count)? 'class="current set"':null;
 							$content.= "<a val='{$count}' {$_current} title='". eventon_return_timely_names_('month_num_to_name',$count,'full',$lang)."' >{$m}</a>";
 							$count ++;
 						}
 							$content.= "</p><div class='clear'></div></div>
 							
 							<div class='evo_j_years evo_j_dates' val='y'>
-								<p class='legend'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_jumpmonthsY','Year').": <a>".($focused_year-2)."</a><a>".($focused_year-1)."</a><a class='current'>".$focused_year."</a><a>".($focused_year+1)."</a><a>".($focused_year+2)."</a></p><div class='clear'></div>
+								<p class='legend'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_jumpmonthsY','Year').": <a>".($focused_year-2)."</a><a>".($focused_year-1)."</a><a class='current set'>".$focused_year."</a><a>".($focused_year+1)."</a><a>".($focused_year+2)."</a></p><div class='clear'></div>
 							</div>
-							
 						</div>
 					</div>";
 				}
 
 				$content.="<p id='evcal_cur'> ".$cal_header_title."</p>
-					<span id='evcal_prev' class='evcal_arrows evcal_btn_prev' ".$hide_arrows_check."><i class='fa fa-angle-left'></i></span>
-					<span id='evcal_next' class='evcal_arrows evcal_btn_next' ".$hide_arrows_check."><i class='fa fa-angle-right'></i></span>";	
+					<span id='evcal_prev' class='evcal_arrows evcal_btn_prev' ".$hide_arrows_check."><i class='fa fa-angle-left'></i></span><span id='evcal_next' class='evcal_arrows evcal_btn_next' ".$hide_arrows_check."><i class='fa fa-angle-right'></i></span>";	
 			}else if(!empty($header_title)){
 				$content.="<p>". $header_title ."</p>";
 			}
@@ -402,7 +415,8 @@ class EVO_generator {
 			// SORT BAR
 			$content.= ($_html_sort_section)? $this->eventon_get_cal_sortbar($args, $sortbar):null;
 			
-			$content .= ($_html_evcal_list)? "<div id='evcal_list' class='eventon_events_list'>":null;
+			$rtl = (!empty($args['rtl']) && $args['rtl'] =='yes')? 'evortl':null;
+			$content .= ($_html_evcal_list)? "<div id='evcal_list' class='eventon_events_list {$rtl}'>":null;
 
 			return $content;
 		}
@@ -442,7 +456,7 @@ class EVO_generator {
 		$eve_args = array(
 			'focus_start_date_range'=>$focus_start_date_range,
 			'focus_end_date_range'=>$focus_end_date_range,
-			'sort_by'=>'sort_date', // by default sort events by start date					
+			'sort_by'=>$sort_by, // by default sort events by start date					
 			'event_count'=>$event_count,
 			'filters'=>$filters,
 			'number_months'=>$number_of_months, // to determine empty label 			
@@ -632,7 +646,7 @@ class EVO_generator {
 				$get_new_monthyear = eventon_get_new_monthyear($focused_month_num, $focused_year,0);
 				$content.= $this->get_calendar_month_body($get_new_monthyear, $focus_start_date_range, $focus_end_date_range);
 				
-				$content.="</div><div class='clear'></div></div>";
+				$content.="</div><div class='clear'></div></div><!-- .ajde_evcal_calendar-->";
 					
 				// action to perform at the end of the calendar
 				do_action('eventon_cal_end');
@@ -682,13 +696,16 @@ class EVO_generator {
 				'_html_sort_section'=>false
 				)
 			);
+
 			
 			
 			// generate each month
 			for($x=0; $x<$number_of_months; $x++){
 				$month_body='';
+
+				$__mo_cnt = ($event_order=='DESC')? $number_of_months-$x-1: $x;
 				
-				$get_new_monthyear = eventon_get_new_monthyear($focused_month_num, $focused_year,$x);
+				$get_new_monthyear = eventon_get_new_monthyear($focused_month_num, $focused_year,$__mo_cnt);
 				
 				$active_month_name = eventon_returnmonth_name_by_num($get_new_monthyear['month']);
 				
@@ -724,7 +741,7 @@ class EVO_generator {
 	/** MAIN function to generate individual events.	*/	 
 		public function eventon_generate_events($args){
 			
-			global $EventON;				
+			global $EventON;
 					
 			// get required shortcode based argument values
 			if(empty($this->shortcode_args)){
@@ -734,7 +751,8 @@ class EVO_generator {
 				$ecv =$this->process_arguments($args);
 			}
 			
-			
+			$this->reused();
+			//print_r($this->shortcode_args);
 			//print_r($args);
 			//print_r($ecv);
 			
@@ -767,9 +785,10 @@ class EVO_generator {
 			// ========================	
 			// GET: list of events for wp argument
 			$event_list_array = $this->wp_query_event_cycle(
-				$wp_arguments, 
+				$wp_arguments,				
 				$ecv['focus_start_date_range'], 
-				$ecv['focus_end_date_range']
+				$ecv['focus_end_date_range'],
+				$ecv
 			);
 			
 			
@@ -858,7 +877,7 @@ class EVO_generator {
 				if($this->is_upcoming_list && !empty($ecv['hide_empty_months']) && $ecv['hide_empty_months']=='yes'){
 					$content_li = "empty";				
 				}else{
-					$content_li = "<div class='eventon_list_event'><p class='no_events'>".$this->lang_array['no_event']."</p></div>";
+					$content_li = "<div class='eventon_list_event'><p class='no_events' >".$this->lang_array['no_event']."</p></div>";
 				}
 				
 			}
@@ -873,9 +892,7 @@ class EVO_generator {
 	 * return events list within start - end date range for WP_Query arg.
 	 * return array
 	 */
-		public function wp_query_event_cycle($wp_arguments, $focus_month_beg_range, $focus_month_end_range, $some=''){
-			
-			//echo $focus_month_beg_range.' '. $focus_month_end_range.'ff'.$some;
+		public function wp_query_event_cycle($wp_arguments, $focus_month_beg_range, $focus_month_end_range, $ecv=''){
 			
 			
 			$event_list_array= $featured_events = array();
@@ -883,7 +900,6 @@ class EVO_generator {
 			//print_r($wp_arguments);
 			
 			
-
 			// check if multiple occurance of events b/w months allowed
 			$__run_occurance_check = (($this->is_upcoming_list && $this->_hide_mult_occur) || (!empty($this->shortcode_args['hide_mult_occur']) && $this->shortcode_args['hide_mult_occur']=='yes'))? true:false;
 			
@@ -925,8 +941,10 @@ class EVO_generator {
 					}//pec not present
 
 
+					// hide past by variable
+						$hide_past_by = (!empty($this->shortcode_args['hide_past_by']))? $this->shortcode_args['hide_past_by']: null;
 
-				
+				// each event
 				while( $events->have_posts()): $events->the_post();
 					
 					$p_id = get_the_ID();
@@ -945,105 +963,172 @@ class EVO_generator {
 					
 					$_is_featured = (!empty($ev_vals['_featured']))? 
 						$ev_vals['_featured'][0] :'no';
+
+
 					
 					// check for recurring event 
 					if($is_recurring_event=='yes'){
+
+						$repeat_intervals = (!empty($ev_vals['repeat_intervals']))? unserialize($ev_vals['repeat_intervals'][0]) :null;
+
+						
+
 						$frequency = $ev_vals['evcal_rep_freq'][0];
 						$repeat_gap_num = $ev_vals['evcal_rep_gap'][0];
 						$repeat_num = (int)$ev_vals['evcal_rep_num'][0];
 						
-						
-						// each repeating instance	
-						$monthly_row_start = $row_start;
-						for($x=0; $x<=($repeat_num); $x++){
-							
-							$feature='no';
-													
-							$repeat_multiplier = ((int)$repeat_gap_num) * $x;
-							//$multiply_term = '+'.$repeat_multiplier.' '.$term;
-							
-							// Get repeat terms for different frequencies
-							switch($frequency){
-								// Additional frequency filters
-								case has_filter("eventon_event_frequency_{$frequency}"):
-									$terms = apply_filters("eventon_event_frequency_{$frequency}", $repeat_multiplier);								
-									$term = $terms['term'];
-									$term_ar = $terms['term_ar'];
-								break;
-								case 'yearly':
-									$term = 'year';	$term_ar = 'ry';
-									$feature = ($_is_featured!='no')?'yes':'no';
-								break;
-								case 'monthly':
-									$term = 'month';	$term_ar = 'rm';
-									$feature = ($_is_featured!='no')?'yes':'no';
-								break; 
-								case 'weekly':
-									$term = 'week';	$term_ar = 'rw';
-								break;							
-								default: $term = $term_ar = ''; break;
+
+						// if repeat intervals are saved
+						if(!empty($repeat_intervals) && is_array($repeat_intervals)){
+							foreach($repeat_intervals as $interval){
+								$E_start_unix = $interval[0];
+								$E_end_unix = $interval[1];
+								$term_ar = 'rm';
+
+								// is future event
+								$fe = ( (!empty($this->shortcode_args['el_type']))? true: eventon_is_future_event($current_time, $E_start_unix, $E_end_unix, $evcal_cal_hide_past, $hide_past_by) );
+
+								// in date range
+								$me = eventon_is_event_in_daterange($E_start_unix,$E_end_unix, $focus_month_beg_range,$focus_month_end_range, $this->shortcode_args);
+
+								if($fe && $me){
+									if($__run_occurance_check && !in_array($p_id, $this->events_processed) ||!$__run_occurance_check){
+									
+										$event_list_array[] = array(
+											'event_id' => $p_id,
+											'event_start_unix'=>$E_start_unix,
+											'event_end_unix'=>$E_end_unix,
+											'event_title'=>get_the_title(),
+											'event_color'=>$evcal_event_color_n,
+											'event_type'=>$term_ar,
+											'event_pmv'=>$ev_vals
+										);
+										
+										if($feature!='no'){
+											$featured_events[]=$p_id;
+										}
+									}
+									$this->events_processed[]=$p_id;	
+								}
 							}
-							
-							
-							$E_start_unix = strtotime('+'.$repeat_multiplier.' '.$term, $row_start);
-							$E_end_unix = strtotime('+'.$repeat_multiplier.' '.$term, $row_end);
+
+						// does not have repeat intervals saved
+						}else{
+
+							// each repeating instance	OLD WAY
+							for($x=0; $x<=($repeat_num); $x++){
+								
+								$feature='no';
+														
+								$repeat_multiplier = ((int)$repeat_gap_num) * $x;
+								
+								// Get repeat terms for different frequencies
+								switch($frequency){
+									// Additional frequency filters
+									case has_filter("eventon_event_frequency_{$frequency}"):
+										$terms = apply_filters("eventon_event_frequency_{$frequency}", $repeat_multiplier);								
+										$term = $terms['term'];
+										$term_ar = $terms['term_ar'];
+									break;
+									case 'yearly':
+										$term = 'year';	$term_ar = 'ry';
+										$feature = ($_is_featured!='no')?'yes':'no';
+									break;
+
+									// MONTHLY
+									case 'monthly':
+										
+										$term = 'month';	$term_ar = 'rm';
+										$feature = ($_is_featured!='no')?'yes':'no';
+										
+									break; 
+									case 'weekly':
+										$term = 'week';	$term_ar = 'rw';
+										
+									break;							
+									default: $term = $term_ar = ''; break;
+								}
+								
+								$E_start_unix = strtotime('+'.$repeat_multiplier.' '.$term, $row_start);
+								$E_end_unix = strtotime('+'.$repeat_multiplier.' '.$term, $row_end);
+								
+										
+
+								// check if only featured events to show
+								if( (!empty($ecv['only_ft']) && $ecv['only_ft']=='yes' && $_is_featured=='yes') || 
+									(!empty($ecv['only_ft']) && $ecv['only_ft']=='no' ) ||
+									empty($ecv['only_ft'])
+								){
+
+									$fe = ( (!empty($this->shortcode_args['el_type']))? true: eventon_is_future_event($current_time, $E_start_unix, $E_end_unix, $evcal_cal_hide_past, $hide_past_by) );
+
+									$me = eventon_is_event_in_daterange($E_start_unix,$E_end_unix, $focus_month_beg_range,$focus_month_end_range, $this->shortcode_args);
 									
 
-							
-							$fe = ( (!empty($this->shortcode_args['el_type']))? true: eventon_is_future_event($current_time, $E_end_unix, $evcal_cal_hide_past) );
+									if($fe && $me){
+										if($__run_occurance_check && !in_array($p_id, $this->events_processed) ||!$__run_occurance_check){
+										
+											$event_list_array[] = array(
+												'event_id' => $p_id,
+												'event_start_unix'=>$E_start_unix,
+												'event_end_unix'=>$E_end_unix,
+												'event_title'=>get_the_title(),
+												'event_color'=>$evcal_event_color_n,
+												'event_type'=>$term_ar,
+												'event_pmv'=>$ev_vals
+											);
+											
+											if($feature!='no'){
+												$featured_events[]=$p_id;
+											}
+										}
+										$this->events_processed[]=$p_id;	
+									}
+								}				
+							} // end for statement
 
-							$me = eventon_is_event_in_daterange($E_start_unix,$E_end_unix, $focus_month_beg_range,$focus_month_end_range, $this->shortcode_args);
+						} // end if statemtn	
+						
+					}else{
+					// Non recurring event
+
+						// check if only featured events to show
+						if( (!empty($ecv['only_ft']) && $ecv['only_ft']=='yes' && $_is_featured=='yes') || 
+							(!empty($ecv['only_ft']) && $ecv['only_ft']=='no' ) ||
+							empty($ecv['only_ft'])
+						){
+
+							$fe = ( (!empty($this->shortcode_args['el_type']))? true: eventon_is_future_event($current_time, $row_start, $row_end, $evcal_cal_hide_past, $hide_past_by));
+							$me = eventon_is_event_in_daterange($row_start,$row_end, $focus_month_beg_range,$focus_month_end_range, $this->shortcode_args);
+
+							//echo $_is_featured.'tt';
 							
+							//echo get_the_title().$row_end.' v '.$current_time.'-</br>';
 
 							if($fe && $me){
-								if($__run_occurance_check && !in_array($p_id, $this->events_processed) ||!$__run_occurance_check){
 								
+								if($__run_occurance_check && !in_array($p_id, $this->events_processed) ||!$__run_occurance_check){
+									
+									$feature = ($_is_featured!='no')?'yes':'no';
+									
 									$event_list_array[] = array(
 										'event_id' => $p_id,
-										'event_start_unix'=>$E_start_unix,
-										'event_end_unix'=>$E_end_unix,
+										'event_start_unix'=>$row_start,
+										'event_end_unix'=>$row_end,
 										'event_title'=>get_the_title(),
 										'event_color'=>$evcal_event_color_n,
-										'event_type'=>$term_ar,
-									);
+										'event_type'=>'nr',
+										'event_pmv'=>$ev_vals
+									);	
 									
 									if($feature!='no'){
 										$featured_events[]=$p_id;
 									}
+									
+									$this->events_processed[]=$p_id;
 								}
-								$this->events_processed[]=$p_id;	
-							}					
-						}	
-						
-					}else{
-					// Non recurring event
-						$fe = ( (!empty($this->shortcode_args['el_type']))? true: eventon_is_future_event($current_time, $row_end, $evcal_cal_hide_past));
-						$me = eventon_is_event_in_daterange($row_start,$row_end, $focus_month_beg_range,$focus_month_end_range, $this->shortcode_args);
-						
-						//echo get_the_title().$row_end.' v '.$current_time.'-</br>';
-
-						if($fe && $me){
-							
-							if($__run_occurance_check && !in_array($p_id, $this->events_processed) ||!$__run_occurance_check){
-								
-								$feature = ($_is_featured!='no')?'yes':'no';
-								
-								$event_list_array[] = array(
-									'event_id' => $p_id,
-									'event_start_unix'=>$row_start,
-									'event_end_unix'=>$row_end,
-									'event_title'=>get_the_title(),
-									'event_color'=>$evcal_event_color_n,
-									'event_type'=>'nr',
-								);	
-								
-								if($feature!='no'){
-									$featured_events[]=$p_id;
-								}
-								
-								$this->events_processed[]=$p_id;
 							}
-						}		
+						}	
 					}
 					
 					
@@ -1058,10 +1143,29 @@ class EVO_generator {
 		}
 	
 	
+	// UPDATE or change shortcode argument values after its processed on global
+		private function update_shortcode_args($field, $new_val){
+			$sca = $this->shortcode_args;
+			if(!empty($sca) && !empty($sca[$field])){
+				$new_sca = $sca;
+				$new_sca[$field]= $new_val;
+
+				$this->shortcode_args = $new_sca;
+			}
+
+			if($field=='lang' && empty($sca)){
+				$this->shortcode_args = array('lang'=>$new_val);
+			}
+		}
+
 	/**	output single event data	 */
-		public function get_single_event_data($event_id){
+		public function get_single_event_data($event_id, $lang=''){
 
 			$this->__calendar_type = 'single';
+
+			if(!empty($lang)){
+				$this->update_shortcode_args('lang', $lang);
+			}
 			
 			// GET Eventon files to load for single event
 			$this->load_evo_files();
@@ -1076,7 +1180,8 @@ class EVO_generator {
 				'event_end_unix'=>$emv['evcal_erow'][0],
 				'event_title'=>get_the_title($event_id),
 				'event_color'=>$emv['evcal_event_color_n'][0],
-				'event_type'=>'nr'
+				'event_type'=>'nr',
+				'event_pmv'=>$emv
 			);
 			
 			$month_int = date('n', time() );
@@ -1085,27 +1190,77 @@ class EVO_generator {
 			
 		}
 	
+	// RETURN event times
+		private function generate_time($args){
+			// start date is past enddate = focus day
+			if($args['eventstart']['j'] < $args['cdate'] && $args['eventend']['j'] == $args['cdate']){
+				return "<em class='evo_day'>".$args['eventstart']['M'].' '.$args['eventstart']['j']."</em><span class='start'>".$args['stime']."</span><span class='end'>- ".$args['etime']."</span>";
+			
+			// start day = focus day and end day in future
+			}elseif($args['eventend']['j'] > $args['cdate'] && $args['eventstart']['j'] == $args['cdate']){
+				return "<span class='start'>".$args['stime']."</span><em class='evo_day end'>".$args['eventend']['M'].' '.$args['eventend']['j']."</em><span class='end'>- ".$args['etime']."</span>";
+			
+			// both start day and end days are not focus day
+			}elseif($args['eventend']['j'] != $args['cdate'] && $args['eventstart']['j'] != $args['cdate']){
+				return "<em class='evo_day'>".$args['eventstart']['M'].' '.$args['eventstart']['j']."</em><span class='start'>".$args['stime']."</span><em class='evo_day end'>".$args['eventend']['M'].' '.$args['eventend']['j']."</em><span class='end'>- ".$args['etime']."</span>";
+			
+			// same start day as focus day
+			}elseif($args['eventstart']['j'] == $args['cdate']){
+				return "<span class='start'>".$args['stime']."</span><em class='evo_day end'>".$args['eventend']['M'].' '.$args['eventend']['j']."</em><span class='end'>- ".$args['etime']."</span>";
+			// same end day as focus day
+			}elseif($args['eventend']['j'] == $args['cdate']){
+				return "<em class='evo_day'>".$args['eventstart']['M'].' '.$args['eventstart']['j']."</em><span class='start'>".$args['stime']."</span><em class='evo_day end'>".$args['eventend']['M'].' '.$args['eventend']['j']."</em><span class='end'>- ".$args['etime']."</span>";
+			}
+		}
+
 	// GENERATE TIME for event
-		public function generate_time_($DATE_start_val='', $DATE_end_val='', $pmv, $evcal_lang_allday, $CURRENT_month_INT=''){
+		public function generate_time_($DATE_start_val='', $DATE_end_val='', $pmv, $evcal_lang_allday, $focus_month_beg_range='', $FOCUS_month_int=''){
 			global $eventon;
 
-			$event_start_unix = $pmv['evcal_srow'][0];
-			$event_end_unix = $pmv['evcal_erow'][0];
-			$wp_time_format = get_option('time_format');
-			$_is_allday = (!empty($pmv['evcal_allday']) && $pmv['evcal_allday'][0]=='yes')? true:false;
-			$_hide_endtime = (!empty($pmv['evo_hide_endtime']) && $pmv['evo_hide_endtime'][0]=='yes')? true:false;
+			// INITIAL variables
+				$event_start_unix = $pmv['evcal_srow'][0];
+				$event_end_unix = $pmv['evcal_erow'][0];
+				$wp_time_format = get_option('time_format');
+				$_is_allday = (!empty($pmv['evcal_allday']) && $pmv['evcal_allday'][0]=='yes')? true:false;
+				$_hide_endtime = (!empty($pmv['evo_hide_endtime']) && $pmv['evo_hide_endtime'][0]=='yes')? true:false;
 
-			$DATE_start_val= (!empty($DATE_start_val))? $DATE_start_val: eventon_get_formatted_time($event_start_unix);
-			if(empty($event_end_unix)){
-				$DATE_end_val= $DATE_start_val;
-			}else{
-				$DATE_end_val=(!empty($DATE_end_val))? $DATE_end_val: eventon_get_formatted_time($event_end_unix);
-			}
+				$DATE_start_val= (!empty($DATE_start_val))? $DATE_start_val: eventon_get_formatted_time($event_start_unix);
+				if(empty($event_end_unix)){
+					$DATE_end_val= $DATE_start_val;
+				}else{
+					$DATE_end_val=(!empty($DATE_end_val))? $DATE_end_val: eventon_get_formatted_time($event_end_unix);
+				}
+
+				// FOCUSED values
+				$CURRENT_month_INT = (!empty($FOCUS_month_int))?
+					$FOCUS_month_int: (!empty($focus_month_beg_range)? 
+						date('n', $focus_month_beg_range ): date('n')); // 
+				$_current_date = (!empty($focus_month_beg_range))? date('j', $focus_month_beg_range ): 1;
+
+				$time_format = (!empty($this->evopt1['evcal_tdate_format']))? $this->evopt1['evcal_tdate_format']: 'F j(l) T';
+				// M F j S l D
 
 
-			$time_format = (!empty($this->evopt1['evcal_tdate_format']))? $this->evopt1['evcal_tdate_format']: 'F j(l) T';
-			// M F j S l D
+				// Universal time format
+				// if activated get time values
+				$__univ_time = false;
+				if( !empty($this->evopt1['evo_timeF_v']) && !empty($this->evopt1['evo_timeF']) && $this->evopt1['evo_timeF'] =='yes' ){
+					$__univ_time_s = date($this->evopt1['evo_timeF_v'], $event_start_unix);
+					$__univ_time = ($_hide_endtime)? $__univ_time_s:  date($this->evopt1['evo_timeF_v'], $event_start_unix) .' - '. date($this->evopt1['evo_timeF_v'], $event_end_unix);
+				}
 
+				$formatted_start = date($wp_time_format,($event_start_unix));
+				$formatted_end = date($wp_time_format,($event_end_unix));
+
+
+			$date_args = array(
+				'cdate'=>$_current_date,
+				'eventstart'=>$DATE_start_val,
+				'eventend'=>$DATE_end_val,
+				'stime'=>$formatted_start,
+				'etime'=>$formatted_end,
+			);
+			// same start and end months
 			if($DATE_start_val['n'] == $DATE_end_val['n']){
 							
 				/** EVENT TYPE = start and end in SAME DAY **/
@@ -1115,19 +1270,24 @@ class EVO_generator {
 					if($_is_allday){					
 						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.": ".$DATE_start_val['l'].")</em>";
 						$__prettytime = $evcal_lang_allday.' ('. ucfirst($DATE_start_val['l']).')';
+						$__time = "<span class='start'>".$evcal_lang_allday."</span>";
+
 					}else{
-						
+
 						$__from_to = ($_hide_endtime)?
-							date($wp_time_format,($event_start_unix)):
-							date($wp_time_format,($event_start_unix)).' - '. date($wp_time_format,($event_end_unix));
+							$formatted_start:
+							$formatted_start.' - '. $formatted_end;
 						
-						$__prettytime ='('. ucfirst($DATE_start_val['l']).') '.$__from_to;
+						$__prettytime = '('. ucfirst($DATE_start_val['l']).') '.$__from_to;
+						$__time = "<span class='start'>".$formatted_start."</span><span class='end'>- ".$formatted_end."</span>";
 					}
 					
+					
 					$_event_date_HTML = array(
-						'html_date'=>$DATE_start_val['j'],
+						'html_date'=> '<span class="start">'.$DATE_start_val['j'].'<em>'.$DATE_start_val['M'].'</em></span>',
+						'html_time'=>$__time,
 						'html_fromto'=> apply_filters('eventon_evt_fe_time', $__from_to),
-						'html_prettytime'=> apply_filters('eventon_evt_fe_ptime', $__prettytime),
+						'html_prettytime'=> ($__univ_time)? $__univ_time_s: apply_filters('eventon_evt_fe_ptime', $__prettytime),
 						'class_daylength'=>"sin_val",
 						'start_month'=>$DATE_start_val['M']
 					);	
@@ -1139,15 +1299,23 @@ class EVO_generator {
 					if($_is_allday){
 						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.")</em>";
 						$__prettytime = $DATE_start_val['j'].' ('. ucfirst($DATE_start_val['l']) .') - '.$DATE_end_val['j'].' ('. ucfirst($DATE_end_val['l']).')';
+						$__time = "<span class='start'>".$evcal_lang_allday."</span>";
 					}else{
-						$__from_to = date($wp_time_format,($event_start_unix)).' - '.date($wp_time_format,($event_end_unix)). ' ('.$DATE_end_val['j'].')';
-						$__prettytime =$DATE_start_val['j'].' ('. ucfirst($DATE_start_val['l']).') '.date($wp_time_format,($event_start_unix)).' - '.$DATE_end_val['j'].' ('. ucfirst($DATE_end_val['l']).') '.date($wp_time_format,($event_end_unix));
+						
+
+						$__from_to = $formatted_start.' - '.$formatted_end. ' ('.$DATE_end_val['j'].')';
+						$__prettytime =$DATE_start_val['j'].' ('. ucfirst($DATE_start_val['l']).') '.$formatted_start.' - '.$DATE_end_val['j'].' ('. ucfirst($DATE_end_val['l']).') '.$formatted_end;
+
+						// for daily view check if start day is same as focused day
+						$__time = $this->generate_time($date_args);
+						
 					}
 					
 					$_event_date_HTML = array(							
-						'html_date'=>$DATE_start_val['j'].'<span> - '.$DATE_end_val['j'].'</span>',
+						'html_date'=> '<span class="start">'.$DATE_start_val['j'].'<em>'.$DATE_start_val['M'].'</em></span><span class="end"> - '.$DATE_end_val['j'].'</span>',
+						'html_time'=>$__time,
 						'html_fromto'=> apply_filters('eventon_evt_fe_time', $__from_to),
-						'html_prettytime'=> apply_filters('eventon_evt_fe_ptime', $__prettytime),
+						'html_prettytime'=> ($__univ_time)? $__univ_time: apply_filters('eventon_evt_fe_ptime', $__prettytime),
 						'class_daylength'=>"mul_val",
 						'start_month'=>$DATE_start_val['M']
 					);	
@@ -1159,10 +1327,14 @@ class EVO_generator {
 				if($CURRENT_month_INT != $DATE_start_val['n']){
 					// check all days event
 					if($_is_allday){
-						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.")</em>";						
+						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.")</em>";
+						$__time = "<span class='start'>".$evcal_lang_allday."</span>";						
 					}else{
 						$__from_to = 
 							'('.$DATE_start_val['F'].' '.$DATE_start_val['j'].') '.date($wp_time_format,($event_start_unix)).' - ('.$DATE_end_val['F'].' '.$DATE_end_val['j'].') '.date($wp_time_format,($event_end_unix));
+						
+						// for daily view check if start day is same as focused day
+						$__time = $this->generate_time($date_args);
 					}
 										
 											
@@ -1170,10 +1342,13 @@ class EVO_generator {
 					/** EVENT TYPE = start month is current month **/
 					// check all days event
 					if($_is_allday){
-						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.")</em>";						
+						$__from_to ="<em class='evcal_alldayevent_text'>(".$evcal_lang_allday.")</em>";
+						$__time = "<span class='start'>".$evcal_lang_allday."</span>";								
 					}else{
 						$__from_to =
-							date($wp_time_format,($event_start_unix)).' - ('.$DATE_end_val['F'].' '.$DATE_end_val['j'].') '.date($wp_time_format,($event_end_unix));	
+							date($wp_time_format,($event_start_unix)).' - ('.$DATE_end_val['F'].' '.$DATE_end_val['j'].') '.date($wp_time_format,($event_end_unix));
+						// for daily view check if start day is same as focused day
+						$__time = $this->generate_time($date_args);
 					}
 				}
 				
@@ -1188,13 +1363,16 @@ class EVO_generator {
 				
 				
 				$_event_date_HTML = apply_filters('evo_eventcard_dif_SEM', array(
-					'html_date'=>$DATE_start_val['j'].'<span> - '.$DATE_end_val['j'].'</span>',
+					'html_date'=> '<span class="start">'.$DATE_start_val['j'].'<em>'.$DATE_start_val['M'].'</em></span><span class="end"> - '.$DATE_end_val['j'].'<em>'.$DATE_end_val['M'].'</em></span>',
+					'html_time'=>$__time,
 					'html_fromto'=> apply_filters('eventon_evt_fe_time', $__from_to),
-					'html_prettytime'=>apply_filters('eventon_evt_fe_ptime', $__prettytime),
+					'html_prettytime'=> ($__univ_time)? $__univ_time: apply_filters('eventon_evt_fe_ptime', $__prettytime),
 					'class_daylength'=>"mul_val",
 					'start_month'=>$DATE_start_val['M']
 				));
 			}
+
+
 
 			return $_event_date_HTML;
 		}
@@ -1214,10 +1392,12 @@ class EVO_generator {
 		
 		// Initial variables
 		$wp_time_format = get_option('time_format');
-		$default_event_color = (!empty($this->evopt1['evcal_hexcode']))?$this->evopt1['evcal_hexcode']:'#ffa800';
+		$default_event_color = (!empty($this->evopt1['evcal_hexcode']))? '#'.$this->evopt1['evcal_hexcode']:'#ffa800';
 		$__shortC_arg = $this->shortcode_args;
 
-		//print_r($__shortC_arg);
+		//echo $__shortC_arg['lang'].'tt';
+
+		// print_r($event_list_array);
 		//echo $this->is_eventcard_open;
 				
 		// EVENT CARD open by default variables		
@@ -1226,10 +1406,8 @@ class EVO_generator {
 		
 			
 		
-		$CURRENT_month_INT = (!empty($FOCUS_month_int))?$FOCUS_month_int: date('n', $focus_month_beg_range ); // 
-		
 		// check featured events are prioritized
-		$__feature_events = ($this->shortcode_args['ft_event_priority']!='no')?true:false;
+		$__feature_events = (!empty($__shortC_arg['ft_event_priority']) && $__shortC_arg['ft_event_priority']!='no')?true:false;
 		
 		
 		// GET EventTop fields - v2.1.17
@@ -1243,14 +1421,15 @@ class EVO_generator {
 		// EACH EVENT
 		if(is_array($event_list_array) ){
 		foreach($event_list_array as $event):
-			
+			//print_r($event);
 			$event_id = $event['event_id'];
 			$event_start_unix = $event['event_start_unix'];
 			$event_end_unix = $event['event_end_unix'];
 			$event_type = $event['event_type'];
-			
+			$ev_vals = $event['event_pmv'];
+
 			$event = get_post($event_id);
-			$ev_vals = get_post_custom($event_id);
+			
 			
 			
 			// define variables
@@ -1283,7 +1462,7 @@ class EVO_generator {
 				evo_hide_endtime
 				NOTE: if its set to hide end time, meaning end time and date would be empty on wp-admin, which will fall into same start end month category.
 			*/
-			$_event_date_HTML = $this->generate_time_($DATE_start_val, $DATE_end_val, $ev_vals, $evcal_lang_allday, $CURRENT_month_INT);
+			$_event_date_HTML = $this->generate_time_($DATE_start_val, $DATE_end_val, $ev_vals, $evcal_lang_allday, $focus_month_beg_range, $FOCUS_month_int);
 			
 				
 			
@@ -1303,13 +1482,14 @@ class EVO_generator {
 					// append to eventcard array
 					$_eventcard['ftimage'] = array(
 						'img'=>$img_src,
-						'hovereffect'=> $this->evopt1['evo_ftimghover']
+						'hovereffect'=> $this->evopt1['evo_ftimghover'],
+						'fullheight'=> (!empty($this->evopt1['evo_ftimg_fullheight'])? $this->evopt1['evo_ftimg_fullheight']: 400),
 					);	
 									
 				}else{		$img_thumb_src='';		}
 				
 			// EVENT DESCRIPTION
-				$evcal_event_content =apply_filters('the_content', $event->post_content);
+				$evcal_event_content =$event->post_content;
 				
 				if(!empty($evcal_event_content) ){
 					$event_full_description = $evcal_event_content;
@@ -1329,8 +1509,7 @@ class EVO_generator {
 					
 				}
 			
-			
-			// EVENT TIME						
+									
 			// EVENT LOCATION
 				$lonlat = (!empty($ev_vals['evcal_lat']) && !empty($ev_vals['evcal_lon']) )?
 						'latlon="1" latlng="'.$ev_vals['evcal_lat'][0].','.$ev_vals['evcal_lon'][0].'" ': null;
@@ -1421,6 +1600,8 @@ class EVO_generator {
 								'value'=>$ev_vals["_evcal_ec_f".$x."a1_cus"][0],
 								'valueL'=>( (!empty($ev_vals["_evcal_ec_f".$x."a1_cusL"]))?
 									$ev_vals["_evcal_ec_f".$x."a1_cusL"][0]:null ),
+								'_target'=>( (!empty($ev_vals["_evcal_ec_f".$x."_onw"]))?
+									$ev_vals["_evcal_ec_f".$x."_onw"][0]:null ),
 								'type'=>$this->evopt1['evcal_ec_f'.$x.'a2']
 							);
 						}
@@ -1436,6 +1617,7 @@ class EVO_generator {
 						'estart'=> ($event_start_unix),
 						'eend'=>($event_end_unix),
 						'etitle'=>$event->post_title,
+						'evals'=>$ev_vals,
 					);
 				}
 			
@@ -1493,7 +1675,7 @@ class EVO_generator {
 			
 			//event color	
 				$event_color = (!empty($ev_vals['evcal_event_color']) )?
-				(($ev_vals["evcal_event_color"][0][0] == '#')?
+				(( strpos($ev_vals["evcal_event_color"][0] ,'#'))?
 						$ev_vals["evcal_event_color"][0]:
 						'#'.$ev_vals["evcal_event_color"][0] )
 					: $default_event_color;
@@ -1512,8 +1694,14 @@ class EVO_generator {
 			$exlink_option = (!empty($ev_vals['_evcal_exlink_option']) )?$ev_vals['_evcal_exlink_option'][0]:1;
 			$event_permalink = get_permalink($event_id);
 			
+			// if UX to be open in new window then use link to single event or that link
+			$_lang_ext = (!empty($__shortC_arg['lang']) && $__shortC_arg['lang']!='L1')?
+				'?l='.$__shortC_arg['lang']:null;
+
 			$href = (!empty($ev_vals['evcal_exlink']) && $exlink_option!='1' )? 
-				'data-exlk="1" href="'.$ev_vals['evcal_exlink'][0].'"': 'data-exlk="0"';
+				'data-exlk="1" href="'.$ev_vals['evcal_exlink'][0].$_lang_ext.'"'
+				:'data-exlk="0"';
+
 			// target
 			$target_ex = (!empty($ev_vals['_evcal_exlink_target'])  && $ev_vals['_evcal_exlink_target'][0]=='yes')?
 				'target="_blank"':null;
@@ -1524,12 +1712,17 @@ class EVO_generator {
 				if(!empty($ev_vals['evcal_location'])){
 					$event_location_variables = ((!empty($lonlat))? $lonlat:null ). ' add_str="'.$ev_vals['evcal_location'][0].'" ';
 					
-					$__scheme_data_location = '
-						<item style="display:none" itemprop="location" itemscope itemtype="http://schema.org/Place">
-							<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-								<item itemprop="streetAddress">'.$ev_vals['evcal_location'][0].'</item>
-							</span>
-						</item>';
+					// conditional schema data for event
+					if(!empty($this->evopt1['evo_schema']) && $this->evopt1['evo_schema']=='yes'){
+						$__scheme_data_location ='';
+					}else{
+						$__scheme_data_location = '
+							<item style="display:none" itemprop="location" itemscope itemtype="http://schema.org/Place">
+								<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+									<item itemprop="streetAddress">'.$ev_vals['evcal_location'][0].'</item>
+								</span>
+							</item>';
+					}
 						
 					$ev_location =				
 						'<em class="evcal_location" '.( (!empty($lonlat))? $lonlat:null ).' add_str="'.$ev_vals['evcal_location'][0].'">'.$ev_vals['evcal_location'][0].'</em>';
@@ -1544,29 +1737,37 @@ class EVO_generator {
 			// 	HTML		
 			// 	EventTop - building of the eventTop section
 			-------------*/
-			$eventtop_html='';
+			$eventtop_html=$eventop_fields_='';
 				
 				// featured image
-				$eventtop_html[] = (!empty($img_thumb_src) && $__shortC_arg['show_et_ft_img']=='yes')? "<p class='ev_ftImg' style='background-image:url(".$img_thumb_src[0].")'></p>":null;
-				
-				// date number 
-				$eventtop_html[]="<p class='evcal_cblock' style='bgcolor='".$event_color."' smon='".$DATE_start_val['F']."' syr='".$DATE_start_val['Y']."'><em class='evo_date'>".$_event_date_HTML['html_date'].'</em>';
+				$eventtop_html[] = (!empty($img_thumb_src) && !empty($__shortC_arg['show_et_ft_img']) && $__shortC_arg['show_et_ft_img']=='yes')? 
+				"<span class='ev_ftImg' style='background-image:url(".$img_thumb_src[0].")'></span>":null;
 				
 				// CHECK for event top fields array
 				$eventop_fields_ = (is_array($eventop_fields) )? true:false;
 				
+				
+				// date number 
+				$___day_name = ($eventop_fields_ && in_array('dayname',$eventop_fields))?
+						"<em class='evo_day' >".$DATE_start_val['D']."</em>": null;
+
+				$eventtop_html[]="<span class='evcal_cblock' bgcolor='".$event_color."' smon='".$DATE_start_val['F']."' syr='".$DATE_start_val['Y']."'><em class='evo_date' >".$___day_name.$_event_date_HTML['html_date'].'</em>';
+				
+
+				//print_r($DATE_start_val);
 				// month name
+				/*
 				if($eventop_fields_ && in_array('monthname',$eventop_fields) || ( !empty($this->shortcode_args['etop_month']) && $this->shortcode_args['etop_month']=='yes') )
 					$eventtop_html[]="<em class='evo_month' mo='".$DATE_start_val['M']."'>".$DATE_start_val['M']."</em>";
+				*/
 				
-				// day name
-				if($eventop_fields_ && in_array('dayname',$eventop_fields))
-					$eventtop_html[]="<em class='evo_day' >".$DATE_start_val['D']."</em>";
+				// time for events
+					$eventtop_html[]= "<em class='evo_time'>".$_event_date_HTML['html_time']."</em>";
 				
-				$eventtop_html[]="<em class='clear'></em></p>";
+				$eventtop_html[]="<em class='clear'></em></span>";
 				
 				// event title
-				$eventtop_html[]= "<p class='evcal_desc' {$event_location_variables}><span class='evcal_desc2 evcal_event_title' itemprop='name'>".$event->post_title."</span>";
+				$eventtop_html[]= "<span class='evcal_desc' {$event_location_variables}><span class='evcal_desc2 evcal_event_title' itemprop='name'>".$event->post_title."</span>";
 				
 				$eventtop_html[]= "<span class='evcal_desc_info' >";
 				
@@ -1582,20 +1783,34 @@ class EVO_generator {
 				if($eventop_fields_ && in_array('locationame',$eventop_fields)){
 					$__location_name = (!empty($ev_vals['evcal_location_name']))?
 						$ev_vals['evcal_location_name'][0]:null;
-					$eventtop_html[]= '<em class="evcal_location event_location_name">'.$__location_name.'</em>';
+					$eventtop_html[]= !empty($__location_name)?'<em class="evcal_location event_location_name">'.$__location_name.'</em>':null;
 				}
 				
 				$eventtop_html[]= "</span><span class='evcal_desc3'>";
 				
-				// organizer
-				if($eventop_fields_ && in_array('organizer',$eventop_fields) && !empty($ev_vals['evcal_organizer']))
-					$eventtop_html[]= "<em class='evcal_oganizer'><i>".( eventon_get_custom_language( $this->evopt2,'evcal_evcard_org', 'Event Organized By')  ).':</i> '.$ev_vals['evcal_organizer'][0]."</em> ";
+					// organizer
+					if($eventop_fields_ && in_array('organizer',$eventop_fields) && !empty($ev_vals['evcal_organizer']))
+						$eventtop_html[]= "<em class='evcal_oganizer'><i>".( eventon_get_custom_language( $this->evopt2,'evcal_evcard_org', 'Event Organized By')  ).':</i> '.$ev_vals['evcal_organizer'][0]."</em>";
+					
+					// event type
+					if($eventop_fields_ && in_array('eventtype',$eventop_fields))
+						$eventtop_html[]= $html_event_type_info;
+
+					// custom meta fields
+					$num = evo_retrieve_cmd_count($this->evopt1);
+					for($x=1; $x<$num+1; $x++){
+						if($eventop_fields_ && in_array('cmd'.$x,$eventop_fields) 
+							&& !empty($ev_vals['_evcal_ec_f'.$x.'a1_cus'])){
+
+							$def = $this->evopt1['evcal_ec_f'.$x.'a1']; // default custom meta field name
+							$i18n_nam = eventon_get_custom_language( $this->evopt2,'evcal_cmd_'.$x, $def);
+
+							$eventtop_html[]= ( ($x==1)? "<b class='clear'></b>":null )."<em class='evcal_cmd'><i>".$i18n_nam.':</i> '.$ev_vals['_evcal_ec_f'.$x.'a1_cus'][0]."</em> ";
+						}
+					}
 				
-				// event type
-				if($eventop_fields_ && in_array('eventtype',$eventop_fields))
-					$eventtop_html[]= $html_event_type_info;
-				
-				$eventtop_html[]= "</p>";
+				$eventtop_html[]= "</span>";
+				$eventtop_html[]= "</span><em class='clear'></em>";
 			
 				$eventtop_html = apply_filters('eventon_eventtop_html',$eventtop_html);
 			// --
@@ -1613,21 +1828,27 @@ class EVO_generator {
 			
 			
 			// SCHEME SEO
-				$__scheme_data = 
-					'<div class="evo_event_schema" style="display:none" >
-					<a href="'.$event_permalink.'" itemprop="url"></a>				
-					<time itemprop="startDate" datetime="'.$DATE_start_val['Y'].'-'.$DATE_start_val['n'].'-'.$DATE_start_val['j'].'"></time>'.
-					$__scheme_data_location.
-					'</div>'
-				
-				;
+				// conditional schema data
+				if(!empty($this->evopt1['evo_schema']) && $this->evopt1['evo_schema']=='yes'){
+					$__scheme_data ='<div class="evo_event_schema" style="display:none" >
+						<a href="'.$event_permalink.'"></a></div>';
+					$__scheme_attributes = '';
+				}else{
+					$__scheme_data = 
+						'<div class="evo_event_schema" style="display:none" >
+						<a href="'.$event_permalink.'" itemprop="url"></a>				
+						<time itemprop="startDate" datetime="'.$DATE_start_val['Y'].'-'.$DATE_start_val['n'].'-'.$DATE_start_val['j'].'"></time>'.
+						$__scheme_data_location.
+						'</div>';
+					$__scheme_attributes = "itemscope itemtype='http://schema.org/Event'";
+				}
 			
 			
 			
 			// ## Eventon Calendar events list -- single event
 			
 			// CLASES - attribute
-			$_ft_imgClass = (!empty($img_thumb_src) && $__shortC_arg['show_et_ft_img']=='yes')? 'hasFtIMG':null;
+			$_ft_imgClass = (!empty($img_thumb_src) && !empty($__shortC_arg['show_et_ft_img']) && $__shortC_arg['show_et_ft_img']=='yes')? 'hasFtIMG':null;
 			$__attr_class = "evcal_list_a ".$event_description_trigger." "
 				.	$_event_date_HTML['class_daylength']." ".(($event_type!='nr')?'event_repeat ':null). $eventcard_script_class.$_ft_imgClass;
 			$_ft_event = ($__feature_events && !empty($ev_vals['_featured']) && $ev_vals['_featured'][0]=='yes')?' ft_event ':null;
@@ -1639,7 +1860,7 @@ class EVO_generator {
 			// div or an e tag
 			$html_tag = ($exlink_option=='1')? 'div':'a';
 
-			$event_html_code="<div class='eventon_list_event' event_id='{$event_id}' itemscope itemtype='http://schema.org/Event'>{$__scheme_data}
+			$event_html_code="<div id='event_{$event_id}' class='eventon_list_event' event_id='{$event_id}' {$__scheme_attributes}>{$__scheme_data}
 			<{$html_tag} id='".$unique_id."' class='".$__a_class."' ".$href." ".$target_ex." style='border-color: ".$event_color."' ".$gmap_trigger." ".(!empty($gmap_api_status)?$gmap_api_status:null)." data-ux_val='{$exlink_option}'>{$html_info_line}</{$html_tag}>".$html_event_detail_card."<div class='clear'></div></div>";	
 			
 			//evc_open
@@ -1662,198 +1883,204 @@ class EVO_generator {
 		return $months_event_array;
 	}
 	
-	/**
-	 *	 Add other filters to wp_query argument
-	 */
-	public function apply_evo_filters_to_wp_argument($wp_arguments, $ecv){
-		// -----------------------------
-		// FILTERING events	
-		
-		// values from filtering events
-		if(!empty($ecv['filters'])){			
+	/**	 Add other filters to wp_query argument	 */
+		public function apply_evo_filters_to_wp_argument($wp_arguments, $ecv){
+			// -----------------------------
+			// FILTERING events	
 			
-			// build out the proper format for filtering with WP_Query
-			$cnt =0;
-			$filter_tax['relation']='AND';
-			foreach($ecv['filters'] as $filter){
-				if($filter['filter_type']=='tax'){					
-					
-					$filter_val = explode(',', $filter['filter_val']);
-					$filter_tax[] = array(
-						'taxonomy'=>$filter['filter_name'],
-						'field'=>'id',
-						'terms'=>$filter_val						
-					);
-					$cnt++;
-				}else{				
-					$filter_meta[] = array(
-						'key'=>$filter['filter_name'],				
-						'value'=>$filter['filter_val'],				
-					);
-				}				
-			}
-			
-			
-			if(!empty($filter_tax)){
+			// values from filtering events
+			if(!empty($ecv['filters'])){			
 				
-				// for multiple taxonomy filtering
-				if($cnt>1){					
-					$filters_tax_wp_argument = array(
-						'tax_query'=>$filter_tax
-					);
-				}else{
-					$filters_tax_wp_argument = array(
-						'tax_query'=>$filter_tax
-					);
-				}
-				$wp_arguments = array_merge($wp_arguments, $filters_tax_wp_argument);
-			}
-			if(!empty($filter_meta)){
-				$filters_meta_wp_argument = array(
-					'meta_query'=>$filter_meta
-				);
-				$wp_arguments = array_merge($wp_arguments, $filters_meta_wp_argument);
-			}		
-		}else{
-
-			
-			// each event type category 
-			foreach($this->get_event_types() as $ety=>$event_type){	
-				
-				if(!empty($ecv[$event_type]) && $ecv[$event_type] !='all'){
-					$ev_type = explode(',', $ecv['event_type'.$x]);
-					$ev_type_ar = array(
-							'tax_query'=>array( 
-							array('taxonomy'=>'event_type'.$x,'field'=>'id','terms'=>$ev_type) )	
-						);
-					
-					$wp_arguments = array_merge($wp_arguments, $ev_type_ar);
-				}
-				
-			}
-
-			
-			
-		}
-		
-		//print_r($wp_arguments);
-		return $wp_arguments;
-	}
-	
-	/**
-	 *	 out put just the sort bar for the calendar
-	 */
-	public function eventon_get_cal_sortbar($args, $sortbar=true){
-		
-		// define variable values	
-		$sorting_options = (!empty($this->evopt1['evcal_sort_options']))?$this->evopt1['evcal_sort_options']:null;
-		$filtering_options = (!empty($this->evopt1['evcal_filter_options']))?$this->evopt1['evcal_filter_options']:array();
-		$content='';
-			
-
-		// START the magic	
-		ob_start();
-		
-		// IF sortbar is set to be shown
-		if($sortbar){
-			echo ( $this->evcal_hide_sort!='yes' )? "<a class='evo_sort_btn'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sopt','Sort Options')."</a>":null;
-		}
-		
-		echo "<div class='eventon_sorting_section' style='display:none'>";
-		if( $this->evcal_hide_sort!='yes' ){ // if sort bar is set to show	
-		
-		// sorting section
-			echo "
-			<div class='eventon_sort_line evo_sortOpt' >
-				<div class='eventon_sf_field'>
-					<p>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sort','Sort By').":</p>
-				</div>
-				<div class='eventon_sf_cur_val evs'>
-					<p class='sorting_set_val'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sdate','Date')."</p>
-				</div>
-				<div class='eventon_sortbar_selection evs_3 evs' >
-					<p val='sort_date' type='date' class='evs_btn evs_hide'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sdate','Date')."</p>";
-				
-				$evsa1 = array(	'title'=>'Title','color'=>'Color');
-				$cnt =1;
-				if(is_array($sorting_options) ){
-					foreach($evsa1 as $so=>$sov){
-						if(in_array($so, $sorting_options) ){	
-															
-							echo "<p val='sort_".$so."' type='".$so."' class='evs_btn' >"
-								.eventon_get_custom_language($this->evopt2, 'evcal_lang_s'.$so,$sov)
-								."</p>";						
-						}
-						$cnt++;
-					}
-				}
-			echo "</div><div class='clear'></div></div>";
-		}
-		
-		$__text_all = eventon_get_custom_language($this->evopt2, 'evcal_lang_all', 'All');
-		// filtering section
-		echo "
-			<div class='eventon_filter_line'>";
-			
-
-			// foreach event type
-			foreach($this->get_event_types() as $ety=>$event_type){	
-				$ety_ = ($ety==1)? '':$ety;
-				if( !empty($args[$event_type])){
-					// event_type line
-					if(in_array($event_type, $filtering_options) && $args[$event_type]=='all'){
-
-						echo "
-						<div class='eventon_filter evo_sortOpt' filter_field='{$event_type}' filter_val='all' filter_type='tax' >
-							<div class='eventon_sf_field'><p>".$this->lang_array['et'.$ety_].":</p></div>				
+				// build out the proper format for filtering with WP_Query
+				$cnt =0;
+				$filter_tax['relation']='AND';
+				foreach($ecv['filters'] as $filter){
+					if($filter['filter_type']=='tax'){					
 						
-							<div class='eventon_filter_selection'>
-								<p class='filtering_set_val' opts='evs4_in'>{$__text_all}</p>
-								<div class='eventon_filter_dropdown' style='display:none'>";
-							
-								$cats = get_categories(array( 'taxonomy'=>$event_type));
-								
-								echo "<p filter_val='all'>{$__text_all}</p>";
-								foreach($cats as $ct){
-									echo "<p filter_val='".$ct->term_id."' filter_slug='".$ct->slug."'>".$ct->name."</p>";
-								}				
-							echo "</div>
-							</div><div class='clear'></div>
-						</div>";
-					}else if($args[$event_type]!='all'){
-						echo "<div class='eventon_filter' filter_field='{$event_type}' filter_val='{$args[$event_type]}' filter_type='tax'></div>";
-					}
+						$filter_val = explode(',', $filter['filter_val']);
+						$filter_tax[] = array(
+							'taxonomy'=>$filter['filter_name'],
+							'field'=>'id',
+							'terms'=>$filter_val						
+						);
+						$cnt++;
+					}else{				
+						$filter_meta[] = array(
+							'key'=>$filter['filter_name'],				
+							'value'=>$filter['filter_val'],				
+						);
+					}				
 				}
+				
+				
+				if(!empty($filter_tax)){
+					
+					// for multiple taxonomy filtering
+					if($cnt>1){					
+						$filters_tax_wp_argument = array(
+							'tax_query'=>$filter_tax
+						);
+					}else{
+						$filters_tax_wp_argument = array(
+							'tax_query'=>$filter_tax
+						);
+					}
+					$wp_arguments = array_merge($wp_arguments, $filters_tax_wp_argument);
+				}
+				if(!empty($filter_meta)){
+					$filters_meta_wp_argument = array(
+						'meta_query'=>$filter_meta
+					);
+					$wp_arguments = array_merge($wp_arguments, $filters_meta_wp_argument);
+				}		
+			}else{
+
+				
+				// each event type category 
+				foreach($this->get_event_types() as $ety=>$event_type){	
+					
+					if(!empty($ecv[$event_type]) && $ecv[$event_type] !='all'){
+						$ev_type = explode(',', $ecv['event_type'.$x]);
+						$ev_type_ar = array(
+								'tax_query'=>array( 
+								array('taxonomy'=>'event_type'.$x,'field'=>'id','terms'=>$ev_type) )	
+							);
+						
+						$wp_arguments = array_merge($wp_arguments, $ev_type_ar);
+					}
+					
+				}
+
+				
+				
+			}
+			
+			//print_r($wp_arguments);
+			return $wp_arguments;
+		}
+	
+	/**	 out put just the sort bar for the calendar	 */
+		public function eventon_get_cal_sortbar($args, $sortbar=true){
+			
+			// define variable values	
+			$sorting_options = (!empty($this->evopt1['evcal_sort_options']))?$this->evopt1['evcal_sort_options']:null;
+			$filtering_options = (!empty($this->evopt1['evcal_filter_options']))?$this->evopt1['evcal_filter_options']:array();
+			$content='';
+				
+
+			// START the magic	
+			ob_start();
+			
+			// IF sortbar is set to be shown
+			if($sortbar){
+				echo ( $this->evcal_hide_sort!='yes' )? "<a class='evo_sort_btn'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sopt','Sort Options')."</a>":null;
 			}
 
+			// expand sort section by default or not
+				$SO_display = (!empty($args['exp_so']) && $args['exp_so'] =='yes')? 'block': 'none';
+			
+			echo "<div class='eventon_sorting_section' style='display:{$SO_display}'>";
+			if( $this->evcal_hide_sort!='yes' ){ // if sort bar is set to show	
+			
+			// sorting section
+				$evsa1 = array(	'date'=>'Date', 'title'=>'Title','color'=>'Color');
+				$sort_options = array(	1=>'sort_date', 'sort_title','sort_color');
 
+					$__sort_key = substr($args['sort_by'], 5);
+
+				echo "
+				<div class='eventon_sort_line evo_sortOpt' >
+					<div class='evo_sortby'><p>".eventon_get_custom_language($this->evopt2, 'evcal_lang_sort','Sort By').":</p></div>
+					<div class='evo_srt_sel'><p class='fa'>".eventon_get_custom_language($this->evopt2, 'evcal_lang_s'.$__sort_key,$__sort_key)."</p>
+						<div class='evo_srt_options'>";
+					$cnt =1;
+					if(is_array($sorting_options) ){
+						foreach($evsa1 as $so=>$sov){
+							if(in_array($so, $sorting_options) || $so=='date' ){
+							echo "<p val='sort_".$so."' type='".$so."' class='evs_btn ".( ($args['sort_by'] == $sort_options[$cnt])? 'evs_hide':null)."' >"
+									.eventon_get_custom_language($this->evopt2, 'evcal_lang_s'.$so,$sov)
+									."</p>";						
+							}
+							$cnt++;
+						}
+					}
+						echo "</div>
+					</div>";
+				
+
+				echo "<div class='clear'></div>
+				</div>";
+
+			
+			}
+			
+			$__text_all = eventon_get_custom_language($this->evopt2, 'evcal_lang_all', 'All');
+			// filtering section
+			echo "
+				<div class='eventon_filter_line'>";
+				
+
+				// foreach event type
+				foreach($this->get_event_types() as $ety=>$event_type){	
+					$ety_ = ($ety==1)? '':$ety;
+					if( !empty($args[$event_type])){
+						// event_type line
+						if(in_array($event_type, $filtering_options) && $args[$event_type]=='all'){
+
+							echo "
+							<div class='eventon_filter evo_sortOpt' filter_field='{$event_type}' filter_val='all' filter_type='tax' >
+								<div class='eventon_sf_field'><p>".$this->lang_array['et'.$ety_].":</p></div>				
+							
+								<div class='eventon_filter_selection'>
+									<p class='filtering_set_val' opts='evs4_in'>{$__text_all}</p>
+									<div class='eventon_filter_dropdown' style='display:none'>";
+								
+									$cats = get_categories(array( 'taxonomy'=>$event_type));
+									
+									echo "<p class='evf_hide' filter_val='all'>{$__text_all}</p>";
+									foreach($cats as $ct){
+										echo "<p  filter_val='".$ct->term_id."' filter_slug='".$ct->slug."'>".$ct->name."</p>";
+									}				
+								echo "</div>
+								</div><div class='clear'></div>
+							</div>";
+						}else if($args[$event_type]!='all'){
+							echo "<div class='eventon_filter' filter_field='{$event_type}' filter_val='{$args[$event_type]}' filter_type='tax'></div>";
+						}
+					}
+
+				}
+
+
+				
+				// (---) Hook for addon
+				if(has_action('eventon_sorting_filters')){
+					echo  do_action('eventon_sorting_filters', $content);
+				}
+					
+				echo "</div>"; // #eventon_filter_line
+
+				echo "<div class='clear'></div>"; // clear
+			
+			echo "</div>"; // #eventon_sorting_section
 			
 			// (---) Hook for addon
-			if(has_action('eventon_sorting_filters')){
-				echo  do_action('eventon_sorting_filters', $content);
+			if(has_action('eventon_below_sorts')){
+				echo  do_action('eventon_below_sorts', $content);
 			}
-				
-			echo "</div>"; // #eventon_filter_line
-		
-		echo "</div>"; // #eventon_sorting_section
-		
-		// (---) Hook for addon
-		if(has_action('eventon_below_sorts')){
-			echo  do_action('eventon_below_sorts', $content);
+			
+			// load bar for calendar
+			echo "<div id='eventon_loadbar_section'><div id='eventon_loadbar'></div></div>";		
+
+			// (---) Hook for addon
+			if(has_action('eventon_after_loadbar')){
+				echo  do_action('eventon_after_loadbar', $content);
+			}	
+			
+			
+			return ob_get_clean();
 		}
 		
-		// load bar for calendar
-		echo "<div id='eventon_loadbar_section'><div id='eventon_loadbar'></div></div>";		
-
-		// (---) Hook for addon
-		if(has_action('eventon_after_loadbar')){
-			echo  do_action('eventon_after_loadbar', $content);
-		}	
-		
-		
-		return ob_get_clean();
-	}
-	
 
 	
 	

@@ -59,6 +59,18 @@ function eventon_shortcode_button($context) {
  add_action('init', 'eventon_shortcode_button_init');
  function eventon_shortcode_button_init() {
 
+ 	global $pagenow, $typenow, $post;	
+	
+	if ( $typenow == 'post' && ! empty( $_GET['post'] ) ) {
+		$typenow = $post->post_type;
+	} elseif ( empty( $typenow ) && ! empty( $_GET['post'] ) ) {
+        $post = get_post( $_GET['post'] );
+        $typenow = $post->post_type;
+    }
+	
+	if ( $typenow == '' || $typenow == "ajde_events" ) return;
+	
+
       //Abort early if the user will never see TinyMCE
       if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') && get_user_option('rich_editing') == 'true')
            return;

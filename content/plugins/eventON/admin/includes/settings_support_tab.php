@@ -12,19 +12,22 @@
 		<div id='chatboxB' style='display:none'></div>
 	<?php endif;?>
 	<div class="inside eventon_settings_page">
+		<a id='evo_livechat' class='evo_support_box special' href='http://www.myeventon.com/support/' target='_blank'>
+			<h3>Real-time Chat Support</h3>
+			<p>Yes! you can ask any support related questions from us using the live chat support. This is free of charge. Please do remember that our availability varies on this chat. Look forward to answering your questions!</p>
+		</a>
 		
-		<a class='evo_support_box' href='https://groups.google.com/forum/#!forum/myeventon' target='_blank'>
-			<h3>Support Forum</h3>
-			<p>Check out our free support forum located in google groups where we answer your questions about the eventON plugin and its addons</p>
+		<a class='evo_support_box' href='http://codecanyon.net/item/eventon-wordpress-event-calendar-plugin/1211017/comments' target='_blank'>
+			<h3>Codecanyon Message Board</h3>
+			<p>When the chat is offline, this is the best place for you to post your questions regarding eventon.</p>
+		</a>
+
+		<a class='evo_support_box twitter' href='http://www.twitter.com/myeventon' target='_blank'>
+			<h3>Follow us on twitter @myeventon</h3>
+			<p>You can get the latest updates, other news, tips and tricks for eventON via our twitter stream. You can also use this to ask quick questions (specially when chat if offline)</p>
 		</a>
 		
 
-		
-		<a id='evo_livechat' class='evo_support_box special' href='http://www.myeventon.com/support/' target='_blank'>
-			<h3>Real-time Chat Support</h3>
-			<p>Yes! you can ask any support related questions from us using the live chat support. This is free of charge. Please do remember that our availability varies on this chat. Look forard to answering your questions!</p>
-		</a>
-		
 		
 		
 		<h2 class='heading'>myEventON Documentation</h2>

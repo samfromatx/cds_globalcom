@@ -109,10 +109,9 @@ jQuery(document).ready(function($){
 			onBeforeShow: function(){
 				$(this).ColorPickerSetColor( $(this).attr('hex'));
 			},	
-			onChange:function(hsb, hex, rgb,el){
-				//console.log(hex);
-				//$(el).attr({'backgroundColor': '#' + hex});
-				$(el).html( hex);
+			onChange:function(hsb, hex, rgb, el){
+				//$(el).css({'backgroundColor': '#' + hex});
+				
 			},	
 			onSubmit: function(hsb, hex, rgb, el) {
 				var obj_input = $(el).siblings('input.backender_colorpicker');
@@ -135,7 +134,7 @@ jQuery(document).ready(function($){
 	// font awesome icons
 	$('.faicon').on('click','i', function(){
 		var poss = $(this).position();
-		$('.fa_icons_selection').css({'top':(poss.top-168)+'px', 'left':(poss.left+3)}).fadeIn('fast');
+		$('.fa_icons_selection').css({'top':(poss.top-220)+'px', 'left':(poss.left-74)}).fadeIn('fast');
 
 		fa_icon_selection = $(this);
 	});
@@ -179,21 +178,21 @@ jQuery(document).ready(function($){
 	});	
 
 	
-	//yes no buttons in event edit page
-	$('.evo_backender_uix').on('click','.acus_yn_btn', function(){
+	//yes no buttons
+	$('.evo_backender_uix').on('click','.evo_yn_btn', function(){
 		
 		if($(this).hasClass('disable')){
 		
 		}else{
 			// yes
-			if($(this).hasClass('btn_at_no')){
-				$(this).removeClass('btn_at_no');
+			if($(this).hasClass('NO')){
+				$(this).removeClass('NO');
 				$(this).siblings('input').val('yes');
 				
 				$('#'+$(this).attr('afterstatement')).fadeIn();
 				
 			}else{//no
-				$(this).addClass('btn_at_no');
+				$(this).addClass('NO');
 				$(this).siblings('input').val('no');
 				
 				$('#'+$(this).attr('afterstatement')).fadeOut();

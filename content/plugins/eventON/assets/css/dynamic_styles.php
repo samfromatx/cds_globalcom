@@ -27,8 +27,8 @@
 			.eventon_events_list .eventon_list_event .evcal_cblock, .evcal_cblock, .eventon_events_list .eventon_list_event .evcal_desc span.evcal_desc2, .evcal_desc span.evcal_desc2, .evcal_evdata_row .evcal_evdata_cell h2, .evcal_evdata_row .evcal_evdata_cell h3.evo_h3, .evcal_month_line p, .evo_clik_row .evo_h3',
 			'css'=>'font-family:$', 'var'=>'evcal_font_fam',	'default'=>"oswald, 'arial narrow'"
 		),array(
-			'item'=>'.ajde_evcal_calendar .evo_sort_btn, .eventon_sf_field p',
-			'css'=>'color:#$', 'var'=>'evcal__sot',	'default'=>'ededed'
+			'item'=>'.ajde_evcal_calendar .evo_sort_btn, .eventon_sf_field p, .evo_srt_sel p.fa',
+			'css'=>'color:#$', 'var'=>'evcal__sot',	'default'=>'B8B8B8'
 		),array(
 			'item'=>'.ajde_evcal_calendar .evo_sort_btn:hover',
 			'css'=>'color:#$', 'var'=>'evcal__sotH',	'default'=>'d8d8d8'
@@ -41,13 +41,13 @@
 			'item'=>'#evcal_list .eventon_list_event .event_description .evcal_btn, .evo_pop_body .evcal_btn',
 			'multicss'=>array(
 				array('css'=>'color:#$', 'var'=>'evcal_gen_btn_fc',	'default'=>'ffffff'),
-				array('css'=>'background-color:#$', 'var'=>'evcal_gen_btn_bgc',	'default'=>'237ebd')
+				array('css'=>'background:#$', 'var'=>'evcal_gen_btn_bgc',	'default'=>'237ebd')
 			)	
 		),array(
 			'item'=>'#evcal_list .eventon_list_event .event_description .evcal_btn:hover, .evo_pop_body .evcal_btn:hover',
 			'multicss'=>array(
 				array('css'=>'color:#$', 'var'=>'evcal_gen_btn_fcx',	'default'=>'fff'),
-				array('css'=>'background-color:#$', 'var'=>'evcal_gen_btn_bgcx',	'default'=>'237ebd')
+				array('css'=>'background:#$', 'var'=>'evcal_gen_btn_bgcx',	'default'=>'237ebd')
 			)	
 		),array(
 			'item'=>'.evcal_evdata_row .evcal_evdata_icons i, .evcal_evdata_row .evcal_evdata_custometa_icons i',

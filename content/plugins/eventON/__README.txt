@@ -4,8 +4,8 @@ Plugin Name: EventON
 Author URI: http://ashanjay.com/
 Tags: calendar, event calendar, event posts
 Requires at least: 3.7
-Tested up to: 3.8.1
-Stable tag: 2.2.9
+Tested up to: 3.9
+Stable tag: 2.2.13
 
 Event calendar plugin for wordpress that utilizes WP's custom post type.  
 
@@ -19,6 +19,77 @@ Event calendar plugin for wordpress that utilizes WP's custom post type. This pl
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+= 2.2.13 (2014-6-16)
+FIXED: Option for adding dynamic styles to inline page when dynamic styles are not saved
+FIXED: featured image on eventTop not showing
+FIXED: shortcode generator not opening from wysiwyg editor button
+FIXED: eventtop styles and HTML that usually get overridden by theme styles
+UPDATED: Eventon addons page to now use ajax to load content
+UPDATED: New welcome screen - hope you guys will like this
+
+= 2.2.12 (2014-6-1)
+ADDED: yes no buttons to be translatable via I18n
+ADDED: the ability to select start or end date for past event cut off
+ADDED: option to limit remote server checks option if eventon wp-admin pages are loading slow due to remote server checks
+ADDED: Addon license activation system 
+UPDATE: Did some serious improvements to cut down remote server check to increase speed
+UPDATED: improvements to addon class and eventon remote updater classes
+UPDATED: UI layout for addons and license page
+FIXED: removed eventon shortcode button from WYSIWYG editor on event-edit post page
+FIXED: error on class-calendar_generator line 1595 with event color value
+FIXED: styles not saving correct in the settings
+FIXED: on widget time and location to be rows by itself
+FIXED: several other minor bugs
+
+= 2.2.11 (2014-5-19)
+ADDED: rtl support
+ADDED: event type #3 into shortcode options if activated
+ADDED: shortcode option to expand sort options section on load per calendar
+ADDED: the ability to show featured image for events at 100% height
+ADDED: the ability to turn off schema data for events
+ADDED: the ability to turn off google fonts completely
+ADDED: extended repeat feature to support first, second etc. friday type repeat events
+ADDED: option to copy auto generated dynamic styles in case appearance doesnt save changes
+UPDATED: UI super smooth all CSS yes/no buttons
+UPDATED: Color picker rainbow circle no more changed it to a button
+UPDATED: unix for virtual repeat events to be stored from back-end to reduce load on front-end
+UPDATED: sort options and filters to close when clicked outside
+FIXED: jumper month names
+FIXED: eventon javascripts to load only on events pages in backend
+FIXED: license activation issue solved
+FIXED: events menu not showing up for some on left menu
+FIXED: eventon popup box not showing correct solved z-index
+FIXED: small bugs
+
+= 2.2.10 (2014-5-5)
+ADDED: you can now show only featured events in the calendar with only_ft shortcode variable
+ADDED: load calendars pre-sorted by date or title with sort_by variable
+ADDED: add to google calendar button and updated add to calendar button
+ADDED: one letter month names for language translation for month jumper
+ADDED: accordion like event card opening capabilty controlled via shortcode
+ADDED: You can now add custom meta fields to eventTop
+ADDED: custom meta field names can be translated in languages now
+ADDED: End 3 letter month to eventTop date - now month shortname is always on
+ADDED: ability to customize the eventCard time format
+ADDED: ability to open links in new window for custom field content type = buttons
+ADDED: wp-admin sort events by event location column
+UPDATED: Month jumper to jump months upon first change in time
+UPDATED: PO file for eventon Admin pages
+UPDATED: Sort options section to be more intuitive for user
+UPDATED: Events list event order DESC now order months in descending order as well
+UPDATED: matching events menu icon based off font icons
+FIXED: Arrow circle CSS for IE
+FIXED: default event color missing # on hex code
+FIXED: Wysiwyg editor eventon shortcode generator icon not opening lightbox
+FIXED: Event type ID column for additional event type categories
+FIXED: Lon lat not saving for location addresses
+FIXED: Secondary languages not getting correct words when switching months
+FIXED: improvements to speed eventON and cut down server requests
+FIXED: featured image hover issues
+FIXED: Custom meta field activation on eventCard and reordering bug
+FIXED: font bold not reflecting on event details
+FIXED: the content filter disable settings issue
+
 = 2.2.9 (2014-3-26)
 ADDED: More/less text background gradient to be able to change from settings
 ADDED: ability to enable upto 5 additional event type categories for events

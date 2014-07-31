@@ -30,6 +30,18 @@ add_filter( 'manage_event_type_custom_column', 'event_type_custom_columns',5,3 )
 // event type 2
 add_filter( 'manage_edit-event_type_2_columns', 'event_type_edit_columns',5 );
 add_filter( 'manage_event_type_2_custom_column', 'event_type_custom_columns',5,3 );
+
+// additional event types
+add_action( 'admin_init', 'eventon_add_tax' );
+function eventon_add_tax(){
+	$options = get_option('evcal_options_evcal_1');
+	for($x=3; $x<6; $x++){
+		if(!empty($options['evcal_ett_'.$x]) && $options['evcal_ett_'.$x]=='yes'){
+			add_filter( "manage_edit-event_type_{$x}_columns", 'event_type_edit_columns',5 );
+			add_filter( "manage_event_type_{$x}_custom_column", 'event_type_custom_columns',5,3 );
+		}
+	}
+}
 function event_type_edit_columns($defaults){
     $defaults['event_type_id'] = __('ID');
     return $defaults;
@@ -109,6 +121,7 @@ function event_type_custom_columns($value, $column_name, $id){
 	        'cb' => '<input type="checkbox" />',
 	        'name' => __('Name'),
 	        'event_location' => __('Address','eventon'),
+	        'ev_lonlat' => __('Lon/Lat','eventon'),
 	//      'description' => __('Description'),
 	        'slug' => __('Slug')
 	        );
@@ -120,12 +133,18 @@ function event_type_custom_columns($value, $column_name, $id){
 	    //$theme = get_term($term_id, 'event_location');
 	    switch ($column_name) {
 	        case 'event_location': 
-	            
 	        	$term_meta = get_option( "taxonomy_$term_id" );
-
 	        	$out = "<p>".esc_attr( $term_meta['location_address'] ) ? esc_attr( $term_meta['location_address'] ) : ''."</p>";
-	           
-	            break;
+	        break;
+	        case 'ev_lonlat': 
+
+	        	$term_meta = get_option( "taxonomy_$term_id" );
+	        	$lon = (!empty($term_meta['location_lon']))? esc_attr( $term_meta['location_lon'] ) : '-';
+	        	$lat = (!empty($term_meta['location_lat']))? esc_attr( $term_meta['location_lat'] ) : '-';
+	        	
+	        	$out = "<p>{$lon} / {$lat}</p>";
+	        break;
+	        
 	 
 	        default:
 	            break;
@@ -135,81 +154,81 @@ function event_type_custom_columns($value, $column_name, $id){
 
 
 // add term page
-function eventon_taxonomy_add_new_meta_field() {
-	// this will add the custom meta field to the add new term page
-	?>
-	<div class="form-field">
-		<label for="term_meta[location_address]"><?php _e( 'Location Address', 'eventon' ); ?></label>
-		<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="">
-		<p class="description"><?php _e( 'Enter a location address','eventon' ); ?></p>
-	</div>
-	<div class="form-field">
-		<label for="term_meta[location_lon]"><?php _e( 'Longitude', 'eventon' ); ?></label>
-		<input type="text" name="term_meta[location_lon]" id="term_meta[location_lon]" value="">
-		<p class="description"><?php _e( '(Optional) longitude for address','eventon' ); ?></p>
-	</div>
-	<div class="form-field">
-		<label for="term_meta[location_lat]"><?php _e( 'Latitude', 'eventon' ); ?></label>
-		<input type="text" name="term_meta[location_lat]" id="term_meta[location_lat]" value="">
-		<p class="description"><?php _e( '(Optional) latitude for address','eventon' ); ?></p>
-	</div>
-<?php
-}
-add_action( 'event_location_add_form_fields', 'eventon_taxonomy_add_new_meta_field', 10, 2 );
+	function eventon_taxonomy_add_new_meta_field() {
+		// this will add the custom meta field to the add new term page
+		?>
+		<div class="form-field">
+			<label for="term_meta[location_address]"><?php _e( 'Location Address', 'eventon' ); ?></label>
+			<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="">
+			<p class="description"><?php _e( 'Enter a location address','eventon' ); ?></p>
+		</div>
+		<div class="form-field">
+			<label for="term_meta[location_lon]"><?php _e( 'Longitude', 'eventon' ); ?></label>
+			<input type="text" name="term_meta[location_lon]" id="term_meta[location_lon]" value="">
+			<p class="description"><?php _e( '(Optional) longitude for address','eventon' ); ?></p>
+		</div>
+		<div class="form-field">
+			<label for="term_meta[location_lat]"><?php _e( 'Latitude', 'eventon' ); ?></label>
+			<input type="text" name="term_meta[location_lat]" id="term_meta[location_lat]" value="">
+			<p class="description"><?php _e( '(Optional) latitude for address','eventon' ); ?></p>
+		</div>
+	<?php
+	}
+	add_action( 'event_location_add_form_fields', 'eventon_taxonomy_add_new_meta_field', 10, 2 );
 
 // Edit term page
-function eventon_taxonomy_edit_meta_field($term) {
- 
-	// put the term ID into a variable
-	$t_id = $term->term_id;
- 
-	// retrieve the existing value(s) for this meta field. This returns an array
-	$term_meta = get_option( "taxonomy_$t_id" ); ?>
-	<tr class="form-field">
-	<th scope="row" valign="top"><label for="term_meta[location_address]"><?php _e( 'Location Address', 'eventon' ); ?></label></th>
-		<td>
-			<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="<?php echo esc_attr( $term_meta['location_address'] ) ? esc_attr( $term_meta['location_address'] ) : ''; ?>">
-			<p class="description"><?php _e( 'Enter a location address','eventon' ); ?></p>
-		</td>
-	</tr>
+	function eventon_taxonomy_edit_meta_field($term) {
+	 
+		// put the term ID into a variable
+		$t_id = $term->term_id;
+	 
+		// retrieve the existing value(s) for this meta field. This returns an array
+		$term_meta = get_option( "taxonomy_$t_id" ); ?>
+		<tr class="form-field">
+		<th scope="row" valign="top"><label for="term_meta[location_address]"><?php _e( 'Location Address', 'eventon' ); ?></label></th>
+			<td>
+				<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="<?php echo esc_attr( $term_meta['location_address'] ) ? esc_attr( $term_meta['location_address'] ) : ''; ?>">
+				<p class="description"><?php _e( 'Enter a location address','eventon' ); ?></p>
+			</td>
+		</tr>
 
-	<tr class="form-field">
-	<th scope="row" valign="top"><label for="term_meta[location_lon]"><?php _e( 'Longitude', 'eventon' ); ?></label></th>
-		<td>
-			<input type="text" name="term_meta[location_lon]" id="term_meta[location_lon]" value="<?php echo esc_attr( $term_meta['location_lon'] ) ? esc_attr( $term_meta['location_lon'] ) : ''; ?>">
-			<p class="description"><?php _e( '(Optional) longitude for address','eventon' ); ?></p>
-		</td>
-	</tr>
+		<tr class="form-field">
+		<th scope="row" valign="top"><label for="term_meta[location_lon]"><?php _e( 'Longitude', 'eventon' ); ?></label></th>
+			<td>
+				<input type="text" name="term_meta[location_lon]" id="term_meta[location_lon]" value="<?php echo esc_attr( $term_meta['location_lon'] ) ? esc_attr( $term_meta['location_lon'] ) : ''; ?>">
+				<p class="description"><?php _e( '(Optional) longitude for address','eventon' ); ?></p>
+			</td>
+		</tr>
 
-	<tr class="form-field">
-	<th scope="row" valign="top"><label for="term_meta[location_lat]"><?php _e( 'Latitude', 'eventon' ); ?></label></th>
-		<td>
-			<input type="text" name="term_meta[location_lat]" id="term_meta[location_lat]" value="<?php echo esc_attr( $term_meta['location_lat'] ) ? esc_attr( $term_meta['location_lat'] ) : ''; ?>">
-			<p class="description"><?php _e( '(Optional) latitude for address','eventon' ); ?></p>
-		</td>
-	</tr>
-<?php
-}
+		<tr class="form-field">
+		<th scope="row" valign="top"><label for="term_meta[location_lat]"><?php _e( 'Latitude', 'eventon' ); ?></label></th>
+			<td>
+				<input type="text" name="term_meta[location_lat]" id="term_meta[location_lat]" value="<?php echo esc_attr( $term_meta['location_lat'] ) ? esc_attr( $term_meta['location_lat'] ) : ''; ?>">
+				<p class="description"><?php _e( '(Optional) latitude for address','eventon' ); ?></p>
+			</td>
+		</tr>
+	<?php
+	}
 
-add_action( 'event_location_edit_form_fields', 'eventon_taxonomy_edit_meta_field', 10, 2 );
+	add_action( 'event_location_edit_form_fields', 'eventon_taxonomy_edit_meta_field', 10, 2 );
 
 
 // Save extra taxonomy fields callback function.
-function evo_save_taxonomy_custom_meta( $term_id ) {
-	if ( isset( $_POST['term_meta'] ) ) {
-		$t_id = $term_id;
-		$term_meta = get_option( "taxonomy_$t_id" );
-		$cat_keys = array_keys( $_POST['term_meta'] );
-		foreach ( $cat_keys as $key ) {
-			if ( isset ( $_POST['term_meta'][$key] ) ) {
-				$term_meta[$key] = $_POST['term_meta'][$key];
+	function evo_save_taxonomy_custom_meta( $term_id ) {
+		if ( isset( $_POST['term_meta'] ) ) {
+			$t_id = $term_id;
+			$term_meta = get_option( "taxonomy_$t_id" );
+			$cat_keys = array_keys( $_POST['term_meta'] );
+			foreach ( $cat_keys as $key ) {
+				if ( isset ( $_POST['term_meta'][$key] ) ) {
+					$term_meta[$key] = $_POST['term_meta'][$key];
+				}
 			}
+			// Save the option array.
+			update_option( "taxonomy_$t_id", $term_meta );
 		}
-		// Save the option array.
-		update_option( "taxonomy_$t_id", $term_meta );
-	}
-}  
-add_action( 'edited_event_location', 'evo_save_taxonomy_custom_meta', 10, 2 );  
-add_action( 'create_event_location', 'evo_save_taxonomy_custom_meta', 10, 2 );
+	}  
+	add_action( 'edited_event_location', 'evo_save_taxonomy_custom_meta', 10, 2 );  
+	add_action( 'create_event_location', 'evo_save_taxonomy_custom_meta', 10, 2 );
 
 ?>

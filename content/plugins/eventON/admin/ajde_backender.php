@@ -34,7 +34,7 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 		// left side tabs with different level colors
 		$ls_level_code = (isset($cpav['level']))? 'class="'.$cpav['level'].'"': null;
 		
-		$leftside .= "<li ".$ls_level_code."><a class='".( ($count==1)?'focused':null)."' data-c_id='".$cpav['id']."' title='".$cpav['tab_name']."'>".$cpav['tab_name']."</a></li>";								
+		$leftside .= "<li ".$ls_level_code."><a class='".( ($count==1)?'focused':null)."' data-c_id='".$cpav['id']."' title='".$cpav['tab_name']."'>".__($cpav['tab_name'],'eventon')."</a></li>";								
 		$tab_type = (isset($cpav['tab_type'] ) )? $cpav['tab_type']:'';
 		if( $tab_type !='empty'){ // to not show the right side
 
@@ -55,7 +55,7 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 	
 					$rightside.= "<div style='display:none' class='fa_icons_selection'><div class='fai_in'><ul class='faicon_ul'>";
 					foreach($font_ as $fa){
-						$rightside.= "<li><i data-name='".$fa."' class='fa ".$fa."'></i>".$fa."</li>";
+						$rightside.= "<li><i data-name='".$fa."' class='fa ".$fa."' title='{$fa}'></i></li>";
 					}
 
 					$rightside.= "</ul>";
@@ -79,7 +79,7 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 				switch ($field['type']){
 					// notices
 					case 'notice':
-						$rightside.= "<div class='evos_notice'>".$field['name']."</div>";
+						$rightside.= "<div class='evos_notice'>".__($field['name'],'eventon')."</div>";
 					break;
 
 					//IMAGE
@@ -130,7 +130,10 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 					break;
 					case 'hr': $rightside.= "<em class='hr_line'></em>"; break;
 					case 'checkbox':
-						$rightside.= "<p><input type='checkbox' name='".$field['id']."' value='yes' ".(($evOPT[$field['id']]=='yes')?'checked="/checked"/':'')."/> ".$field['name']."</p>";
+
+						$this_value= (!empty($evOPT[ $field['id']]))? $evOPT[ $field['id']]: null;
+						
+						$rightside.= "<p><input type='checkbox' name='".$field['id']."' value='yes' ".(($this_value=='yes')?'checked="/checked"/':'')."/> ".$field['name']."</p>";
 					break;
 					case 'text':
 						$this_value= (!empty($evOPT[ $field['id']]))? $evOPT[ $field['id']]: null;
@@ -305,24 +308,32 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 					break;
 					case 'checkboxes':
 						
-						$meta_ar = (!empty($evOPT[ $field['id'] ]) )? $evOPT[ $field['id'] ]: null;
-						$meta_arr= $meta_ar;
+						$meta_arr= (!empty($evOPT[ $field['id'] ]) )? $evOPT[ $field['id'] ]: null;
+						$default_arr= (!empty($field['default'] ) )? $field['default']: null;
+
+						ob_start();
 						
-						$rightside.= "<p class='acus_line acus_checks'>".__($field['name'],'eventon')."<br/><br/> ";
+						echo "<p class='acus_line acus_checks'><span style='padding-bottom:10px;'>".__($field['name'],'eventon')."</span>";
+
 						
 						// foreach checkbox
 						foreach($field['options'] as $option=>$option_val){
 
 							$checked='';
-							if(is_array($meta_arr)){
+							if(!empty($meta_arr) && is_array($meta_arr)){
 								$checked = (in_array($option, $meta_arr))?'checked':'';
+							}elseif(!empty($default_arr)){
+								$checked = (in_array($option, $default_arr))?'checked':'';
 							}
 							
-							$rightside.="<span><input id='".$field['id'].$option_val."' type='checkbox' 
+							echo "<span><input id='".$field['id'].$option_val."' type='checkbox' 
 							name='".$field['id']."[]' value='".$option."' ".$checked."/>
 							<label for='".$field['id'].$option_val."'><span></span>".$option_val."</label></span>";							
 						}						
-						$rightside.= "</p>";						
+						echo  "</p>";
+
+						$rightside.= ob_get_clean();
+
 					break;
 					
 					case 'yesno':
@@ -338,8 +349,7 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 
 
 
-
-						$rightside.= "<p class='yesno_row'><a afterstatement='".$after_statement."' class='acus_yn_btn ".(($__default=='yes')?null:'btn_at_no')."'></a><input type='hidden' name='".$field['id']."' value='".(($__default=='yes')?'yes':'no')."'/><span>".__($field['name'],'eventon')."{$legend_code}</span></p>";
+						$rightside.= "<p class='yesno_row'>".eventon_html_yesnobtn(array('var'=>$__default,'attr'=>array('afterstatement'=>$after_statement) ))."<input type='hidden' name='".$field['id']."' value='".(($__default=='yes')?'yes':'no')."'/><span class='field_name'>".__($field['name'],'eventon')."{$legend_code}</span></p>";
 					break;
 					case 'begin_afterstatement': 
 						

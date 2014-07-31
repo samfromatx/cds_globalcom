@@ -23,6 +23,7 @@ class EVO_post_types{
 	public function __construct() {
 		add_action( 'init', array( __CLASS__, 'register_taxonomies' ), 5 );
 		add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
+
 	}
 
 	/**
@@ -57,6 +58,9 @@ class EVO_post_types{
 			)) 
 		);
 
+
+
+		
 
 		// Event type custom taxonomy NAMES
 		$event_type_names = evo_get_ettNames($evcal_opt1);
@@ -98,6 +102,8 @@ class EVO_post_types{
 		
 		
 	}
+
+	
 	/**
 	 * Register core post types
 	 */
@@ -122,7 +128,7 @@ class EVO_post_types{
 					'query_var'		 		=> true,
 					'supports' 				=> array('title','editor','custom-fields','thumbnail'),
 					//'supports' 			=> array('title','editor','thumbnail'),
-					'menu_position' 		=> 5, 
+					'menu_position' 		=> 15, 
 					'has_archive' 			=> true
 				)
 			)
