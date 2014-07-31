@@ -6,6 +6,7 @@ include 'widgets/upcoming-events.php';
 include 'widgets/industries.php';
 include 'widgets/locations.php';
 include 'widgets/optin.php';
+include 'widgets/media-post.php';
 include 'widgets/nonprofit-post.php';
 include 'widgets/twitter.php';
 include 'widgets/youtube.php';
