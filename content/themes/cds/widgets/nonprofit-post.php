@@ -5,8 +5,8 @@ class NonprofitPostWidget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'nonprofit_post_widget',
-            __('Nonprofit Post', 'text_domain'),
-            array('description' => __('Display the latest category blog post', 'text_domain'))
+            __('Nonprofit Blog Posts', 'text_domain'),
+            array('description' => __('Display the last three nonprofit blog posts', 'text_domain'))
         );
     }
 
