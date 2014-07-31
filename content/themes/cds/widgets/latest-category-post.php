@@ -1,12 +1,12 @@
 <?php
 
-class LatestPostWidget extends WP_Widget {
+class LatestCategoryPostWidget extends WP_Widget {
 
     public function __construct() {
         parent::__construct(
-            'latest_post_widget',
-            __('Latest Blog Post', 'text_domain'),
-            array('description' => __('Display the latest blog post', 'text_domain'))
+            'latest_category_post_widget',
+            __('Latest Category Post', 'text_domain'),
+            array('description' => __('Display the latest category blog post', 'text_domain'))
         );
     }
 
@@ -17,13 +17,18 @@ class LatestPostWidget extends WP_Widget {
         if (count($recent)) {
             $post = $recent[0];
             setup_postdata($post);
+
+            $image = get_the_post_thumbnail(get_the_ID(), 250, 125);
+            if (!$image) {
+                $image_path = get_stylesheet_directory_uri() . '/images/widget-defaults/' . $instance['default_image'];
+                $image = "<img src=\"$image_path\" />";
+            }
+
             ?>
                 <div class="link widget single">
-                    <h4><?php echo $instance['title'] ?></h4>
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    <?php the_excerpt(); ?>
-                    <p class="byline">By <?php the_author(); ?></p>
-                    <a class="arrow" href="<?php the_permalink(); ?>"><span class="hidefromscreen">Click arrow</span></a>
+                    <h4><?php echo $instance['title']; ?></h4>
+                    <a class="full" href="<?php the_permalink(); ?>"><?php echo $image; ?></a>
+                    <a class="read" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                 </div>
             <?php
         }
@@ -51,5 +56,5 @@ class LatestPostWidget extends WP_Widget {
     }
 }
 add_action('widgets_init', function() {
-    register_widget('LatestPostWidget');
+    register_widget('LatestCategoryPostWidget');
 });
