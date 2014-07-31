@@ -17,7 +17,7 @@ class OptinWidget extends WP_Widget {
             <div class="optinwidget-text">
                 <p><?php echo $instance['optin_text'] ?></p>
                 <p><strong><?php echo $instance['optin_text_b'] ?></strong></p>
-                <a href="/stay_informed/" class="btn btn-danger optin_submit" id="optinSubmit" role="button"><?php echo $instance['optin_button_text'] ?></a>
+                <a href="/stay-informed/" class="btn btn-danger optin_submit" id="optinSubmit" role="button"><?php echo $instance['optin_button_text'] ?></a>
             </div>
         </div>
         <?php
