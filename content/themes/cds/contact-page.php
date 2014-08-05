@@ -43,7 +43,7 @@ Template Name: Contact Form
                             <label for="formsubject" class="hidefromscreen">Subject:</label>
                             <select name="subject" required class="contact-dropdown" id="formsubject" aria-required="true">
                                 <option value="">Subject</option>
-                                <option>Customer Service</option>
+                                <option value="Customer Service">Customer Service (magazine subscriptions, etc.)</option>
                                 <option>Sales</option>
                                 <option <?php if ($_GET['sbj'] == "demo") : echo("selected"); endif; ?>>Demo</option>
                                 <option <?php if ($_GET['sbj'] == "quote") : echo("selected"); endif; ?>>Quote</option>
