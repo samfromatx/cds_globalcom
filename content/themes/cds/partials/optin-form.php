@@ -39,6 +39,7 @@
 <div class="col-xs-10 col-xs-offset-1">
 <h3 style="color: #fc4c00;">Thank you for signing up to stay up to date on our latest products and services.</h3>
 <p class="optin_note">All messages are moderated and always on topic. You can unsubscribe at any time.</p>
+<?php get_sidebar(); ?>
 </div>
 </div>
 </div>
@@ -49,8 +50,7 @@
 $('#optinform').submit(function(e) {
     e.preventDefault(); // don't submit multiple times
     this.submit();
-    console.log("Hooray, it worked!");
-    $("#optinformpage").hide();
-    $("#thankyou").show();
+    $("#optinformpage").slideUp();
+    $("#thankyou").slideDown();
 });
 </script>

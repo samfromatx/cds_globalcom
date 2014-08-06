@@ -69,8 +69,8 @@ Template Name: Contact Form
 	                            <input type="text" name="lastName" placeholder="Last Name" id="formlastName" required aria-required="true" />
 	                        <label for="forminboundOriginator" class="hidefromscreen">How Did You Hear About Us:</label>
 	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" aria-required="false" />
-	                        <label for="formComments" class="hidefromscreen">Comments:</label>
-                            	<textarea rows="6" name="comments" placeholder="Comments" id="formComments"></textarea>
+	                        <label for="formComments" class="hidefromscreen">Message:</label>
+                            	<textarea rows="6" name="comments" placeholder="Message" id="formComments"></textarea>
                         <div>
                             <input value="cds-global-contact" type="hidden" name="elqFormName" />
                             <input value="1851" type="hidden" name="elqSiteId" />
@@ -78,12 +78,26 @@ Template Name: Contact Form
                             <input type="submit" value="Submit" />
                         </div>
                     </form>
+
+<div id="thankyou" style="display: none;">
+<h3 style="color: #fc4c00;">Thank you for contacting CDS Global!</h3>
+<p>CDS Global is the leading provider of end-to-end business process outsourcing.</p>
+
+<aside class="additional sidebar" role="complementary">
+    <h2 style="color: #1cadf1; text-align:center;">We Power&nbsp;&nbsp;&nbsp;&nbsp;We Connect&nbsp;&nbsp;&nbsp;&nbsp;We Simplify</h2>
+    <?php
+
+        dynamic_sidebar('cds-thankyou');
+    ?>
+</aside>
+</div>
+
                     <iframe name="eloqua-submit" style="display: none;"></iframe>
 
                 </div>
             </div>
 
-            <?php get_sidebar(); ?>
+            <?php //get_sidebar(); ?>
         </div>
         <?php endif; ?>
     </div>

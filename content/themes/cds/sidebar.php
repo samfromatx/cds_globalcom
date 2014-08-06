@@ -1,3 +1,11 @@
+<?php
+// See if the current page or the parent has a custom industry sidebar
+// Otherwise fall back to the default one.
+$actual_link = "$_SERVER[REQUEST_URI]";
+$parentdir = explode('/', $actual_link);
+if ($parentdir[1] != "stay-informed") {
+?>
+
 <aside class="secondary sidebar" role="complementary">
     <?php
         // If this is a leaf page, include the CTA buttons
@@ -11,11 +19,6 @@
             </div>
         <?php endif;
 
-        // See if the current page or the parent has a custom industry sidebar
-        // Otherwise fall back to the default one.
-        $actual_link = "$_SERVER[REQUEST_URI]";
-        $parentdir = explode('/', $actual_link);
-
         //$sidebar = "industry-{$post->post_name}";
         $sidebar = "industry-$parentdir[2]";
         if (!is_active_sidebar($sidebar)) {
@@ -27,3 +30,12 @@
         dynamic_sidebar($sidebar);
     ?>
 </aside>
+<?php } else { ?>
+<aside class="additional sidebar" role="complementary">
+    <h2 style="color: #1cadf1; text-align:center;">We Power&nbsp;&nbsp;&nbsp;&nbsp;We Connect&nbsp;&nbsp;&nbsp;&nbsp;We Simplify</h2>
+    <?php
+
+        dynamic_sidebar('cds-thankyou');
+    ?>
+</aside>
+<?php } ?>

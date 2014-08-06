@@ -426,6 +426,11 @@ function cds_widgets_init() {
         'id' => 'cds-blog',
     ) + $defaults);
 
+    register_sidebar(array(
+        'name' => 'Thank you page',
+        'id' => 'cds-thankyou',
+    ) + $defaults);
+
     // Separate widget config for each industry page
     $industry_page = get_page_by_path('industries');
     $industries = get_pages(array('parent' => $industry_page->ID));
