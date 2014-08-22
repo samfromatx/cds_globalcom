@@ -8,7 +8,7 @@
 <div class="col-xs-10">
 <form class="optin" action="https://s1851.t.eloqua.com/e/f2" method="post" target="eloqua-submit" name="optinform" id="optinform">
 <p>Sign up for our email list below. We'll keep you up to date on the categories of your choice.</p><label class="hidefromscreen" for="emailAddress">Email Address:</label><input id="optin_email" name="emailAddress" required="" type="email" placeholder="Email Address" /><br><br>
-<label class="hidefromscreen" for="country">Country:</label><select name="country" required id="formcountry" placeholder="Country">
+<label class="hidefromscreen" for="country">Country:</label><select name="country" required="" id="formcountry" placeholder="Country">
 <option value="">Country</option>
 <option value="US">United States</option>
 <option value="CA">Canada</option>
@@ -251,7 +251,7 @@
 <option value="ZW">Zimbabwe</option>
 </select><br>
 <label class="checkbox" for="industry"><strong>Industry categories you are interested in:</strong><br>
-<input name="industry" type="radio" value="Media" /> Media<br>
+<input name="industry" type="radio" value="Media" required="" /> Media<br>
 <input name="industry" type="radio" value="Not For Profit" /> Nonprofit<br>
 <input name="industry" type="radio" value="Utilities" /> Utilities<br>
 <input name="industry" type="radio" value="Other" /> Other</label><br>
@@ -291,9 +291,14 @@
 <iframe name="eloqua-submit" style="display: none;"></iframe>
 <script>
 $('#optinform').submit(function(e) {
+    if ( this.checkValidity && !this.checkValidity() ) {
+        $( this ).find( ":invalid" ).first().focus();
+        event.preventDefault();
+        return;
+        }
     e.preventDefault(); // don't submit multiple times
     this.submit();
     $("#optinformpage").slideUp();
     $("#thankyou").slideDown();
-});
+})
 </script>
