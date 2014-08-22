@@ -256,7 +256,7 @@
 <input name="industry" type="radio" value="Utilities" /> Utilities<br>
 <input name="industry" type="radio" value="Other" /> Other</label><br>
 <hr class="fadeline" />
-<label class="checkbox" for="legal"><input name="OptInCheckbox" type="checkbox" value="on" required="true" /> By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</label>
+<label class="checkbox" for="legal"><input name="OptInCheckbox" type="checkbox" value="on" required="" /> By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</label>
 <input type="hidden" name="PermissionDate" value="<?php echo date("m/d/Y"); ?>" />
 <input type="hidden" name="elqSource" value="Opt_In_Form">
 <input type="hidden" name="status1" value="Prospect">
