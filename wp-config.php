@@ -17,7 +17,7 @@ if ($wpdomain == "cds.local") {
 	$dbConfigFile = dirname(__FILE__) . '/local-config.php';
 	if (!file_exists($dbConfigFile))
 	    die('Set up database config in local-config.php');
-} elseif ($wpdomain == "stage.cds-global.com") {
+} elseif ($wpdomain == "stage.cds-global.com" || $wpdomain == "uk.stage.cds-global.com") {
 	$dbConfigFile = dirname(__FILE__) . '/stage-config.php';
 	if (!file_exists($dbConfigFile))
 	    die('Set up database config in stage-config.php');
@@ -77,7 +77,17 @@ $table_prefix = 'wp_';
  */
 define('WPLANG', '');
 
+/* Multisite */
+define( 'WP_ALLOW_MULTISITE', true );
 
+define('MULTISITE', true);
+define('SUNRISE', 'on');
+define('SUBDOMAIN_INSTALL', true);
+define('DOMAIN_CURRENT_SITE', $wpdomain);
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+define('WP_DEFAULT_THEME', 'cds');
 
 /* That's all, stop editing! Happy blogging. */
 
