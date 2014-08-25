@@ -295,9 +295,15 @@ function eloqua_form($post_id = false) {
             } elseif ($_COOKIE["utmmedium"]) {
                 $elqMed = $_COOKIE["utmmedium"];
             }
+            if ($_GET['utm_campaign']) {
+                $elqInitialCampaign = $_GET['utm_campaign'];
+            } elseif ($_COOKIE["utmcampaign"]) {
+                $$elqInitialCampaign = $_COOKIE["utmcampaign"];
+            }
             $qsArray = array(
                 'elqCampaignName' => $elqCN,
                 'elqMed' => $elqMed,
+                'eLQInitialCampaignName1' => $elqInitialCampaign,
                  ); ?>
             <?php foreach ($qsArray as $name => $qsarg): ?>
                 <input type="hidden" name="<?php echo $name; ?>" data-qsarg="<?php echo $qsarg; ?>" value="<?php echo $qsarg; ?>">

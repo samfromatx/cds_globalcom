@@ -1,43 +1,43 @@
 <?php $eloquaForm = array (
   'action' => 'https://s1851.t.eloqua.com/e/f2',
-  'fields' => 
+  'fields' =>
   array (
-    'emailAddress' => 
+    'emailAddress' =>
     array (
       'type' => 'email',
       'displayName' => 'Email Address',
       'apiName' => 'C_EmailAddress',
     ),
-    'firstName' => 
+    'firstName' =>
     array (
       'type' => 'text',
       'displayName' => 'First Name',
       'apiName' => 'C_FirstName',
     ),
-    'lastName' => 
+    'lastName' =>
     array (
       'type' => 'text',
       'displayName' => 'Last Name',
       'apiName' => 'C_LastName',
     ),
-    'company' => 
+    'company' =>
     array (
       'type' => 'text',
       'displayName' => 'Company',
       'apiName' => 'C_Company',
     ),
-    'businessPhone' => 
+    'businessPhone' =>
     array (
       'type' => 'tel',
       'displayName' => 'Business Phone',
       'apiName' => 'C_BusPhone',
     ),
-    'country' => 
+    'country' =>
     array (
       'type' => 'select',
       'displayName' => 'Country',
       'apiName' => 'C_Country',
-      'options' => 
+      'options' =>
       array (
         '' => '--------------',
         'US' => 'United States',
@@ -281,18 +281,18 @@
         'ZW' => 'Zimbabwe',
       ),
     ),
-    'title' => 
+    'title' =>
     array (
       'type' => 'text',
       'displayName' => 'Title',
       'apiName' => 'C_Title',
     ),
-    'department' => 
+    'department' =>
     array (
       'type' => 'select',
       'displayName' => 'Department',
       'apiName' => 'C_Department1',
-      'options' => 
+      'options' =>
       array (
         '' => ' - Select List -',
         'Administration & Support' => 'Administration & Support',
@@ -307,12 +307,12 @@
         'Sales' => 'Sales',
       ),
     ),
-    'jobLevel' => 
+    'jobLevel' =>
     array (
       'type' => 'select',
       'displayName' => 'Job Level',
       'apiName' => 'C_Job_Role1',
-      'options' => 
+      'options' =>
       array (
         '' => ' - Please Select -',
         'CXO' => 'CXO',
@@ -332,12 +332,12 @@
         'Volunteer' => 'Volunteer',
       ),
     ),
-    'industry' => 
+    'industry' =>
     array (
       'type' => 'select',
       'displayName' => 'Industry',
       'apiName' => 'C_Industry1',
-      'options' => 
+      'options' =>
       array (
         '' => ' - Please Select -',
         'Agriculture' => 'Agriculture',
@@ -370,12 +370,12 @@
         'Utilities' => 'Utilities',
       ),
     ),
-    'companySize' => 
+    'companySize' =>
     array (
       'type' => 'select',
       'displayName' => 'Company Size',
       'apiName' => 'C_Company_Size1',
-      'options' => 
+      'options' =>
       array (
         '' => ' - Please Select -',
         '<10M' => '<10M',
@@ -385,12 +385,12 @@
         '>1B' => '>1B',
       ),
     ),
-    'totalCirculation' => 
+    'totalCirculation' =>
     array (
       'type' => 'select',
       'displayName' => 'Total Circulation ',
       'apiName' => 'C_Total_Circulation_1',
-      'options' => 
+      'options' =>
       array (
         '0-50,000' => '0-50,000',
         '50,001-100,000' => '50,001-100,000',
@@ -399,42 +399,42 @@
         '1,000,000+' => '1,000,000+',
       ),
     ),
-    'typeOfPublisher' => 
+    'typeOfPublisher' =>
     array (
       'type' => 'select',
       'displayName' => 'Type of Publisher',
       'apiName' => 'C_Status1',
-      'options' => 
+      'options' =>
       array (
         'Consumer' => 'Consumer',
         'B2B/Trade' => 'B2B/Trade',
         'Other' => 'Other',
       ),
     ),
-    'address1' => 
+    'address1' =>
     array (
       'type' => 'text',
       'displayName' => 'Address 1',
       'apiName' => 'C_Address1',
     ),
-    'address2' => 
+    'address2' =>
     array (
       'type' => 'text',
       'displayName' => 'Address 2',
       'apiName' => 'C_Address2',
     ),
-    'city' => 
+    'city' =>
     array (
       'type' => 'text',
       'displayName' => 'City',
       'apiName' => 'C_City',
     ),
-    'stateOrProvince' => 
+    'stateOrProvince' =>
     array (
       'type' => 'select',
       'displayName' => 'State or Province',
       'apiName' => 'C_State_Prov',
-      'options' => 
+      'options' =>
       array (
         '' => ' - Please Select -',
         'AB' => 'AB',
@@ -501,30 +501,30 @@
         'Non U.S.' => 'Non U.S.',
       ),
     ),
-    'twitter' => 
+    'twitter' =>
     array (
       'type' => 'text',
       'displayName' => 'Twitter',
       'apiName' => 'C_Twitter1',
     ),
-    'facebook' => 
+    'facebook' =>
     array (
       'type' => 'text',
       'displayName' => 'Facebook',
       'apiName' => 'C_Facebook1',
     ),
-    'linkedIn' => 
+    'linkedIn' =>
     array (
       'type' => 'text',
       'displayName' => 'LinkedIn',
       'apiName' => 'C_LinkedIn1',
     ),
-    'notForProfitOrganizationType' => 
+    'notForProfitOrganizationType' =>
     array (
       'type' => 'select',
       'displayName' => 'Not for Profit Organization Type',
       'apiName' => 'C_Not_for_Profit_Organization_Type1',
-      'options' => 
+      'options' =>
       array (
         'National' => 'National',
         'Regional' => 'Regional',
@@ -532,13 +532,13 @@
       ),
     ),
   ),
-  'hidden' => 
+  'hidden' =>
   array (
     'elqFormName' => 'cds-global-resources',
     'elqSiteId' => '1851',
     'elqCampaignId' => '',
   ),
-  'admin' => 
+  'admin' =>
   array (
     'elqSource' =>
     array (
@@ -551,7 +551,7 @@
         'type' => 'select',
         'displayName' => 'Eloqua Lead Source',
         'displayValue'  =>  '',
-        'options' => 
+        'options' =>
         array (
             'Marketing_Campaign_Case_Study' => 'Case Study',
             'Marketing_Campaign_Seminar' => 'Seminar',
@@ -573,7 +573,7 @@
       'type' => 'select',
       'displayName' => 'Eloqua Lead Source Most Recent',
       'displayValue'  =>  '',
-      'options' => 
+      'options' =>
         array (
             'Marketing_Campaign_Case_Study' => 'Case Study',
             'Marketing_Campaign_Seminar' => 'Seminar',
@@ -591,9 +591,10 @@
       'displayValue'  =>  'CDS-Global.com',
     ),
   ),
-  'qs' => 
+  'qs' =>
   array (
     'elqCampaignName' => 'cn',
     'elqMed' => 'utm_medium',
+    'eLQInitialCampaignName1' => '',
   ),
 );
