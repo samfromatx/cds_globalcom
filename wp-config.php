@@ -17,7 +17,7 @@ if ($wpdomain == "cds.local") {
 	$dbConfigFile = dirname(__FILE__) . '/local-config.php';
 	if (!file_exists($dbConfigFile))
 	    die('Set up database config in local-config.php');
-} elseif ($wpdomain == "stage.cds-global.com" || $wpdomain == "uk.stage.cds-global.com") {
+} elseif ($wpdomain == "stage.cds-global.com" || $wpdomain == "stageuk.cds-global.com") {
 	$dbConfigFile = dirname(__FILE__) . '/stage-config.php';
 	if (!file_exists($dbConfigFile))
 	    die('Set up database config in stage-config.php');
