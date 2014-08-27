@@ -257,13 +257,31 @@
 <input name="industry" type="radio" value="Other" /> Other</label><br>
 <hr class="fadeline" />
 <label class="checkbox" for="legal"><input name="OptInCheckbox" type="checkbox" value="on" required="" /> By checking this box, I authorize CDS Global to contact me via the email address supplied about CDS Global products and services, including product releases, updates, seminars, events, surveys, trainings and special offers.</label>
+<?php
+if ($_GET['utm_campaign']) {
+    $elqCamp = $_GET['utm_campaign'];
+} elseif ($_COOKIE["utmcampaign"]) {
+    $elqCamp = $_COOKIE["utmcampaign"];
+} else {
+    $elqCamp = "Website_Opt_In-CDS-Global.com";
+}
+if ($_GET['utm_medium']) {
+    $elqMed = $_GET['utm_medium'];
+} elseif ($_COOKIE["utmmedium"]) {
+    $elqMed = $_COOKIE["utmmedium"];
+} else {
+    $elqMed = "";
+}
+?>
 <input type="hidden" name="PermissionDate" value="<?php echo date("m/d/Y"); ?>" />
 <input type="hidden" name="elqSource" value="Opt_In_Form">
 <input type="hidden" name="status1" value="Prospect">
+<input type="hidden" name="eLQInitialCampaignName1" value="<?php echo $elqCamp ?>">
 <input type="hidden" name="LeadSource" value="Inbound_Contact_Me_form_Web">
-<input type="hidden" name="LeadSourceName" value="Website_Opt_In-CDS-Global.com">
+<input type="hidden" name="LeadSourceName" value="<?php echo $elqCamp ?>">
 <input type="hidden" name="LSMostRecent" value="Inbound_Contact_Me_form_Web">
-<input type="hidden" name="LSNameMostRecent" value="Website_Opt_In-CDS-Global.com">
+<input type="hidden" name="LSNameMostRecent" value="<?php echo $elqCamp ?>">
+<input type="hidden" name="elqMed" value="<?php echo $elqMed ?>">
 <input type="hidden" name="elqFormName" value="cds-global-resources">
 <input type="hidden" name="elqSiteId" value="1851">
 <hr class="fadeline" />
