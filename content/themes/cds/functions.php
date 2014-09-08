@@ -572,16 +572,16 @@ apply_filters( 'wpseo_sitemap_page-sitemap_change_freq', 'daily', 'http://www.cd
 add_action('init', 'setUTMCookie');
 function setUTMCookie() {
     if (!$_COOKIE["utmcampaign"] || $_GET['utm_campaign']) {
-        setcookie('utmcampaign', $_GET['utm_campaign'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+        setcookie('utmcampaign', htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
     if (!$_COOKIE["utmmedium"] || $_GET['utm_medium']) {
-        setcookie('utmmedium', $_GET['utm_medium'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+        setcookie('utmmedium', htmlspecialchars($_GET['utm_medium'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
     if (!$_COOKIE["utmsource"] || $_GET['utm_source']) {
-        setcookie('utmsource', $_GET['utm_source'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+        setcookie('utmsource', htmlspecialchars($_GET['utm_source'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
     if (!$_COOKIE["utmcontent"] || $_GET['utm_content']) {
-        setcookie('utmcontent', $_GET['utm_content'], time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+        setcookie('utmcontent', htmlspecialchars($_GET['utm_content'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
 }
 

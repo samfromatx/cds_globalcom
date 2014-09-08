@@ -275,7 +275,8 @@ function eloqua_form($post_id = false) {
                 // check for utm_campaign query string and if present overwrite LeadSourceName and LSNameMostRecent
                 if ($name == "LeadSourceName" || $name == "LSNameMostRecent") {
                     if ($_GET['utm_campaign']) {
-                        $value = $_GET['utm_campaign'];
+                        //$value = $_GET['utm_campaign'];
+                        $value = htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8');
                     } elseif ($_COOKIE["utmcampaign"]) {
                         $value = $_COOKIE["utmcampaign"];
                     }
@@ -286,17 +287,20 @@ function eloqua_form($post_id = false) {
 
             <?php
             if ($_GET['cn']) {
-                $elqCN = $_GET['cn'];
+                //$elqCN = $_GET['cn'];
+                $elqCN = htmlspecialchars($_GET['cn'], ENT_QUOTES, 'UTF-8');
             } elseif ($_COOKIE["utmcontent"]) {
                 $elqCN = $_COOKIE["utmcontent"];
             }
             if ($_GET['utm_medium']) {
-                $elqMed = $_GET['utm_medium'];
+                //$elqMed = $_GET['utm_medium'];
+                $elqMed = htmlspecialchars($_GET['utm_medium'], ENT_QUOTES, 'UTF-8');
             } elseif ($_COOKIE["utmmedium"]) {
                 $elqMed = $_COOKIE["utmmedium"];
             }
             if ($_GET['utm_campaign']) {
-                $elqInitialCampaign = $_GET['utm_campaign'];
+                //$elqInitialCampaign = $_GET['utm_campaign'];
+                $elqInitialCampaign = htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8');
             } elseif ($_COOKIE["utmcampaign"]) {
                 $$elqInitialCampaign = $_COOKIE["utmcampaign"];
             }
