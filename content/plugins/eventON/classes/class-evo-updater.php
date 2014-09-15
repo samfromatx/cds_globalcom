@@ -23,6 +23,8 @@ class evo_updater{
 
     /** Plugin name (plugin_file) */
     public $slug;
+
+    public $error_code ='00';
 	
 	public $transient;
 
@@ -225,10 +227,12 @@ class evo_updater{
 
 	// get version information
 		public function evo_check_info($false, $action, $args){
-			if ($args->slug === $this->slug) {  
-	            $information = $this->getRemote_information($args);  
-	            return $information;  
-	        }  
+			if(!empty($args->slug)){
+				if ($args->slug === $this->slug) {  
+		            $information = $this->getRemote_information($args);  
+		            return $information;  
+		        }  
+		    }
 	        return $false;
 		}
 	
@@ -267,39 +271,6 @@ class evo_updater{
 			
 	    }
 	
-	
-	/**	Update field values to licenses */
-		function save_new_update_details($remote_version, $has_new_update, $current_version){
-			$licenses =get_option('_evo_licenses');
-			
-			if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$this->slug]) ){
-				
-
-				$new_lic = $licenses;
-				$new_lic[$this->slug]['remote_version']= $remote_version;	
-				$new_lic[$this->slug]['has_new_update']= $has_new_update;	
-
-				update_option('_evo_licenses',$new_lic);
-				
-				return $new_lic;
-			}else{
-				return false;
-			}
-		}
-	
-	// save license fields to wp options
-		function save_new_license_field_values($license_field, $new_value, $license_slug){
-			$licenses =get_option('_evo_licenses');
-			
-			if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$license_slug]) ){
-				
-				
-				$new_lic = $licenses;
-				$new_lic[$license_slug][$license_field]= $new_value;	
-
-				update_option('_evo_licenses',$new_lic);
-			}
-		}
 	
     /** Return the remote version   */
 	    public function getRemote_version(){
@@ -364,9 +335,12 @@ class evo_updater{
 			}
 		}
 	
+
+
 	/** get license key **/
 		public function _verify_license_key($slug='', $key=''){
-			
+			global $eventon;
+
 			$slug = (!empty($slug))? $slug: $this->slug;
 			$saved_key = (!empty($key) )? $key: $this->get_saved_license_key($slug);
 			
@@ -377,7 +351,9 @@ class evo_updater{
 				$args = array(
 					'slug' => $this->slug,
 					'key'=>$saved_key,
-					'server'=>$_SERVER['SERVER_NAME']
+					'server'=>$_SERVER['SERVER_NAME'],
+					'siteurl'=>get_site_url(),
+					'evoversion'=>$eventon->version,
 				);
 				$request_string = array(
 					'body' => array(
@@ -397,6 +373,33 @@ class evo_updater{
 					return ($license_check_status==1)? true:$license_check_status;
 						
 				}			
+			}	
+		}
+
+	// Internally check if the license has active status in the options and if so return true
+	// also use for verify whether evo products activated
+		public function _verify_license_locally($slug=''){
+			$licenses =get_option('_evo_licenses');
+			$slug = (!empty($slug))? $slug: $this->slug;
+
+			if(is_array($licenses) && count($licenses)>0 && !empty($licenses[$slug]) 
+				&& !empty($licenses[$slug]['status']) && $licenses[$slug]['status']=='active'){	
+				return true;
+			}else{
+				return false;
+			}	
+		}
+
+	// another alternative function to check whether license is activated without tapping to remote server
+		public function is_activated($slug='', $licenses=''){
+			$licenses =(!empty($licenses))? $licenses: get_option('_evo_licenses');
+			$slug = (!empty($slug))? $slug: $this->slug;
+
+			if(is_array($licenses) && count($licenses)>0 && !empty($licenses[$slug]) 
+				&& !empty($licenses[$slug]['status']) && $licenses[$slug]['status']=='active'){	
+				return true;
+			}else{
+				return false;
 			}	
 		}
 	
@@ -423,6 +426,28 @@ class evo_updater{
 			}
 		}
 	
+	// get licenses saved in options
+		public function get_licenses(){
+			global $eventon;
+
+			// get saved options for licenses
+			$licenses =  get_option('_evo_licenses');
+			if(empty($licenses)){
+				// if there are no licenses saved add eventon information in there
+				$lice = array(
+					'eventon'=>array(
+						'name'=>'EventON',
+						'current_version'=>$eventon->version,
+						'type'=>'plugin',
+						'status'=>'inactive',
+						'key'=>'',
+						'siteurl'=>'',
+					));
+				update_option('_evo_licenses', $lice);
+			}
+
+			return $licenses;
+		}
 	// save to wp options
 		public function save_license_key($slug, $key){
 			$licenses =get_option('_evo_licenses');
@@ -433,6 +458,8 @@ class evo_updater{
 
 				$new_lic[$slug]['key']= $key;	
 				$new_lic[$slug]['status']= 'active';
+				// update siteurl license activated on
+				$new_lic[$slug]['siteurl']= get_site_url();
 				
 				update_option('_evo_licenses',$new_lic);
 				
@@ -442,16 +469,104 @@ class evo_updater{
 			}
 			
 		}
+		/**	Update field values to licenses */
+			function save_new_update_details($remote_version, $has_new_update, $current_version){
+				$licenses =get_option('_evo_licenses');
+				
+				if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$this->slug]) ){
+					
 
-	// remove license
-		public function remove_license(){
-			$licenses =get_option('_evo_licenses');
+					$new_lic = $licenses;
+					$new_lic[$this->slug]['remote_version']= $remote_version;	
+					$new_lic[$this->slug]['has_new_update']= $has_new_update;	
+
+					update_option('_evo_licenses',$new_lic);
+					
+					return $new_lic;
+				}else{
+					return false;
+				}
+			}
+		
+		// save license fields to wp options
+			function save_new_license_field_values($license_field, $new_value, $license_slug){
+				$licenses =get_option('_evo_licenses');
+				
+				if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$license_slug]) ){
+					
+					
+					$new_lic = $licenses;
+					$new_lic[$license_slug][$license_field]= $new_value;	
+
+					update_option('_evo_licenses',$new_lic);
+				}
+			}
+
+
+	// deactivate eventon license
+		public function deactivate_eventon_license(){
 			
-			if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$this->slug])){
+			global $eventon;
+
+			$slug = 'eventon';
+			$saved_key = $this->get_saved_license_key('eventon');
+			
+			if($saved_key!=false ){		
+							
+				global $wp_version;
+			
+				$args = array(	'key'=>$saved_key,);
+				$request_string = array(
+					'body' => array(
+						'action' => 'deactivate_license', 
+						'request' => serialize($args),
+						'api-key' => md5(get_bloginfo('url'))
+					),
+					'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo('url')
+				);
+				
+			
+				$request = wp_remote_post($this->api_url, $request_string);
+				if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
+					$result =  $request['body'];
+					
+					// successfully inactive license
+					if($result==1){
+						$licenses =get_option('_evo_licenses');
+											
+						if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$slug])){
+
+							$new_lic = $licenses;
+							unset($new_lic[$slug]['key']);
+							$new_lic[$slug]['status']='inactive';
+							
+							update_option('_evo_licenses',$new_lic);
+
+							return $new_lic;
+
+						}else{	return false;	}
+					}else{ 
+						$this->error_code = '07'; 
+						return false;}					
+				}			
+			}else{
+				$this->error_code = '06';
+				return false;
+			}	
+			
+		}
+
+		
+		// remove addon licenses
+		public function remove_license($slug='', $key=''){
+			$licenses =get_option('_evo_licenses');
+						
+			$slug = (!empty($slug))? $slug: $this->slug;						
+			if(!empty($licenses) && count($licenses)>0 && !empty($licenses[$slug])){
 
 				$new_lic = $licenses;
-				unset($new_lic[$this->slug]['key']);
-				$new_lic[$this->slug]['status']='inactive';
+				unset($new_lic[$slug]['key']);
+				$new_lic[$slug]['status']='inactive';
 				
 				update_option('_evo_licenses',$new_lic);
 
@@ -461,7 +576,22 @@ class evo_updater{
 				return false;
 			}
 		}
-	
+
+	// error code decipher
+		public function error_code_($code=''){
+			$code = (!empty($code))? $code: $this->error_code;
+			$array = array(
+				'01'=>"No data returned from envato API",
+				"02"=>'Your license is not a valid one!, please check and try again.',
+				"03"=>'envato verification API is busy at moment, please try later.',
+				"04"=>'This license is already registered with a different site.',
+				"05"=>'Your EventON version is older than 2.2.17.',
+				"06"=>'Eventon license key not passed correct!',
+				"07"=>'Could not deactivate eventON license from remote server',
+				"00"=>'Could not verify the License key. Please try again.'
+			);
+			return $array[$code];
+		}
 	// compare and return true or false for has newset version;
 		public function has_newest_version($remote_version=''){
 				

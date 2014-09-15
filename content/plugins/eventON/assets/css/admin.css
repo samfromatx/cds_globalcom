@@ -48,3 +48,15 @@
 	background-image:none;
 	background:transparent;
 }
+
+	/* event meta field image uploading version 2.2.15*/
+		.evo_metafield_image input[type=button]:hover{
+			background-color: rgb(245, 228, 198)
+		}
+		.evo_metafield_image .evo_loc_image_src img{
+			width: 100%; height: auto; padding-top: 8px;
+		}
+		.evo_metafield_image .evo_loc_image_src{
+			display: inline-block;			
+		}
+

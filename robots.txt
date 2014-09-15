@@ -3,4 +3,6 @@ Disallow: /graphics/
 Disallow: /elqNow/
 Disallow: /media/
 Disallow: /tours/
+Disallow: /perspectives/
 Disallow: /*.wp-login.php$
+Disallow: *.pdf

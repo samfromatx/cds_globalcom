@@ -140,7 +140,9 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 						
 						$default_value = (!empty($field['default']) )? 'placeholder="'.$field['default'].'"':null;
 						
-						$rightside.= "<p>".__($field['name'],'eventon').$legend_code."</p><p><span class='nfe_f_width'><input type='text' name='".$field['id']."' value='".$this_value."' ".$default_value."/></span></p>";
+						$rightside.= "<p>".__($field['name'],'eventon').$legend_code."</p><p><span class='nfe_f_width'><input type='text' name='".$field['id']."'";
+						$rightside.= 'value="'.$this_value.'"';
+						$rightside.= $default_value."/></span></p>";
 					break;
 					case 'textarea':
 						
@@ -296,7 +298,8 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 					break;
 					case 'dropdown':
 						
-						$dropdown_opt = (!empty($evOPT[ $field['id'] ]))? $evOPT[ $field['id'] ]:null;
+						$dropdown_opt = (!empty($evOPT[ $field['id'] ]))? $evOPT[ $field['id'] ]
+							:( !empty($field['default'])? $field['default']:null);
 						
 						$rightside.= "<p class='acus_line'>".__($field['name'],'eventon')." <select name='".$field['id']."'>";
 						
@@ -304,7 +307,13 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 							$rightside.="<option type='radio' name='".$field['id']."' value='".$option."' "
 							.  ( ($option == $dropdown_opt)? 'selected=\"selected\"':null)  ."/> ".$option_val."</option>";
 						}						
-						$rightside.= "</select></p>";						
+						$rightside.= "</select>";
+
+							// description text for this field
+							if(!empty( $field['desc'] )){
+								$rightside.= "<br/><i style='opacity:0.6'>".$field['desc']."</i>";
+							}
+						$rightside.= "</p>";						
 					break;
 					case 'checkboxes':
 						

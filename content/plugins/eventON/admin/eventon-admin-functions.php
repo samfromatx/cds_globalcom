@@ -65,7 +65,7 @@ function eventon_shortcode_button($context) {
 		$typenow = $post->post_type;
 	} elseif ( empty( $typenow ) && ! empty( $_GET['post'] ) ) {
         $post = get_post( $_GET['post'] );
-        $typenow = $post->post_type;
+        $typenow = (!empty($post) )? $post->post_type : '';
     }
 	
 	if ( $typenow == '' || $typenow == "ajde_events" ) return;

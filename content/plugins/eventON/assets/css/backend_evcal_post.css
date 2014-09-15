@@ -11,6 +11,9 @@
 .yesno_leg_line span.evo_yn_btn {position: absolute;}
 
 
+/* hide location and organizer tag boxes */
+	#tagsdiv-event_location, #tagsdiv-event_organizer{display: none;}
+
 /* buttons within black boxes */
 	.eventon_mb .actions a.button_evo{
 		background: none;
@@ -106,7 +109,18 @@
 	#meta_tb.evoThirdparty_meta td .evcal_row_dark {margin-top: 0;}
 	#meta_tb.evoThirdparty_meta .divide td{padding: 0px;}
 	#meta_tb.evoThirdparty_meta td{padding: 0 10px 10px;}
-
+	.evo_thirdparty_section_header .evcal_db_data{
+		margin-top: 0;font-style: italic;		
+	}
+	.evo_thirdparty_section_header{
+		margin: 0 -22px;padding: 5px 8px;
+		background-color: #E9E9E9;
+		border-bottom: 1px solid #D5D5D5;
+	}
+	.evo_thirdparty_table_td p.evo_thirdparty label{
+		font-style: italic;	
+		font-size: 13px;	
+	}
 
 /* event start end dates */
 	#ui-datepicker-div{
@@ -223,6 +237,12 @@
 	}
 	.evcal_data_block_style1 .evcal_metaf_icon{height:36px; width:28px; margin-top:6px;}
 
+/* event post specific settngs */
+	.evo_event_opts label{
+		padding-top: 4px;
+		padding-left: 80px;
+	}
+	.evo_event_opts p.yesno_leg_line{padding-top: 0; margin-top: 0;}
 
 /** User interaction **/
 	#evo_new_window_io span:hover{opacity:1}
@@ -431,19 +451,22 @@
 		font-style: italic;
 	}
 
-	.evomb_body input, #evcal_location_field{
+	.evomb_body input, select.evo_select_field, .evo_metafield_image input[type=button]{
 		-webkit-box-shadow: 0px 2px #686767;
 		box-shadow: 0px 2px #686767;
 		border:none;
-		border-radius: 4px
+		border-radius: 4px;
+		line-height: 130%
 	}
+
+	
 	#evo_mb label{
 		font-style:italic;
 		font-size:12px;
 		margin-bottom: 10px;
 		display: block;
 		cursor: default;
-		color: #b4b0b0;
+		color: #C9C6C6;
 	}
 
 

@@ -1,0 +1,5 @@
+[aam]
+super_admin = "1"
+page.access_control.capability = "level_9"
+feature.post_access.capability = "level_9"
+feature.event_manager.capability = "level_9"

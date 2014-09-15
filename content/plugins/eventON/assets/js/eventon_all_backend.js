@@ -1,6 +1,6 @@
 /*
 	Script that runs on all over the backend pages
-	ver: 1.3
+	ver: 2.2.15
 */
 jQuery(document).ready(function($){
 	
@@ -8,29 +8,29 @@ jQuery(document).ready(function($){
 	// EventON Sitewide POPUP
 	// ----------
 	// hide		
-	$('.eventon_popup').on('click','.eventon_close_pop_btn', function(){
-		var obj = $(this);
-		hide_popupwindowbox();
-	});
-	
-	$('.eventon_popup_text').on('click',' .evo_close_pop_trig',function(){
-		var obj = $(this).parent();
-		hide_popupwindowbox();
-	});
-	
-	$(document).mouseup(function (e){
-		var container=$('.eventon_popup');
+		$('.eventon_popup').on('click','.eventon_close_pop_btn', function(){
+			var obj = $(this);
+			hide_popupwindowbox();
+		});
 		
-		if(container.hasClass('active')){
-			if (!container.is(e.target) // if the target of the click isn't the container...
-			&& container.has(e.target).length === 0) // ... nor a descendant of the container
-			{
-				container.animate({'margin-top':'70px','opacity':0}).fadeOut().removeClass('active');
-				$('#evo_popup_bg').fadeOut();
-				popup_open = false;
+		$('.eventon_popup_text').on('click',' .evo_close_pop_trig',function(){
+			var obj = $(this).parent();
+			hide_popupwindowbox();
+		});
+		
+		$(document).mouseup(function (e){
+			var container=$('.eventon_popup');
+			
+			if(container.hasClass('active')){
+				if (!container.is(e.target) // if the target of the click isn't the container...
+				&& container.has(e.target).length === 0) // ... nor a descendant of the container
+				{
+					container.animate({'margin-top':'70px','opacity':0}).fadeOut().removeClass('active');
+					$('#evo_popup_bg').fadeOut();
+					popup_open = false;
+				}
 			}
-		}
-	});
+		});
 	
 	// function to hide popup that can be assign to click actions
 		function hide_popupwindowbox(){
@@ -56,6 +56,61 @@ jQuery(document).ready(function($){
 	
 
 	
+	// Upload custom images to eventon custom image meta fields
+		var file_frame;
+	  
+	    $('.custom_upload_image_button').click(function() {
+	    	var obj = jQuery(this);
+	    	var box = obj.closest('.evo_metafield_image');
+
+	    	// choose image
+	    	if(obj.hasClass('chooseimg')){
+		    	
+		        event.preventDefault();
+				// If the media frame already exists, reopen it.
+				if ( file_frame ) {
+					file_frame.open();
+					return;
+				}
+
+				// Create the media frame.
+				file_frame = wp.media.frames.downloadable_file = wp.media({
+					title: 'Choose an Image',
+					button: {text: 'Use Image',},
+					multiple: false
+				});
+
+				// When an image is selected, run a callback.
+				file_frame.on( 'select', function() {
+					attachment = file_frame.state().get('selection').first().toJSON();
+
+					box.find('.evo_loc_img').val( attachment.id );
+					box.find('.evo_loc_image_src img').attr('src', attachment.url ).fadeIn();
+					var old_text = obj.attr('value');
+					var new_text = obj.data('txt');
+
+					obj.attr({'value': new_text, 'data-txt': old_text, 'class': 'custom_upload_image_button button removeimg'});
+				});
+
+				// Finally, open the modal.
+				file_frame.open();
+			}else{
+				
+				box.find('.evo_loc_img').val( '' );
+		  		box.find('.evo_loc_image_src img').fadeOut(function(){
+		  			$(this).attr('src', '' );
+		  		});
+		  		var old_text = obj.attr('value');
+				var new_text = obj.attr('data-txt');
+
+				obj.attr({'value': new_text, 'data-txt': old_text, 'class': 'custom_upload_image_button button chooseimg'});
+
+				return false;
+			}
+	    });  
+	  	
+
+
 	
 	
 	/*
@@ -142,7 +197,7 @@ jQuery(document).ready(function($){
 			}else{
 				
 				$('.eventon_popup.regular').addClass('active').show().animate({'margin-top':'0px','opacity':1}).fadeIn();
-				$('.eventon_popup.eventon_shortcode').addClass('active').show().animate({'margin-top':'0px','opacity':1}).fadeIn();
+				$('.eventon_popup.eventon_shortcode:first-child').addClass('active').show().animate({'margin-top':'0px','opacity':1}).fadeIn();
 			}
 			
 			$('html, body').animate({scrollTop:0}, 700);

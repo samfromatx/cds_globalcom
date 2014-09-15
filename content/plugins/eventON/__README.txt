@@ -4,8 +4,8 @@ Plugin Name: EventON
 Author URI: http://ashanjay.com/
 Tags: calendar, event calendar, event posts
 Requires at least: 3.7
-Tested up to: 3.9
-Stable tag: 2.2.13
+Tested up to: 4.0
+Stable tag: 2.2.17
 
 Event calendar plugin for wordpress that utilizes WP's custom post type.  
 
@@ -19,6 +19,83 @@ Event calendar plugin for wordpress that utilizes WP's custom post type. This pl
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+= 2.2.17 (2014-9-10)
+ADDED: Mobile tap on eventtop and jquery mobile support
+ADDED: Upto 10 custom meta data fields for events can now be activated
+ADDED: Event Location and organizer fields as filtering options
+ADDED: Support for NOT event type taxonomy eg. event_type="NOT-23" will exclude tax tag 23 events
+ADDED: Location name and address over location image
+ADDED: View more events button for calendar to show events as needed
+ADDED: The ability to offset jumper start year
+ADDED: New event paging section to settings to manage event archive page templates and slug
+FIXED: Featured image height 100% fix
+FIXED: Location Image dissapearing when updating events
+FIXED: Location address and name with aphostrophe not saving correct
+FIXED: Event Card open by default not working properly
+FIXED: Event type color override is not working on calendars
+FIXED: Event type 2 term tags not showing correctly on event top
+FIXED: Generate google maps default yes value not working
+FIXED: All day event date name capitalized properly
+FIXED: All day events showing incorrectly on eventcard
+FIXED: Category translation not working on calendar
+UPDATED: Addons page not showing installed addons
+UPDATED: All addons to support new eventon exists check
+UPDATED: Location and organizer meta box in event edit page
+UPDATED: Remove _blank on get directions for only mobile
+UPDATED: JQuery UI CSS to 1.11 version 
+UPDATED: Event Edit page UI
+
+= 2.2.16 (2014-8-19)
+FIXED: Jquery nodevalue error when passing shortcode arguments between months
+FIXED: Featured image at full height when switching months
+FIXED: Minor style issues
+FIXED: Minor bugs related to eventtop fields
+UPDATED: User capabilities for actionUser compatibility
+
+= 2.2.15(2014-8-13)
+ADDED: WPML compatibility
+ADDED: Event Subtitle can now be added and styled
+ADDED: The ability to select all categories to be shown on eventTop
+ADDED: Event Location Image field - this need to be configured in settings first to show
+ADDED: Organizer meta field with similar event location method
+ADDED: Disable onClick zoom effect on event featured image
+ADDED: Ability to create year around event without a specific date
+ADDED: Ability to auto trash old event posts from wp-admin
+ADDED: Option to hide sort options section per each calendar in the shortcode
+ADDED: Shortcode generator to ESE widget
+ADDED: Class names to custom meta fields so styles can be applied
+UPDATED: Event Location saving machanism with better verification and using terms
+UPDATED: i18n fields with missing plugin textdomain for translation
+UPDATED: event end time can now be set to last beyond start date and still visible in calendar
+UPDATED: Responsive Featured image styles
+UPDATED: Google maps generate to be set to yes by default
+UPDATED: Lightbox eventcard close button X made lighter for visibility
+UPDATED: minor style issues are solved
+FIXED: upcoming list hide past not working
+FIXED: hide end date honored in dailyview times
+FIXED: Featured events only calendar issue
+FIXED: evo addon class redeclare error
+FIXED: Minor style issues
+FIXED: Custom universal times remove end time from event card
+FIXED: 23 hour format G to be recognized in wp-admin time selection fields
+FIXED: RGB related Javascript error on wp-admin that was stopping yes/no button function
+
+
+= 2.2.14(2014-7-3)
+ADDED: Ability to exclude events from calendars without deleting them
+ADDED: Overall calendar user interaction do not interact value
+UPDATED: Removed month header blank space from event list
+UPDATED: Schema SEO data to have end date that was missing
+UPDATED: Improvements to Paypal intergration into front-end
+UPDATED: Seperate function to load for calendar footer with action hook evo_cal_footer
+UPDATED: Pretty time on eventcard converted into proper language
+FIXED: Repeat events for week of the month not showing correct
+FIXED: Addon license activation page not working correctly
+FIXED: Hide multiple occurence not showing events on other calendars on same page
+FIXED: Repeating events time now showing correct on event card
+FIXED: Schema SEO showing event page URL when someone dont have single events addon
+FIXED: shortcode generator showing a body double
+
 = 2.2.13 (2014-6-16)
 FIXED: Option for adding dynamic styles to inline page when dynamic styles are not saved
 FIXED: featured image on eventTop not showing

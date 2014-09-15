@@ -313,6 +313,9 @@ class EvcalWidget_SC extends WP_Widget{
 		$evo_title = (!empty($evo_title))? $evo_title: null;
 		$evo_shortcodeW = (!empty($evo_shortcodeW))? $evo_shortcodeW: null;
 		// HTML
+
+		eventon_shortcode_pop_content();
+
 		?>
 		<div id='eventon_widget_settings' class='eventon_widget_settings'>
 			<div class='eventon_widget_top'><p></p></div>
@@ -323,8 +326,8 @@ class EvcalWidget_SC extends WP_Widget{
 					value="<?php echo esc_attr($evo_title); ?>" placeholder='Widget Title' title='Widget Title'/>					
 				</div>
 			</div>
-			<p><label><?php _e('Paste the eventON shortcode to execute','eventon');?><?php $eventon->throw_guide('Paste eventON Shortcodes with [ ] in here to execute them for this widget.','L');?></label>
-			<p class='evo_widget_textarea'><textarea name="<?php echo $this->get_field_name('evo_shortcodeW'); ?>" id="<?php echo $this->get_field_id('evo_shortcodeW'); ?>"><?php echo esc_attr($evo_shortcodeW); ?></textarea></p>
+			<p><a id='evo_shortcode_btn' class='eventon_popup_trig evo_admin_btn btn_prime' title='<?php _e('eventON Shortcode generator','eventon');?>' href='#'>[ add eventon ]</a></p>
+			<p class='evo_widget_textarea'><textarea name="<?php echo $this->get_field_name('evo_shortcodeW'); ?>" id="<?php echo $this->get_field_id('evo_shortcodeW'); ?>"><?php echo esc_attr($evo_shortcodeW); ?></textarea><br/><label><?php _e('EventOn Calendar Shortcode','eventon');?><?php $eventon->throw_guide('Use the Eventon Shortcode Generator to create a shortcode based on your requirements, and paste it in here.','L');?></label></p>
 		
 		</div>
 		<?php

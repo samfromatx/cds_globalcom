@@ -49,8 +49,8 @@ if( ! class_exists( "Yoast_Update_Manager", false ) ) {
 			$this->license_manager = $license_manager;
 
 			// generate transient names
-			$this->response_transient_key = $this->product->get_slug() . 'update-response';
-			$this->request_failed_transient_key = $this->product->get_slug() . '-update-request-failed';
+			$this->response_transient_key = $this->product->get_transient_prefix() . '-update-response';
+			$this->request_failed_transient_key = $this->product->get_transient_prefix() . '-update-request-failed';
 
 			// maybe delete transient
 			$this->maybe_delete_transients();
@@ -101,7 +101,12 @@ if( ! class_exists( "Yoast_Update_Manager", false ) ) {
 				return false;
 			}
 
+			// start request process
 			global $wp_version;
+
+			// set a transient to prevent failed update checks on every page load
+			// this transient will be removed if a request succeeds
+			set_transient( $this->request_failed_transient_key, 'failed', 10800 );
 
 			// setup api parameters
 			$api_params = array(
@@ -129,11 +134,11 @@ if( ! class_exists( "Yoast_Update_Manager", false ) ) {
 				$this->error_message = $request->get_error_message();
 				add_action( 'admin_notices', array( $this, 'show_update_error' ) );
 
-				// set a transient to prevent failed update checks on every page load
-				set_transient( $this->request_failed_transient_key, 'failed', 10800 );
-
 				return false;
 			}
+
+			// request succeeded, delete transient indicating a request failed
+			delete_transient( $this->request_failed_transient_key );
 
 			// decode response
 			$response = $request->get_response();
@@ -192,7 +197,7 @@ if( ! class_exists( "Yoast_Update_Manager", false ) ) {
 		 */
 		private function get_cached_remote_data() {
 
-			$data = get_transient( $this->product->get_slug() . 'update-response' );
+			$data = get_transient( $this->response_transient_key );
 
 			if( $data ) {
 				return $data;

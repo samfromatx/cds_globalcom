@@ -10,6 +10,8 @@ jQuery(document).ready(function($){
 	function init(){
 		init_run_gmap_openevc();
 
+		fullheight_img_reset();
+
 		$('.evopop_top').click(function(){
 			//_form_set_rsvp_choise($(this));
 			alert('f');
@@ -17,7 +19,7 @@ jQuery(document).ready(function($){
 	}
 
 
-	// popup
+	// LIGHTBOX
 		var popupcode = "<div class='evo_popup' style='display:none'><div class='evo_popin'><a class='evopopclose'>X</a><div class='evo_pop_body evcal_eventcard'></div></div></div><div class='evo_popbg' style='display:none'></div>";
 		$('body').append(popupcode);
 		
@@ -39,13 +41,11 @@ jQuery(document).ready(function($){
 				
 			});
 			
-		// POPUP functions
+		// LIGHTBOX functionsx
 			function prepair_popup(){
 				var cur_window_top = parseInt($(window).scrollTop()) + 50;
-				$('.evo_popin').css({'margin-top':cur_window_top});
-				
+				$('.evo_popin').css({'margin-top':cur_window_top});				
 				$('.evo_pop_body').html('');
-
 			}
 			
 			function show_popup(){
@@ -58,16 +58,33 @@ jQuery(document).ready(function($){
 			}
 
 	
-	// OPENING event card -- user interaction and loading google maps
-		//event full description
-		$('.eventon_events_list').on('click','.desc_trig', function(){
+	// OPENING event card -- USER INTREACTION and loading google maps
+		//event full description\
+
+		if(is_mobile()){
+			var etop_action = 'tap';
+		}else{
+			var etop_action = 'click';
+		}
+
+
+		$('body').on(etop_action,'.eventon_events_list .desc_trig', function(){
+
+			var obj = $(this);
+			var attr = obj.closest('.evoLB').attr('data-cal_id');
+			if(typeof attr !== typeof undefined && attr !== false){
+				var cal_id = attr;
+				var cal = $('#'+cal_id);
+			}else{
+				var cal = obj.closest('.ajde_evcal_calendar');
+			}
 			
-			var cal = $(this).closest('.ajde_evcal_calendar');
+			
 			var evodata = cal.find('.evo-data');
 			var ux_val__ = evodata.data('ux_val');
 			var accord__ = evodata.data('accord');
 
-			var obj = $(this);
+			
 			
 			var exlk = obj.data('exlk');
 			var ux_val = obj.data('ux_val');
@@ -77,7 +94,7 @@ jQuery(document).ready(function($){
 				ux_val = ux_val__;
 			}
 			
-			
+			console.log(ux_val);
 			// open as popup
 			if(ux_val=='3'){
 				
@@ -85,6 +102,10 @@ jQuery(document).ready(function($){
 				obj.evoGenmaps({
 					'_action':'lightbox',
 				});
+
+				// update border color
+					bgcolor = $('.evo_pop_body').find('.evcal_cblock').attr('bgcolor');
+					$('.evo_pop_body').find('.evopop_top').css({'border-left':'3px solid '+bgcolor});
 				
 				return false;
 
@@ -102,6 +123,8 @@ jQuery(document).ready(function($){
 
 			}else if(ux_val=='2'){
 				return;
+			}else if(ux_val=='X'){
+				return false;
 			}else if(ux_val=='none'){
 				return false;
 			}else{
@@ -167,7 +190,7 @@ jQuery(document).ready(function($){
 
 	// MONTH jumper
 		$('.ajde_evcal_calendar').on('click','.evo-jumper-btn', function(){
-			$(this).siblings('.evo_j_container').slideToggle();
+			$(this).parent().siblings('.evo_j_container').slideToggle();
 		});
 
 		// select a new time from jumper
@@ -223,7 +246,32 @@ jQuery(document).ready(function($){
 				var new_gmal_id =gmap_id+'_widget';
 				obj.attr({'id':new_gmal_id})
 			});
-		}			
+		}
+
+
+	// show more events on the list
+		$('body').on('click','.evoShow_more_events',  function(){
+			var evCal = $(this).closest('.ajde_evcal_calendar');
+			var evoData = evCal.find('.evo-data');
+			var event_count = parseInt(evoData.data('ev_cnt'));
+			var show_limit = evoData.data('show_limit');
+			var allEvents = evCal.find('.eventon_list_event').length;
+
+			var currentShowing = evCal.find('.eventon_list_event:visible').length;
+
+			for(x=1; x<=event_count ; x++ ){
+				var inde = currentShowing+x-1;
+				evCal.find('.eventon_list_event:eq('+ inde+')').slideDown();
+			}
+
+			// hide view more button
+			if(allEvents > currentShowing && allEvents<=  (currentShowing+event_count)){
+				$(this).fadeOut();
+			}
+
+
+			//console.log(currentShowing);
+		});
 	
 		
 	//===============================
@@ -362,6 +410,7 @@ jQuery(document).ready(function($){
 							filter_ar['filter_type'] = $(this).attr('filter_type');
 							filter_ar['filter_name'] = $(this).attr('filter_field');
 							filter_ar['filter_val'] = filter_val;
+							filter_ar['filter_op'] = $(this).attr('data-fl_o');
 							filter_array.push(filter_ar);
 						}
 					});			
@@ -369,18 +418,17 @@ jQuery(document).ready(function($){
 					var filter_array ='';
 				}
 				
-				var el = ev_cal.find('.cal_arguments');
 				var shortcode_array ={};
-						
-		
-				$(el[0].attributes).each(function() {
-					if(this.nodeName!='class' && this.nodeName!='style' ){
-						shortcode_array[this.nodeName] = this.nodeValue;
-						
-					}
-					//console.log(this.nodeName);
-				});
 				
+				ev_cal.find('.cal_arguments').each(function(){
+					$.each(this.attributes, function(i, attrib){
+						var name = attrib.name;
+						//console.log(name);
+						if(attrib.name!='class' && attrib.name!='style' ){
+							shortcode_array[attrib.name] = attrib.value;	
+						}
+					});
+				});				
 				//console.log(shortcode_array);
 				
 				
@@ -425,13 +473,14 @@ jQuery(document).ready(function($){
 						animate_month_switch(data.cal_month_title, ev_cal.find('#evcal_cur'));
 						
 						evodata.attr({'data-cmonth':data.month,'data-cyear':data.year});
-						change_jumper_set_values(cal_id);
+						change_jumper_set_values(cal_id);						
 						
 					},complete:function(){
 						ev_cal.find('#eventon_loadbar').css({width:'100%'}).fadeOut();
 						ev_cal.find('.eventon_events_list').delay(300).slideDown('slow');
 						ev_cal.evoGenmaps({'delay':400});
 						init_run_gmap_openevc(600);
+						fullheight_img_reset(cal_id);
 					}
 				});
 			}
@@ -452,7 +501,6 @@ jQuery(document).ready(function($){
 			title_element.find('span:last-child').fadeIn(800, function(){
 				title_element.html(new_data).width('');
 			});
-			
 			
 		}
 	
@@ -499,36 +547,71 @@ jQuery(document).ready(function($){
 	
 	// expand and shrink featured image
 		$('.ajde_evcal_calendar').on('click','.evcal_evdata_img',function(){
-			feature_image_expansion($(this));
+			if(!$(this).hasClass('evo_noclick')){				
+				feature_image_expansion($(this));
+			}
 		});
 		$('.evo_popup').on('click','.evcal_evdata_img',function(){
-			feature_image_expansion($(this));
+			if(!$(this).hasClass('evo_noclick')){				
+				feature_image_expansion($(this));
+			}
 		});
 	
-		function feature_image_expansion(image){
+		function feature_image_expansion(image, height){
 			img = image;
 			
 			var img_status = img.attr('status');
 			
-			if(img_status=='open'){
-				img.attr({'status':'close'}).css({'height':''});
-			}else{
+			if(img_status=='open' ){
+				img.attr({'status':'close'}).css({'height':''});				
+			}else{				
+
+				var img_full_height = parseInt(img.attr('data-imgheight'));
 				
-				var cal_width = parseInt(img.parent().width());			
-				var img_full_height = parseInt(img.attr('imgheight'));
-				var img_full_width = parseInt(img.attr('imgwidth'));
-				var img_current_height = parseInt(img.height());
-				
-				var relative_height = parseInt(img_full_height * (cal_width/img_full_width)) ;
-				
+				if(img.hasClass('evo_fullheight')){
+					relative_height = img_full_height;
+				}else{
+					var cal_width = parseInt(img.parent().width());			
+					var img_full_width = parseInt(img.attr('data-imgwidth'));
+					var img_current_height = parseInt(img.height());
+					
+					var relative_height = parseInt(img_full_height * (cal_width/img_full_width)) ;
+
+					//console.log(relative_height+' '+xx);
+				}
 				
 				img.css({'height':relative_height}).attr({'status':'open'});
 			}
-			//console.log('9');
+			
 		}
 
-		$('.evo_fullheight').each(function(){
-			feature_image_expansion($(this));
-		});
+		
+		function fullheight_img_reset(calid){
+			if(calid){
+				$('#'+calid).find('.eventon_list_event .evo_fullheight').each(function(){
+					feature_image_expansion($(this));
+				});
+			}else{
+				$('.evo_fullheight').each(function(){					
+					feature_image_expansion($(this));					
+				});
+			}
+		}
+		
 	
+	// treatments for calendar events upon load
+		function treat_events(calid){
+			if(calid!=''){
+				if(is_mobile()){
+					$('#'+calid).find('.evo_metarow_getDr form').attr({'target':'_self'});
+				}
+			}
+		}
+
+		// if mobile check
+		function is_mobile(){
+			return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )? true: false;
+		}
+
+
 })

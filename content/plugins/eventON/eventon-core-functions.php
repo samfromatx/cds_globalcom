@@ -139,35 +139,60 @@ function eventon_is_event_in_daterange($Estart_unix, $Eend_unix, $Mstart_unix, $
 }
 
 
-// GET time for ICS adjusted for unix
-function evo_get_adjusted_utc($unix){
-	$offset = (get_option('gmt_offset', 0) * 3600);
 
-	
 
-	/*
-		We are making time (mktime) and getting time (date) using php server timezone
-		So we first adjust save UNIX to get unix at UTC/GMT 0 and then we adjust that time to offset for timezone saved on wordpress settings.
-	*/
-	$__unix = $unix - (date('Z')) - $offset;
 
-	//$the_date = $unix;
-	//date_default_timezone_get();
-	//date_default_timezone_set("UTC");
-	//$new_timeT = gmdate("Ymd", $unix);
-	//$new_timeT = date_i18n("Ymd", $__unix);
-	$new_timeT = date("Ymd", $__unix);
-	$new_timeZ = date("Hi", $__unix);
 
-	return $new_timeT.'T'.$new_timeZ.'00Z';
+// TIME formatting
+	// pretty time on event card
+	function eventon_get_langed_pretty_time($unixtime, $dateformat){
 
-}
+		$datest = str_split($dateformat);
+		$__new_dates = $__output = '';
 
-function evo_unix_offset($unix){
-	$offset = (get_option('gmt_offset', 0) * 3600);
+		// full month name
+		if(in_array('F', $datest)){
+			$num = date('n', $unixtime);
+			$_F = eventon_return_timely_names_('month_num_to_name',$num,'full');
+			$__new_dates['F'] = $_F;
+		}
 
-}
+		// 3 letter month name
+		if(in_array('M', $datest)){
+			$num = date('n', $unixtime);
+			$_M = eventon_return_timely_names_('month_num_to_name',$num,'three');
+			$__new_dates['M'] = $_M;
+		}
 
+		//full day name
+		if(in_array('l', $datest)){
+			$num = date('l', $unixtime);
+			$_l = eventon_return_timely_names_('day',$num, 'full');
+			$__new_dates['l'] = $_l;
+		}
+
+		//3 letter day name
+		if(in_array('D', $datest)){
+			$num = date('N', $unixtime);
+			$_D = eventon_return_timely_names_('day_num_to_name',$num, 'three');
+			$__new_dates['D'] = $_D;
+		}
+
+
+		// process values
+		foreach($datest as $date_part){
+			if(array_key_exists($date_part, $__new_dates)){
+				$__output .= $__new_dates[$date_part];
+			}else{
+				$__output .= date($date_part, $unixtime);
+			}
+		}
+
+		//echo 'rr'.$__output;
+
+		return $__output;
+
+	}
 // RETURN: formatted event time in multiple formats
 function eventon_get_formatted_time($row_unix){
 	/*
@@ -373,14 +398,12 @@ function eventon_get_formatted_time($row_unix){
 		}
 
 
-
 		// for each repeat times
 		$count = 1;
 		for($x =0; $x<=$repeat_count; $x++){
 
 			$repeat_multiplier = ((int)$repeat_gap) * $x;
 			
-
 
 			// for day of week monthly repears
 			if($repeat_type == 'monthly' && $month_repeat_by=='dow' && !empty($days) && is_array($days) ){
@@ -438,8 +461,6 @@ function eventon_get_formatted_time($row_unix){
 
 		//return array_merge($repeat_intervals, $errors);
 		return $repeat_intervals;
-		//return $errors;
-		
 	}
 
 	// check if repeat post data are good to go
@@ -455,6 +476,7 @@ function eventon_get_formatted_time($row_unix){
 /*
 	return jquery and HTML UNIVERSAL date format for the site
 	added: version 2.1.19
+	updated: 
 */
 	function eventon_get_timeNdate_format($evcal_opt=''){
 		
@@ -496,7 +518,7 @@ function eventon_get_formatted_time($row_unix){
 		// time format
 		$wp_time_format = get_option('time_format');
 		
-		$hr24 = (strpos($wp_time_format, 'H')!==false)?true:false;
+		$hr24 = (strpos($wp_time_format, 'H')!==false || strpos($wp_time_format, 'G')!==false)?true:false;
 		
 		return array(
 			$jq_date_format, 
@@ -528,6 +550,35 @@ function eventon_get_formatted_time($row_unix){
 		return $output;
 
 	}
+
+
+// ---
+// SUPPORTIVE time and date functions
+	// GET time for ICS adjusted for unix
+		function evo_get_adjusted_utc($unix){
+			$offset = (get_option('gmt_offset', 0) * 3600);
+			/*
+				We are making time (mktime) and getting time (date) using php server timezone
+				So we first adjust save UNIX to get unix at UTC/GMT 0 and then we adjust that time to offset for timezone saved on wordpress settings.
+			*/
+			$__unix = $unix - (date('Z')) - $offset;
+
+			//$the_date = $unix;
+			//date_default_timezone_get();
+			//date_default_timezone_set("UTC");
+			//$new_timeT = gmdate("Ymd", $unix);
+			//$new_timeT = date_i18n("Ymd", $__unix);
+			$new_timeT = date("Ymd", $__unix);
+			$new_timeZ = date("Hi", $__unix);
+
+			return $new_timeT.'T'.$new_timeZ.'00Z';
+		}
+
+	function evo_unix_offset($unix){
+		$offset = (get_option('gmt_offset', 0) * 3600);
+	}
+
+
 
 
 // return 24h or 12h or true false
@@ -794,89 +845,85 @@ action=TEMPLATE
 
 
 // Returns a proper form of labeling for custom post type
-/**
- * Function that returns an array containing the IDs of the products that are on sale.
- */
-if( !function_exists ('eventon_get_proper_labels')){
-	function eventon_get_proper_labels($sin, $plu){
-		return array(
-		'name' => _x($plu, 'post type general name'),
-		'singular_name' => _x($sin, 'post type singular name'),
-		'add_new' => __('Add New '. $sin),
-		'add_new_item' => __('Add New '.$sin),
-		'edit_item' => __('Edit '.$sin),
-		'new_item' => __('New '.$sin),
-		'all_items' => __('All '.$plu),
-		'view_item' => __('View '.$sin),
-		'search_items' => __('Search '.$plu),
-		'not_found' =>  __('No '.$plu.' found'),
-		'not_found_in_trash' => __('No '.$plu.' found in Trash'), 
-		'parent_item_colon' => '',
-		'menu_name' => $plu
-	  );
+/** Function that returns an array containing the IDs of the products that are on sale. */
+	if( !function_exists ('eventon_get_proper_labels')){
+		function eventon_get_proper_labels($sin, $plu){
+			return array(
+			'name' => _x($plu, 'post type general name' , 'eventon'),
+			'singular_name' => _x($sin, 'post type singular name' , 'eventon'),
+			'add_new' => __('Add New '. $sin , 'eventon'),
+			'add_new_item' => __('Add New '.$sin , 'eventon'),
+			'edit_item' => __('Edit '.$sin , 'eventon'),
+			'new_item' => __('New '.$sin , 'eventon'),
+			'all_items' => __('All '.$plu , 'eventon'),
+			'view_item' => __('View '.$sin , 'eventon'),
+			'search_items' => __('Search '.$plu , 'eventon'),
+			'not_found' =>  __('No '.$plu.' found' , 'eventon'),
+			'not_found_in_trash' => __('No '.$plu.' found in Trash' , 'eventon'), 
+			'parent_item_colon' => '',
+			'menu_name' => _x($plu, 'admin menu', 'eventon')
+		  );
+		}
 	}
-}
 // Return formatted time 
-if( !function_exists ('ajde_evcal_formate_date')){
-	function ajde_evcal_formate_date($date,$return_var){	
-		$srt = strtotime($date);
-		$f_date = date($return_var,$srt);
-		return $f_date;
+	if( !function_exists ('ajde_evcal_formate_date')){
+		function ajde_evcal_formate_date($date,$return_var){	
+			$srt = strtotime($date);
+			$f_date = date($return_var,$srt);
+			return $f_date;
+		}
 	}
-}
 
-if( !function_exists ('returnmonth')){
-	function returnmonth($n){
-		$timestamp = mktime(0,0,0,$n,1,2013);
-		return date('F',$timestamp);
+	if( !function_exists ('returnmonth')){
+		function returnmonth($n){
+			$timestamp = mktime(0,0,0,$n,1,2013);
+			return date('F',$timestamp);
+		}
 	}
-}
-if( !function_exists ('eventon_returnmonth_name_by_num')){
-	function eventon_returnmonth_name_by_num($n){
-				
-		return eventon_return_timely_names_('month_num_to_name', $n);
+	if( !function_exists ('eventon_returnmonth_name_by_num')){
+		function eventon_returnmonth_name_by_num($n){
+					
+			return eventon_return_timely_names_('month_num_to_name', $n);
+		}
 	}
-}
 
-/*
-	eventON return font awesome icons names
-*/
-function get_eventON_icon($var, $default, $options_value){
+/*	eventON return font awesome icons names*/
+	function get_eventON_icon($var, $default, $options_value){
 
-	$options_value = (!empty($options_value))? $options_value: get_option('evcal_options_evcal_1');
+		$options_value = (!empty($options_value))? $options_value: get_option('evcal_options_evcal_1');
 
-	return (!empty( $options_value[$var]))? $options_value[$var] : $default;
-}
+		return (!empty( $options_value[$var]))? $options_value[$var] : $default;
+	}
 
 
 // Return a excerpt of the event details
-function eventon_get_event_excerpt($text, $excerpt_length, $default_excerpt='', $title=true){
-	global $eventon;
-	
-	$content='';
-	
-	if(empty($default_excerpt) ){
-	
-		$words = explode(' ', $text, $excerpt_length + 1);
-		if(count($words) > $excerpt_length) :
-			array_pop($words);
-			array_push($words, '[...]');
-			$content = implode(' ', $words);
-		endif;
-		$content = strip_shortcodes($content);
-		$content = str_replace(']]>', ']]&gt;', $content);
-		$content = strip_tags($content);
-	}else{
-		$content = $default_excerpt;
+	function eventon_get_event_excerpt($text, $excerpt_length, $default_excerpt='', $title=true){
+		global $eventon;
+		
+		$content='';
+		
+		if(empty($default_excerpt) ){
+		
+			$words = explode(' ', $text, $excerpt_length + 1);
+			if(count($words) > $excerpt_length) :
+				array_pop($words);
+				array_push($words, '[...]');
+				$content = implode(' ', $words);
+			endif;
+			$content = strip_shortcodes($content);
+			$content = str_replace(']]>', ']]&gt;', $content);
+			$content = strip_tags($content);
+		}else{
+			$content = $default_excerpt;
+		}
+		
+		
+		$titletx = ($title)? '<h3 class="padb5 evo_h3">' . eventon_get_custom_language($eventon->evo_generator->evopt2, 'evcal_evcard_details','Event Details').'</h3>':null;
+		
+		$content = '<div class="event_excerpt" style="display:none">'.$titletx.'<p>'. $content . '</p></div>';
+		
+		return $content;
 	}
-	
-	
-	$titletx = ($title)? '<h3 class="padb5 evo_h3">' . eventon_get_custom_language($eventon->evo_generator->evopt2, 'evcal_evcard_details','Event Details').'</h3>':null;
-	
-	$content = '<div class="event_excerpt" style="display:none">'.$titletx.'<p>'. $content . '</p></div>';
-	
-	return $content;
-}
 	function eventon_get_normal_excerpt($text, $excerpt_length){
 		$content='';
 
@@ -894,216 +941,165 @@ function eventon_get_event_excerpt($text, $excerpt_length, $default_excerpt='', 
 	}
 
 
-/**
- * eventon Term Meta API - Get term meta
- */
-function get_eventon_term_meta( $term_id, $key, $single = true ) {
-	return get_metadata( 'eventon_term', $term_id, $key, $single );
-}
-
-/**
- * Get template part (for templates like the event-loop).
- */
-function eventon_get_template_part( $slug, $name = '' , $preurl='') {
-	global $eventon;
-	$template = '';
-	
-	
-	if($preurl){
-		$template =$preurl."/{$slug}-{$name}.php";
-	}else{
-		// Look in yourtheme/slug-name.php and yourtheme/eventon/slug-name.php
-		if ( $name )
-			$template = locate_template( array ( "{$slug}-{$name}.php", "{$eventon->template_url}{$slug}-{$name}.php" ) );
-
-		// Get default slug-name.php
-		if ( !$template && $name && file_exists( AJDE_EVCAL_PATH . "/templates/{$slug}-{$name}.php" ) )
-			$template = AJDE_EVCAL_PATH . "/templates/{$slug}-{$name}.php";
-
-		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/eventon/slug.php
-		if ( !$template )
-			$template = locate_template( array ( "{$slug}.php", "{$eventon->template_url}{$slug}.php" ) );
-
-		
+/** eventon Term Meta API - Get term meta */
+	function get_eventon_term_meta( $term_id, $key, $single = true ) {
+		return get_metadata( 'eventon_term', $term_id, $key, $single );
 	}
-	
-	if ( $template )
-		load_template( $template, false );
-}
 
+/** Get template part (for templates like the event-loop). */
+	function eventon_get_template_part( $slug, $name = '' , $preurl='') {
+		global $eventon;
+		$template = '';
+		
+		
+		if($preurl){
+			$template =$preurl."/{$slug}-{$name}.php";
+		}else{
+			// Look in yourtheme/slug-name.php and yourtheme/eventon/slug-name.php
+			if ( $name )
+				$template = locate_template( array ( "{$slug}-{$name}.php", "{$eventon->template_url}{$slug}-{$name}.php" ) );
 
+			// Get default slug-name.php
+			if ( !$template && $name && file_exists( AJDE_EVCAL_PATH . "/templates/{$slug}-{$name}.php" ) )
+				$template = AJDE_EVCAL_PATH . "/templates/{$slug}-{$name}.php";
 
+			// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/eventon/slug.php
+			if ( !$template )
+				$template = locate_template( array ( "{$slug}.php", "{$eventon->template_url}{$slug}.php" ) );
 
-if(!function_exists('date_parse_from_format')){
-	function date_parse_from_format($_wp_format, $date){
-		
-		$date_pcs = preg_split('/ (?!.* )/',$_wp_format);
-		$time_pcs = preg_split('/ (?!.* )/',$date);
-		
-		$_wp_date_str = preg_split("/[\s . , \: \- \/ ]/",$date_pcs[0]);
-		$_ev_date_str = preg_split("/[\s . , \: \- \/ ]/",$time_pcs[0]);
-		
-		$check_array = array(
-			'Y'=>'year',
-			'y'=>'year',
-			'm'=>'month',
-			'n'=>'month',
-			'M'=>'month',
-			'F'=>'month',
-			'd'=>'day',
-			'j'=>'day',
-			'D'=>'day',
-			'l'=>'day',
-		);
-		
-		foreach($_wp_date_str as $strk=>$str){
-			
-			if($str=='M' || $str=='F' ){
-				$str_value = date('n', strtotime($_ev_date_str[$strk]));
-			}else{
-				$str_value=$_ev_date_str[$strk];
-			}
-			
-			if(!empty($str) )
-				$ar[ $check_array[$str] ]=$str_value;		
 			
 		}
 		
-		$ar['hour']= date('H', strtotime($time_pcs[1]));
-		$ar['minute']= date('i', strtotime($time_pcs[1]));
-		
-		
-		return $ar;
+		if ( $template )
+			load_template( $template, false );
 	}
-}
 
 
 
-if( !function_exists('date_parse_from_format') ){
-	function date_parse_from_format($format, $date) {
-	  $dMask = array(
-		'H'=>'hour',
-		'i'=>'minute',
-		's'=>'second',
-		'y'=>'year',
-		'm'=>'month',
-		'd'=>'day'
-	  );
-	  $format = preg_split('//', $format, -1, PREG_SPLIT_NO_EMPTY); 
-	  $date = preg_split('//', $date, -1, PREG_SPLIT_NO_EMPTY); 
-	  foreach ($date as $k => $v) {
-		if ($dMask[$format[$k]]) $dt[$dMask[$format[$k]]] .= $v;
-	  }
-	  return $dt;
-	}
-}
+
+
+
+
 
 /** Return integer value for a hex color code **/
-function eventon_get_hex_val($color){
-    if ($color[0] == '#')
-        $color = substr($color, 1);
+	function eventon_get_hex_val($color){
+	    if ($color[0] == '#')
+	        $color = substr($color, 1);
 
-    if (strlen($color) == 6)
-        list($r, $g, $b) = array($color[0].$color[1],
-                                 $color[2].$color[3],
-                                 $color[4].$color[5]);
-    elseif (strlen($color) == 3)
-        list($r, $g, $b) = array($color[0].$color[0], $color[1].$color[1], $color[2].$color[2]);
-    else
-        return false;
+	    if (strlen($color) == 6)
+	        list($r, $g, $b) = array($color[0].$color[1],
+	                                 $color[2].$color[3],
+	                                 $color[4].$color[5]);
+	    elseif (strlen($color) == 3)
+	        list($r, $g, $b) = array($color[0].$color[0], $color[1].$color[1], $color[2].$color[2]);
+	    else
+	        return false;
 
-    $r = hexdec($r); $g = hexdec($g); $b = hexdec($b);
+	    $r = hexdec($r); $g = hexdec($g); $b = hexdec($b);
 
-    $val = (int)(($r+$g+$b)/3);
-	
-    return $val;
-}
-
-
-
-/**
- * Get capabilities for Eventon - these are assigned to admin during installation or reset
- */
-function eventon_get_core_capabilities(){
-	$capabilities = array();
-
-	$capabilities['core'] = apply_filters('eventon_core_capabilities',array(
-		"manage_eventon"
-	));
-	
-	
-	
-	$capability_types = array( 'eventon' );
-
-	foreach( $capability_types as $capability_type ) {
-
-		$capabilities[ $capability_type ] = array(
-
-			// Post type
-			"publish_{$capability_type}",
-			"edit_{$capability_type}",
-			"read_{$capability_type}",
-			"delete_{$capability_type}",
-			"edit_{$capability_type}s",
-			"edit_others_{$capability_type}s",
-			"publish_{$capability_type}s",
-			"read_private_{$capability_type}s",
-			"delete_{$capability_type}s",
-			"delete_private_{$capability_type}s",
-			"delete_published_{$capability_type}s",
-			"delete_others_{$capability_type}s",
-			"edit_private_{$capability_type}s",
-			"edit_published_{$capability_type}s",
-
-			// Terms
-			"manage_{$capability_type}_terms",
-			"edit_{$capability_type}_terms",
-			"delete_{$capability_type}_terms",
-			"assign_{$capability_type}_terms"
-		);
+	    $val = (int)(($r+$g+$b)/3);
+		
+	    return $val;
 	}
 
-	return $capabilities;
-}
+
+
+/** Get capabilities for Eventon - these are assigned to admin during installation or reset
+ */
+	function eventon_get_core_capabilities(){
+		$capabilities = array();
+
+		$capabilities['core'] = apply_filters('eventon_core_capabilities',array(
+			"manage_eventon"
+		));
+		
+		
+		
+		$capability_types = array( 'eventon' );
+
+		foreach( $capability_types as $capability_type ) {
+
+			$capabilities[ $capability_type ] = array(
+
+				// Post type
+				"publish_{$capability_type}s",
+				"edit_{$capability_type}s",
+				"edit_others_{$capability_type}s",	
+				"read_private_{$capability_type}s",
+				"delete_{$capability_type}s",
+				"delete_private_{$capability_type}s",
+				"delete_published_{$capability_type}s",
+				"delete_others_{$capability_type}s",
+				"edit_private_{$capability_type}s",
+				"edit_published_{$capability_type}s",
+
+				// Terms
+				"manage_{$capability_type}_terms",
+				"edit_{$capability_type}_terms",
+				"delete_{$capability_type}_terms",
+				"assign_{$capability_type}_terms"
+			);
+
+			/*
+			// Post type
+				"publish_{$capability_type}",
+				"edit_{$capability_type}",
+				"read_{$capability_type}",
+				"delete_{$capability_type}",
+				"edit_{$capability_type}s",
+				"edit_others_{$capability_type}s",
+				"publish_{$capability_type}s",
+				"read_private_{$capability_type}s",
+				"delete_{$capability_type}s",
+				"delete_private_{$capability_type}s",
+				"delete_published_{$capability_type}s",
+				"delete_others_{$capability_type}s",
+				"edit_private_{$capability_type}s",
+				"edit_published_{$capability_type}s",
+				*/
+		}
+
+		return $capabilities;
+	}
 
 
 // sort eventcard fields 
-function eventon_EVC_sort($array, $order_option_val){
-	
-	$new_array = array();
-	
-	// create an array
-	$correct_order = (!empty($order_option_val))? 
-		explode(',',$order_option_val): null;
-	
-	if(!empty($correct_order)){
-		foreach($correct_order as $box){
-			if(array_key_exists($box, $array))
-				$new_array[$box]=$array[$box];
-		}
-	}else{
-		$new_array = $array;
-	}	
-	return $new_array;
-}
+	function eventon_EVC_sort($array, $order_option_val){
+		
+		$new_array = array();
+		
+		// create an array
+		$correct_order = (!empty($order_option_val))? 
+			explode(',',$order_option_val): null;
+		
+		if(!empty($correct_order)){
+			foreach($correct_order as $box){
+				if(array_key_exists($box, $array))
+					$new_array[$box]=$array[$box];
+			}
+		}else{
+			$new_array = $array;
+		}	
+		return $new_array;
+	}
 
 
 /* Initiate capabilities for eventON */
-function eventon_init_caps(){
-	global $wp_roles;
-	
-	if ( class_exists('WP_Roles') )
-		if ( ! isset( $wp_roles ) )
-			$wp_roles = new WP_Roles();
-	
-	$capabilities = eventon_get_core_capabilities();
-	
-	foreach( $capabilities as $cap_group ) {
-		foreach( $cap_group as $cap ) {
-			$wp_roles->add_cap( 'administrator', $cap );
+	function eventon_init_caps(){
+		global $wp_roles;
+		
+		if ( class_exists('WP_Roles') )
+			if ( ! isset( $wp_roles ) )
+				$wp_roles = new WP_Roles();
+		
+		$capabilities = eventon_get_core_capabilities();
+		
+		foreach( $capabilities as $cap_group ) {
+			foreach( $cap_group as $cap ) {
+				$wp_roles->add_cap( 'administrator', $cap );
+			}
 		}
 	}
-}
 
 
 // for style values
@@ -1117,16 +1113,6 @@ function eventon_styles($default, $field, $options){
 }
 
 
-/**
- * Clean variables
- *
- * @access public
- * @param string $var
- * @return string
- */
-function eventon_clean( $var ) {
-	return sanitize_text_field( $var );
-}
 
 // GET activated event type count
 	function evo_verify_extra_ett($evopt=''){
@@ -1166,7 +1152,7 @@ function eventon_clean( $var ) {
 		$evopt = (!empty($evopt))? $evopt: get_option('evcal_options_evcal_1');
 
 		$count=0;
-		for($x=1; $x<6; $x++ ){
+		for($x=1; $x<11; $x++ ){
 			if(!empty($evopt['evcal_af_'.$x]) && $evopt['evcal_af_'.$x]=='yes' && !empty($evopt['evcal_ec_f'.$x.'a1'])){
 				$count = $x;
 			}else{
@@ -1232,61 +1218,395 @@ function eventon_clean( $var ) {
 
 
 // GET  event custom taxonomy field names
-function eventon_get_event_tax_name($tax, $options=''){
-	$output ='';
+	function eventon_get_event_tax_name($tax, $options=''){
+		$output ='';
 
-	$options = (!empty($options))? $options: get_option('evcal_options_evcal_1');
+		$options = (!empty($options))? $options: get_option('evcal_options_evcal_1');
 
-	if($tax =='et'){
-		$output = (!empty($options['evcal_eventt']))? $options['evcal_eventt']:'Event Type';
-	}elseif($tax=='et2'){
-		$output = (!empty($options['evcal_eventt2']))? $options['evcal_eventt2']:'Event Type 2';
+		if($tax =='et'){
+			$output = (!empty($options['evcal_eventt']))? $options['evcal_eventt']:'Event Type';
+		}elseif($tax=='et2'){
+			$output = (!empty($options['evcal_eventt2']))? $options['evcal_eventt2']:'Event Type 2';
+		}
+
+		return $output;
 	}
-
-	return $output;
-}
 
 // GET  event custom taxonomy field names -- FOR FRONT END w/ Lang
-function eventon_get_event_tax_name_($tax, $lang='', $options='', $options2=''){
-	$output ='';
+	function eventon_get_event_tax_name_($tax, $lang='', $options='', $options2=''){
+		$output ='';
 
-	$options = (!empty($options))? $options: get_option('evcal_options_evcal_1');
-	$options2 = (!empty($options2))? $options2: get_option('evcal_options_evcal_2');
-	$_lang_variation = (!empty($lang))? $lang:'L1';
+		$options = (!empty($options))? $options: get_option('evcal_options_evcal_1');
+		$options2 = (!empty($options2))? $options2: get_option('evcal_options_evcal_2');
+		$_lang_variation = (!empty($lang))? $lang:'L1';
 
-	$_tax = ($tax =='et')? 'evcal_eventt': 'evcal_eventt2';
-	$_tax_lang_field = ($tax =='et')? 'evcal_lang_et1': 'evcal_lang_et2';
+		$_tax = ($tax =='et')? 'evcal_eventt': 'evcal_eventt2';
+		$_tax_lang_field = ($tax =='et')? 'evcal_lang_et1': 'evcal_lang_et2';
 
 
-	// check for language first
-	if(!empty($options2[$_lang_variation][$_tax_lang_field]) ){
-		$output = stripslashes($options2[$_lang_variation][$_tax_lang_field]);
+		// check for language first
+		if(!empty($options2[$_lang_variation][$_tax_lang_field]) ){
+			$output = stripslashes($options2[$_lang_variation][$_tax_lang_field]);
+		
+		// no lang value -> check set custom names
+		}elseif(!empty($options[$_tax])) {		
+			$output = $options[$_tax];
+		}else{
+			$output = ($tax =='et')? 'Event Type': 'Event Type 2';
+		}
+
+		return $output;
+	}
+
+
+// GET SAVED VALUES
+	// meta value check and return
+	function check_evo_meta($meta_array, $fieldname){
+		return (!empty($meta_array[$fieldname]))? true:false;
+	}
+	function evo_meta($meta_array, $fieldname, $slashes=false){
+		return (!empty($meta_array[$fieldname]))? 
+			($slashes? stripcslashes($meta_array[$fieldname][0]): $meta_array[$fieldname][0])
+			:null;
+	}
+	function evo_meta_yesno($meta_array, $fieldname, $check_value, $yes_value, $no_value){	
+		return (!empty($meta_array[$fieldname]) && $meta_array[$fieldname][0] == $check_value)? $yes_value:$no_value;
+	}
+	function evo_check_yn($meta_array, $fieldname){
+		return (!empty($meta_array[$fieldname]) && $meta_array[$fieldname][0]=='yes')? true:false;
+	}
+	// this will return true or false after checking if eventon settings value = yes
+	function evo_settings_val($fieldname, $options, $not=''){
+		if($not){
+			return ( empty($options[$fieldname]) || (!empty($options[$fieldname]) && $options[$fieldname]=='no') )? true:false;
+		}else{
+			return ( !empty($options[$fieldname]) && $options[$fieldname]=='yes' )? true:false;
+		}
+	}
+
+
+
+
+
+/* version 2.2.15 */
 	
-	// no lang value -> check set custom names
-	}elseif(!empty($options[$_tax])) {		
-		$output = $options[$_tax];
-	}else{
-		$output = ($tax =='et')? 'Event Type': 'Event Type 2';
+	/* when events are moved to trash record time */
+		function eventon_record_trashedtime($opt){
+			$opt['event_trashed'] = current_time('timestamp');
+			update_option('evcal_options_evcal_1', $opt);
+		}
+
+	/* check if its time to trash old events again */
+		function is_eventon_events_ready_to_trash($opt){
+
+			// check if set to trash old events
+			if(!empty($opt['evcal_move_trash']) && $opt['evcal_move_trash']=='yes'){
+				$rightnow =current_time('timestamp');
+
+				$last_trashed = (!empty($opt['event_trashed']))? $opt['event_trashed']:false;
+
+				$trash_gap = 3600*24;
+
+				// check if the time is correct for trashing
+				if(!$last_trashed || $last_trashed+$trash_gap < $rightnow){
+					return true;
+				}else{ return false;}
+			}else{ return false;}
+		}
+	/* check event post values for exclude on trashing the event post */
+		function is_eventon_event_excluded($pmv){
+			
+		}
+
+
+
+/* 2.2.17 */
+
+	// process taxnomy filter values and return terms and operator
+		function eventon_tax_filter_pro($value){
+			if(strpos($value, 'NOT-')!== false){
+				$op = explode('-', $value);
+				$filter_op='NOT IN';
+				$vals = $op[1];
+			}else{
+				$vals= $value;
+				$filter_op = 'IN';
+			}
+
+			return array($vals, $filter_op);
+		}
+
+	// get options for eventon settings
+		/*
+			tab ending = 1,2, etc. rs for rsvp
+		*/
+		function evo_get_options($tab_ending){
+			return get_option('evcal_options_evcal_'.$tab_ending);
+		}
+
+
+	// PAGING functions
+		// return archive eevnt page id set in previous version or in settigns
+		function evo_get_event_page_id($opt=''){
+			$opt == (!empty($opt))? $opt: evo_get_options('1');
+			if(!empty($opt['evo_event_archive_page_id'])){
+			 	$id = $opt['evo_event_archive_page_id'];
+			}else{
+				$id = get_option('eventon_events_page_id');
+				$id = !empty($id)? $id: false;
+			}
+
+			// check if this post exist
+			if($id){
+				$id = (get_post_status( $id ))? $id: false;
+			}
+
+			return $id;
+		}
+		// get event archive page template name
+		function evo_get_event_template($opt){
+			$opt == (!empty($opt))? $opt: evo_get_options('1');
+			$ptemp = $opt['evo_event_archive_page_template'];
+
+			if(empty($ptemp) || $ptemp=='archive-ajde_events.php' ){
+			 	$template = 'archive-ajde_events.php';
+			}else{
+				$template =$ptemp;
+			}
+			return $template;
+		}
+		function evo_archive_page_content(){}
+
+
+// eventon and wc check function
+// added 2.2.17
+	function evo_initial_check($slug='eventon'){
+		
+		if($slug=='eventon'){
+			$evoURL = get_option('eventon_addon_urls');
+
+			// if url saved in options
+			if(!empty($evoURL) ){
+				//echo 1;
+				if(file_exists($evoURL['addons'])){
+					return $evoURL['addons'];
+				}else{
+					return AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
+				}
+				
+				
+			}else{
+				//echo 2;
+				// for multi site
+				if(is_multisite()){
+
+					$evoURL = false;
+
+					if ( ! function_exists( 'is_plugin_active_for_network' ) )
+   						require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	   				
+					if(is_plugin_active_for_network(EVENTON_BASE.'/eventon.php')){
+						$url = AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
+						return $url;
+					}else{
+						$blogs = wp_get_sites();
+					
+						foreach($blogs as $blog){
+							//echo $blog['blog_id'];
+							$_active_plugins = get_blog_option($blog['blog_id'], 'active_plugins');
+
+							if(!empty($_active_plugins)){
+								//echo 3;
+								$_evoInstalled = false;
+								foreach($_active_plugins as $plugin){
+									// check if eventon is in activated plugins list
+									if(strpos( $plugin, 'eventon.php') !== false){
+										$_evoInstalled= true;
+										$evoSlug = explode('/', $plugin);
+									}
+								}
+
+								if(!empty($evoSlug) && $_evoInstalled){
+									$url = AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
+
+									$evoURL= (file_exists($url))? $url: false;
+									break;
+								}else{ $evoURL= false;	}
+							}else{  
+								//echo 4;
+								$evoURL= false;	
+							}					
+						}
+						return $evoURL;
+					}
+				}else{
+					$_active_plugins = get_option( 'active_plugins' );
+					if(!empty($_active_plugins)){
+						$_evoInstalled = false;
+						foreach($_active_plugins as $plugin){
+							// check if eventon is in activated plugins list
+							if(strpos( $plugin, 'eventon.php') !== false){
+								$_evoInstalled= true;
+								$evoSlug = explode('/', $plugin);
+							}
+						}
+
+						if(!empty($evoSlug) && $_evoInstalled){
+							$url = AJDE_EVCAL_PATH. '/classes/class-evo-addons.php';
+
+							return (file_exists($url))? $url: false;
+						}else{ 	return false;	}
+					}else{  return false;	}
+				}
+			}// enfif
+
+		}elseif($slug=='woo'){
+			$_wcInstalled = false;
+
+			if(is_multisite()){
+
+				if ( ! function_exists( 'is_plugin_active_for_network' ) )
+   					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+				if(is_plugin_active_for_network('woocommerce/woocommerce.php')){
+					return true;
+				}else{
+					$blogs = wp_get_sites();
+					foreach($blogs as $blog){
+						echo $blog['blog_id'];
+						$_active_plugins = get_blog_option($blog['blog_id'], 'active_plugins');
+						if(!empty($_active_plugins)){	
+							print_r($_active_plugins);			
+							foreach($_active_plugins as $plugin){
+								// check if eventon is in activated plugins list
+								if(strpos( $plugin, 'woocommerce.php') !== false){
+									return true;
+									break;
+								}
+							}						
+						}
+					}
+				}
+				
+			}else{
+				$_active_plugins = get_option( 'active_plugins' );				
+				if(!empty($_active_plugins)){				
+					foreach($_active_plugins as $plugin){
+						// check if eventon is in activated plugins list
+						if(strpos( $plugin, 'woocommerce.php') !== false){
+							return true;
+							break;
+						}
+					}
+				}				
+			}
+			return $_wcInstalled;
+		}
+
 	}
 
-	return $output;
-}
 
-// meta value check and return
-function evo_meta($meta_array, $fieldname){
-	return (!empty($meta_array[$fieldname]))? $meta_array[$fieldname][0]:null;
-}
-function evo_meta_yesno($meta_array, $fieldname, $check_value, $yes_value, $no_value){	
-	return (!empty($meta_array[$fieldname]) && $meta_array[$fieldname][0] == $check_value)? $yes_value:$no_value;
-}
-// this will return true or false after checking if eventon settings value = yes
-function evo_settings_val($fieldname, $options, $not=''){
-	if($not){
-		return ( empty($options[$fieldname]) || (!empty($options[$fieldname]) && $options[$fieldname]=='no') )? true:false;
-	}else{
-		return ( !empty($options[$fieldname]) && $options[$fieldname]=='yes' )? true:false;
+// SUPPORT FUNCTIONS
+	/** Clean variables */
+		function eventon_clean( $var ) {
+			return sanitize_text_field( $var );
+		}
+
+	// currency codes for paypal
+		function evo_get_currency_codes(){
+			return array(
+				'AUD'=>'Australian Dollar',
+				'BRL'=>'Brazillian Real',
+				'CAD'=>'Canadian Dollar',
+				'CZK'=>'Czech Koruna',
+				'DKK'=>'Danish Krone',
+				'EUR'=>'Euro',
+				'HKD'=>'Hong Kong Dollar',
+				'HUF'=>'Hungarian Forint',
+				'ILS'=>'Israeli New Sheqel',
+				'JPY'=>'Japanese Yen',
+				'MYR'=>'Malaysian Ringgit',
+				'MXN'=>'Mexican Peso',
+				'NOK'=>'Norwegian Krone',
+				'NZD'=>'New Zealand Dollar',
+				'PHP'=>'Philippine Peso',
+				'PLN'=>'Polish Zloty',
+				'GBP'=>'Pound Sterling',
+				'RUB'=>'Russian Ruble',
+				'SGD'=>'Singapore Dollar',
+				'SEK'=>'Swedish Krona',
+				'CHF'=>'Swiss Franc',
+				'TWD'=>'Taiwan New Dollar',
+				'THB'=>'Thai Baht',
+				'TRY'=>'Turkish Lira',
+				'USD'=>'US Dollar',
+			);
+		}
+
+
+
+
+	if(!function_exists('date_parse_from_format')){
+		function date_parse_from_format($_wp_format, $date){
+			
+			$date_pcs = preg_split('/ (?!.* )/',$_wp_format);
+			$time_pcs = preg_split('/ (?!.* )/',$date);
+			
+			$_wp_date_str = preg_split("/[\s . , \: \- \/ ]/",$date_pcs[0]);
+			$_ev_date_str = preg_split("/[\s . , \: \- \/ ]/",$time_pcs[0]);
+			
+			$check_array = array(
+				'Y'=>'year',
+				'y'=>'year',
+				'm'=>'month',
+				'n'=>'month',
+				'M'=>'month',
+				'F'=>'month',
+				'd'=>'day',
+				'j'=>'day',
+				'D'=>'day',
+				'l'=>'day',
+			);
+			
+			foreach($_wp_date_str as $strk=>$str){
+				
+				if($str=='M' || $str=='F' ){
+					$str_value = date('n', strtotime($_ev_date_str[$strk]));
+				}else{
+					$str_value=$_ev_date_str[$strk];
+				}
+				
+				if(!empty($str) )
+					$ar[ $check_array[$str] ]=$str_value;		
+				
+			}
+			
+			$ar['hour']= date('H', strtotime($time_pcs[1]));
+			$ar['minute']= date('i', strtotime($time_pcs[1]));
+			
+			
+			return $ar;
+		}
 	}
-}
+
+	if( !function_exists('date_parse_from_format') ){
+		function date_parse_from_format($format, $date) {
+		  $dMask = array(
+			'H'=>'hour',
+			'i'=>'minute',
+			's'=>'second',
+			'y'=>'year',
+			'm'=>'month',
+			'd'=>'day'
+		  );
+		  $format = preg_split('//', $format, -1, PREG_SPLIT_NO_EMPTY); 
+		  $date = preg_split('//', $date, -1, PREG_SPLIT_NO_EMPTY); 
+		  foreach ($date as $k => $v) {
+			if ($dMask[$format[$k]]) $dt[$dMask[$format[$k]]] .= $v;
+		  }
+		  return $dt;
+		}
+	}
 
 
 ?>

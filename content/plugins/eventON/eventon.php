@@ -3,11 +3,11 @@
  * Plugin Name: EventON
  * Plugin URI: http://www.myeventon.com/
  * Description: A beautifully crafted minimal calendar experience
- * Version: 2.2.13
+ * Version: 2.2.17
  * Author: AshanJay
  * Author URI: http://www.ashanjay.com
  * Requires at least: 3.7
- * Tested up to: 3.8.1
+ * Tested up to: 3.9.2
  *
  * Text Domain: eventon
  * Domain Path: /lang/languages/
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'EventON' ) ) {
 
 class EventON {
-	public $version = '2.2.13';
+	public $version = '2.2.17';
 	/**
 	 * @var evo_generator
 	 */
@@ -67,14 +67,29 @@ class EventON {
 	 * Define EVO Constants
 	 */
 	public function define_constants() {
-		define( "AJDE_EVCAL_DIR", WP_PLUGIN_DIR );
+		define( "AJDE_EVCAL_DIR", WP_PLUGIN_DIR ); //E:\xampp\htdocs\WP/wp-content/plugins
 		define( "AJDE_EVCAL_PATH", dirname( __FILE__ ) );
 		define( "AJDE_EVCAL_FILE", ( __FILE__ ) );
 		define( "AJDE_EVCAL_URL", path_join(plugins_url(), basename(dirname(__FILE__))) );
-		define( "AJDE_EVCAL_BASENAME", plugin_basename(__FILE__) );
-		define( "EVENTON_BASE", basename(dirname(__FILE__)) );
+		define( "AJDE_EVCAL_BASENAME", plugin_basename(__FILE__) ); //eventON/eventon.php
+		define( "EVENTON_BASE", basename(dirname(__FILE__)) ); //eventON
 		define( "BACKEND_URL", get_bloginfo('url').'/wp-admin/' ); 
 
+		// save addon class file url so addons can access this
+		$this->evo_url();
+
+	}
+	public function evo_url($resave=false){
+		$init = get_option('eventon_addon_urls');
+		if(empty($init) || $resave){
+			$arr = array(
+				'addons'=>AJDE_EVCAL_PATH.'/classes/class-evo-addons.php',
+				'date'=> time()
+			);
+			update_option('eventon_addon_urls',$arr);
+			$init = $arr;
+		}
+		return $init;
 	}
 	
 	
@@ -108,7 +123,11 @@ class EventON {
 		
 		//admin only classes
 		include_once( 'classes/class-evo-event.php' );
+		include_once( 'classes/class-evo-admin.php' );
 		$this->evo_event = new evo_event();
+		$this->evo_admin = new evo_admin();
+
+
 	}
 	/**
 	 * Include required ajax files.
@@ -329,8 +348,10 @@ class EventON {
 			
 			// Google gmap API script -- loadded from class-calendar_generator.php		
 
-			wp_register_script('add_to_cal', AJDE_EVCAL_URL. '/assets/js/add_to_calendar.js', array('jquery'),'1.0',true );
+			//wp_register_script('add_to_cal', AJDE_EVCAL_URL. '/assets/js/add_to_calendar.js', array('jquery'),'1.0',true ); -- 2.2.17
 
+			
+			wp_register_script('evo_mobile',AJDE_EVCAL_URL.'/assets/js/jquery.mobile.min.js', array('jquery'), 1.0, true ); // 2.2.17
 			wp_register_script('evcal_ajax_handle', AJDE_EVCAL_URL. '/assets/js/eventon_script.js', array('jquery'),'1.0',true );
 			wp_localize_script( 
 				'evcal_ajax_handle', 
@@ -407,7 +428,8 @@ class EventON {
 		}
 		public function load_default_evo_scripts(){
 			//wp_enqueue_script('add_to_cal');
-			wp_enqueue_script('evcal_ajax_handle');
+			wp_enqueue_script('evo_mobile');
+			wp_enqueue_script('evcal_ajax_handle');			
 			wp_enqueue_script('eventon_gmaps');
 
 			if(has_action('eventon_enqueue_scripts'))

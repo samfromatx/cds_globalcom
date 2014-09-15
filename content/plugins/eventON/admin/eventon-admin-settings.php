@@ -32,18 +32,17 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 		global $eventon;
 		
 		
-		//echo "<a class='thickbox' href='http://dev.myeventon.com/wp-admin/plugin-install.php?tab=plugin-information&plugin=eventon&section=changelog&TB_iframe=true&width=600&height=800'>Test</a>";
-		/////
+		
 		do_action('eventon_settings_start');
 		
 		
 		// Settings Tabs array
 		$evcal_tabs = apply_filters('eventon_settings_tabs',array(
-			'evcal_1'=>__('Settings'), 
-			'evcal_2'=>__('Language'),
-			'evcal_3'=>__('Styles'),
-			'evcal_4'=>__('Addons & Licenses'),
-			'evcal_5'=>__('Support'),
+			'evcal_1'=>__('Settings', 'eventon'), 
+			'evcal_2'=>__('Language', 'eventon'),
+			'evcal_3'=>__('Styles', 'eventon'),
+			'evcal_4'=>__('Addons & Licenses', 'eventon'),
+			'evcal_5'=>__('Support', 'eventon'),
 		));
 		
 		
@@ -131,6 +130,12 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 		//print_r(get_option('_evo_licenses'));
 		//print_r($evcal_opt[1]);
 
+
+		// activation notification
+		if(!$eventon->evo_updater->is_activated('eventon')){
+			echo '<div class="update-nag">'.__('Your copy of EventOn is not activated yet some features may be restricted. <a href="'.get_admin_url().'admin.php?page=eventon&tab=evcal_4">Activate License Now</a>','eventon').'</div>';
+		}
+
 // TABBBED HEADER		
 ?>
 <div class="wrap" id='evcal_settings'>
@@ -141,7 +146,7 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 			foreach($evcal_tabs as $nt=>$ntv){
 				$evo_notification='';
 				
-				echo "<a href='?page=eventon&tab=".$nt."' class='nav-tab ".( ($focus_tab == $nt)? 'nav-tab-active':null)."' evcal_meta='evcal_1'>".$ntv.$evo_notification."</a>";
+				echo "<a href='?page=eventon&tab=".$nt."' class='nav-tab ".( ($focus_tab == $nt)? 'nav-tab-active':null)." {$nt}' evcal_meta='evcal_{$nt}'>".$ntv.$evo_notification."</a>";
 			}			
 		?>
 		
@@ -150,7 +155,7 @@ if ( ! function_exists( 'eventon_settings' ) ) {
 <?php
 
 // SETTINGS SAVED MESSAGE
-$updated_code = (isset($_POST['settings-updated']) && $_POST['settings-updated']=='true')? '<div class="updated fade"><p>Settings Saved</p></div>':null;
+$updated_code = (isset($_POST['settings-updated']) && $_POST['settings-updated']=='true')? '<div class="updated fade"><p>'.__('Settings Saved','eventon').'</p></div>':null;
 echo $updated_code;
 	
 	
@@ -192,7 +197,7 @@ switch ($focus_tab):
 		</div>	
 	</div>
 	<div class='evo_diag'>
-		<input type="submit" class="evo_admin_btn btn_prime" value="<?php _e('Save Changes') ?>" /> <a id='resetColor' style='display:none' class='evo_admin_btn btn_secondary'>Reset to default colors</a><br/><br/>
+		<input type="submit" class="evo_admin_btn btn_prime" value="<?php _e('Save Changes') ?>" /> <a id='resetColor' style='display:none' class='evo_admin_btn btn_secondary'><?php _e('Reset to default colors','eventon')?></a><br/><br/>
 		<a target='_blank' href='http://www.myeventon.com/support/'><img src='<?php echo AJDE_EVCAL_URL;?>/assets/images/myeventon_resources.png'/></a>
 	</div>
 	
@@ -230,7 +235,7 @@ switch ($focus_tab):
 <div id="evcal_2" class="postbox evcal_admin_meta">	
 	<div class="inside">
 		<h2><?php _e('Type in custom language text for front-end calendar','eventon');?></h2>
-		<h4>Select your language <select id='evo_lang_selection' url=<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $uri_parts[0];;?>>		
+		<h4><?php _e('Select your language','eventon');?> <select id='evo_lang_selection' url=<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $uri_parts[0];;?>>		
 		<?php
 			foreach($lang_variations as $lang){
 				echo "<option value='{$lang}' ".(($__lang_version==$lang)? 'selected="select"':null).">{$lang}</option>";
@@ -238,7 +243,7 @@ switch ($focus_tab):
 		?></select><span class='evoGuideCall'>?<em><?php _e("You can use this to save upto 2 different languages for customized text. Once saved use the shortcode to show calendar text in that customized language. eg. [add_eventon lang='L2']",'eventon');?></em></span></h4>
 		<p><i><?php _e('Please use the below fields to type in custom language text that will be used to replace the default language text on the front-end of the calendar.','eventon')?></i></p>
 		
-		<div class='evoLANG_section_header evo_settings_toghead'>Months and Dates</div>
+		<div class='evoLANG_section_header evo_settings_toghead'><?php _e('Months and Dates','eventon');?></div>
 		<div class='evo_settings_togbox'>
 			<div class='evcal_lang_box '>
 				
@@ -372,7 +377,7 @@ switch ($focus_tab):
 	</div>
 	
 </div>
-<input type="submit" class="evo_admin_btn btn_prime" value="<?php _e('Save Changes') ?>" style='margin-top:15px'/>	
+<input type="submit" class="evo_admin_btn btn_prime" value="<?php _e('Save Changes','eventon') ?>" style='margin-top:15px'/>	
 </form>
 <?php	
 	break;

@@ -7,7 +7,7 @@
  * @author 		AJDE
  * @category 	Admin
  * @package 	eventon/Admin
- * @version     1.0
+ * @version     2.2.15
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -46,7 +46,7 @@ function eventon_duplicate_event() {
 
 
 /**
- * Get a product from the database to duplicate
+ * Get a event from the database to duplicate
  *
  * @access public
  * @param mixed $id
@@ -64,7 +64,7 @@ function eventon_get_event_to_duplicate($id) {
 
 
 /**
- * Function to create the duplicate of the product.
+ * Function to create the duplicate of the event.
  *
  * @access public
  * @param mixed $post
@@ -113,15 +113,16 @@ function eventon_create_duplicate_from_event( $post, $parent = 0, $post_status =
 	// Copy the meta information
 	eventon_duplicate_post_meta( $post->ID, $new_post_id );
 
-	// Copy the children (variations)
-	if ( $children_products =& get_children( 'post_parent='.$post->ID.'&post_type=product_variation' ) ) {
+	// for event tickets addon using WC
+	if($new_post_type=='product'){
+		if ( $children_products =& get_children( 'post_parent='.$post->ID.'&post_type=product_variation' ) ) {
 
-		if ($children_products) foreach ($children_products as $child) {
+			if ($children_products) foreach ($children_products as $child) {
 
-			eventon_create_duplicate_from_event( eventon_get_event_to_duplicate( $child->ID ), $new_post_id, $child->post_status );
+				eventon_create_duplicate_from_event( eventon_get_event_to_duplicate( $child->ID ), $new_post_id, $child->post_status );
 
+			}
 		}
-
 	}
 
 	return $new_post_id;

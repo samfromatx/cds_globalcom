@@ -156,10 +156,10 @@ add_action( 'admin_head', 'eventon_admin_menu_highlight' );
 	function eventon_admin_post_css() {
 		global $wp_scripts;
 		
-		
 		// JQ UI styles
-		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';		
-		wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css' );
+		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.10.4';		
+		
+		wp_enqueue_style("jquery-ui-css", "http://ajax.googleapis.com/ajax/libs/jqueryui/{$jquery_version}/themes/smoothness/jquery-ui.min.css");
 		
 		wp_enqueue_style( 'backend_evcal_post',AJDE_EVCAL_URL.'/assets/css/backend_evcal_post.css');
 		wp_enqueue_style( 'evo_backend_admin',AJDE_EVCAL_URL.'/assets/css/admin.css');
@@ -183,6 +183,7 @@ add_action( 'admin_head', 'eventon_admin_menu_highlight' );
 		
 			// other scripts 
 			wp_enqueue_script('evcal_backend_post',AJDE_EVCAL_URL.'/assets/js/admin/eventon_backend_post.js', array('jquery','jquery-ui-core','jquery-ui-datepicker'), 1.0, true );
+			wp_enqueue_script("jquery-ui-core");
 			
 			wp_localize_script( 'evcal_backend_post', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));	
 			
@@ -203,8 +204,8 @@ add_action( 'admin_head', 'eventon_admin_menu_highlight' );
 		global $eventon, $pagenow;
 		
 		// JQuery UI Styles
-		$calendar_ui_style_src = AJDE_EVCAL_URL.'/assets/css/jquery-ui.min.css';
-		wp_enqueue_style( 'eventon_JQ_UI',$calendar_ui_style_src);
+		//$calendar_ui_style_src = AJDE_EVCAL_URL.'/assets/css/jquery-ui.css';
+		//wp_enqueue_style( 'eventon_JQ_UI',$calendar_ui_style_src);
 		
 		// Scripts/ Styles for eventON Settings page only		
 		if( (!empty($pagenow) && $pagenow=='admin.php')

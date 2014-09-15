@@ -13,6 +13,9 @@
 	}
 
 	#meta_tabs a{cursor:pointer}
+	#meta_tabs a.evcal_5{
+		background-color: #F0E5DF
+	}
 	.postbox hr{background-color:#DFDFDF;border:none;height:1px;border-bottom:1px solid #fff}
 
 	.evcal_yn_btn{
@@ -371,7 +374,39 @@
 		font-size:14px;
 		color:#747474
 	}
-
-
+	
+	.eventon_searchbox{
+		margin-top: 15px;
+	}
+	.eventon_searchbox #searchform {
+		position: relative;
+		border: 2px solid #d7d7d7;
+		border-radius: 30px;
+		margin-bottom: 25px;
+	}
+	.eventon_searchbox input[type=text]:focus{outline:none;}
+	.eventon_searchbox input[type=text] {
+		padding: 15px 20px;
+		font: 300 20px 'open sans';
+		border: none;
+		background: transparent;
+		width: 750px;
+		outline: none;
+	}
+	.eventon_searchbox input[type=submit] {
+		cursor: pointer;
+		background: #dfa872;
+		border: none;
+		font: 700 18px 'open sans';
+		color: #fff;
+		display: inline-block;
+		padding: 5px 14px;
+		border-bottom: 3px solid #cf955c;
+		text-transform: uppercase;
+		border-radius: 20px;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
 
 .clear{clear:both}

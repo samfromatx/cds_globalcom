@@ -29,6 +29,9 @@ function eventon_remove_eventpost_previewbtn() {
 
 
 
+
+
+
 /**
  * Columns for events page
  *
@@ -84,6 +87,7 @@ function eventon_custom_event_columns( $column , $post_id) {
 
 	//if ( empty( $ajde_events ) || $ajde_events->id != $post->ID )
 		//$ajde_events = get_product( $post );
+	$pmv = get_post_custom($post_id);
 
 	switch ($column) {
 		case has_filter("evo_column_type_{$column}"):
@@ -100,7 +104,24 @@ function eventon_custom_event_columns( $column , $post_id) {
 			$post_type_object = get_post_type_object( $post->post_type );
 			$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $post->ID );
 
-			echo '<strong><a class="row-title" href="'.$edit_link.'">' . $title.'</a>';
+
+			echo "<div class='evoevent_item'>";
+				$img_src = $eventon->evo_admin->get_image('thumbnail',false);
+				$event_color = $eventon->evo_admin->get_color($pmv);
+				echo '<a class="evoevent_image" href="' . get_edit_post_link( $post_id ) . '">';
+				if($img_src){
+					echo '<img class="evoEventCirc" src="' . $img_src . '"/>';
+				}else{
+					echo '<span class="evoEventCirc" style="background-color:#' . $event_color . '"></span>';
+				}
+				echo '</a><div class="evo_item_details">';
+			
+				
+			if($can_edit_post){
+				echo '<strong><a class="row-title" href="'.$edit_link.'">' . $title.'</a>';
+			}else{
+				echo '<strong>' . $title.'';
+			}
 
 			_post_states( $post );
 
@@ -113,32 +134,32 @@ function eventon_custom_event_columns( $column , $post_id) {
 			if (isset($_GET['mode']) && $_GET['mode']=='excerpt') echo apply_filters('the_excerpt', $post->post_excerpt);
 
 			// Get actions
-			$actions = array();
+				$actions = array();
 
-			$actions['id'] = 'ID: ' . $post->ID;
+				$actions['id'] = 'ID: ' . $post->ID;
 
-			if ( $can_edit_post && 'trash' != $post->post_status ) {
-				$actions['edit'] = '<a href="' . get_edit_post_link( $post->ID, true ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
-				$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline' ) ) . '">' . __( 'Quick&nbsp;Edit' ) . '</a>';
-			}
-			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
-				if ( 'trash' == $post->post_status )
-					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-post_' . $post->ID ) . "'>" . __( 'Restore' ) . "</a>";
-				elseif ( EMPTY_TRASH_DAYS )
-					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash' ) . "</a>";
-				if ( 'trash' == $post->post_status || !EMPTY_TRASH_DAYS )
-					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently' ) . "</a>";
-			}
-			if ( $post_type_object->public ) {
-				if ( in_array( $post->post_status, array( 'pending', 'draft', 'future' ) ) ) {
-					if ( $can_edit_post )
-						$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'Preview' ) . '</a>';
-				} elseif ( 'trash' != $post->post_status ) {
-					$actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
+				if ( $can_edit_post && 'trash' != $post->post_status ) {
+					$actions['edit'] = '<a href="' . get_edit_post_link( $post->ID, true ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
+					$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline' ) ) . '">' . __( 'Quick&nbsp;Edit' ) . '</a>';
 				}
-			}
+				if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
+					if ( 'trash' == $post->post_status )
+						$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-post_' . $post->ID ) . "'>" . __( 'Restore' ) . "</a>";
+					elseif ( EMPTY_TRASH_DAYS )
+						$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash' ) . "</a>";
+					if ( 'trash' == $post->post_status || !EMPTY_TRASH_DAYS )
+						$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently' ) . "</a>";
+				}
+				if ( $post_type_object->public ) {
+					if ( in_array( $post->post_status, array( 'pending', 'draft', 'future' ) ) ) {
+						if ( $can_edit_post )
+							$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'Preview' ) . '</a>';
+					} elseif ( 'trash' != $post->post_status ) {
+						$actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
+					}
+				}
 
-			$actions = apply_filters( 'post_row_actions', $actions, $post );
+				$actions = apply_filters( 'post_row_actions', $actions, $post );
 
 			echo '<div class="row-actions">';
 
@@ -166,6 +187,8 @@ function eventon_custom_event_columns( $column , $post_id) {
 				$value = (!empty($event->$field))? $event->$field: null;
 				echo "<div class='{$field}'>{$value}</div>";
 			}
+			echo "<div class='_menu_order'>".$post->menu_order."</div>";
+			echo '</div>';
 			echo '</div>';
 			
 		break;
@@ -258,60 +281,55 @@ function eventon_custom_event_columns( $column , $post_id) {
 add_action('manage_ajde_events_posts_custom_column', 'eventon_custom_event_columns', 10, 2 );
 
 
+/** Make events columns sortable */
+	function eventon_custom_events_sort($columns) {
+		$custom = array(
+			'event_start_date'		=> 'evcal_start_date',
+			'event_end_date'		=> 'evcal_end_date',
+			'event_location'		=> 'event_location',
+			'name'					=> 'title',
+			'evo_featured'			=> 'featured',
+			//'repeat'				=> 'repeat',
+		);
+		return wp_parse_args( $custom, $columns );
+	}
 
-/**
- * Make events columns sortable
- */
-function eventon_custom_events_sort($columns) {
-	$custom = array(
-		'event_start_date'		=> 'evcal_start_date',
-		'event_end_date'		=> 'evcal_end_date',
-		'event_location'		=> 'event_location',
-		'name'					=> 'title',
-		'evo_featured'			=> 'featured',
-		//'repeat'				=> 'repeat',
-	);
-	return wp_parse_args( $custom, $columns );
-}
-
-add_filter( 'manage_edit-ajde_events_sortable_columns', 'eventon_custom_events_sort');
+	add_filter( 'manage_edit-ajde_events_sortable_columns', 'eventon_custom_events_sort');
 
 
-/**
- * Event column orderby
- */
-function eventon_custom_event_orderby( $vars ) {
-	if (isset( $vars['orderby'] )) :
-		if ( 'evcal_start_date' == $vars['orderby'] ) :
-			$vars = array_merge( $vars, array(
-				'meta_key' 	=> 'evcal_srow',
-				'orderby' 	=> 'meta_value_num'
-			) );
+/** Event column orderby */
+	function eventon_custom_event_orderby( $vars ) {
+		if (isset( $vars['orderby'] )) :
+			if ( 'evcal_start_date' == $vars['orderby'] ) :
+				$vars = array_merge( $vars, array(
+					'meta_key' 	=> 'evcal_srow',
+					'orderby' 	=> 'meta_value_num'
+				) );
+			endif;
+			if ( 'evcal_end_date' == $vars['orderby'] ) :
+				$vars = array_merge( $vars, array(
+					'meta_key' 	=> 'evcal_erow',
+					'orderby' 	=> 'meta_value'
+				) );
+			endif;
+			if ( 'featured' == $vars['orderby'] ) :
+				$vars = array_merge( $vars, array(
+					'meta_key' 	=> '_featured',
+					'orderby' 	=> 'meta_value'
+				) );
+			endif;
+			if ( 'event_location' == $vars['orderby'] ) :
+				$vars = array_merge( $vars, array(
+					'meta_key' 	=> 'evcal_location',
+					'orderby' 	=> 'meta_value'
+				) );
+			endif;
 		endif;
-		if ( 'evcal_end_date' == $vars['orderby'] ) :
-			$vars = array_merge( $vars, array(
-				'meta_key' 	=> 'evcal_erow',
-				'orderby' 	=> 'meta_value'
-			) );
-		endif;
-		if ( 'featured' == $vars['orderby'] ) :
-			$vars = array_merge( $vars, array(
-				'meta_key' 	=> '_featured',
-				'orderby' 	=> 'meta_value'
-			) );
-		endif;
-		if ( 'event_location' == $vars['orderby'] ) :
-			$vars = array_merge( $vars, array(
-				'meta_key' 	=> 'evcal_location',
-				'orderby' 	=> 'meta_value'
-			) );
-		endif;
-	endif;
 
-	return $vars;
-}
+		return $vars;
+	}
 
-add_filter( 'request', 'eventon_custom_event_orderby' );
+	add_filter( 'request', 'eventon_custom_event_orderby' );
 
 
 
@@ -328,8 +346,12 @@ function eventon_duplicate_event_link_row($actions, $post) {
 	if ( $post->post_type != 'ajde_events' )
 		return $actions;
 
-	$actions['duplicate'] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=duplicate_event&amp;post=' . $post->ID ), 'eventon-duplicate-event_' . $post->ID ) . '" title="' . __( 'Make a duplicate from this event', 'eventon' )
+	$post_type = get_post_type_object( $post->post_type );
+	if ( current_user_can( $post_type->cap->edit_post, $post->ID ) ){
+
+		$actions['duplicate'] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=duplicate_event&amp;post=' . $post->ID ), 'eventon-duplicate-event_' . $post->ID ) . '" title="' . __( 'Make a duplicate from this event', 'eventon' )
 		. '" rel="permalink">' .  __( 'Duplicate', 'eventon' ) . '</a>';
+	}
 
 	return $actions;
 }
@@ -355,7 +377,8 @@ function eventon_duplicate_event_post_button() {
 		$notifyUrl = wp_nonce_url( admin_url( "admin.php?action=duplicate_event&post=" . absint( $_GET['post'] ) ), 'eventon-duplicate-event_' . $_GET['post'] );
 		?>
 		<div class="misc-pub-section" >
-		<div id="duplicate-action"><a class="submitduplicate duplication button" href="<?php echo esc_url( $notifyUrl ); ?>"><?php _e( 'Duplicate this event', 'eventon' ); ?></a></div>
+			<div id="duplicate-action"><a class="submitduplicate duplication button" href="<?php echo esc_url( $notifyUrl ); ?>"><?php _e( 'Duplicate this event', 'eventon' ); ?></a></div>
+			
 		</div>
 		<?php
 	}
@@ -449,7 +472,14 @@ function eventon_admin_event_quick_edit( $column_name, $post_type ) {
 						<input type="text" name="evcal_organizer" class="text" placeholder="<?php _e( 'Event Organizer', 'eventon' ); ?>" value="">
 					</span>
 				</label>
-				
+				<?php /*
+				<label>
+				    <span class="title"><?php _e( 'Menu Order', 'eventon' ); ?></span>
+				    <span class="input-text-wrap">
+						<input type="text" name="_menu_order" class="text" placeholder="<?php _e( 'Menu Order', 'eventon' ); ?>" value="">
+					</span>
+				</label>
+				*/?>
 				<label class="alignleft featured">
 					<input type="checkbox" name="_featured" value="1">
 					<span class="checkbox-title"><?php _e( 'Featured', 'eventon' ); ?></span>
@@ -533,6 +563,14 @@ function eventon_admin_event_quick_edit_save( $post_id, $post ) {
 	
 	// featured
 	if ( isset( $_POST['_featured'] ) ) update_post_meta( $post_id, '_featured', 'yes' ); else update_post_meta( $post_id, '_featured', 'no' );
+
+	// menu order
+	if( isset( $_POST['_menu_order'] ) ){
+		
+		$newpostdata['menu_order'] = 5;
+        $newpostdata['ID'] = $post_id;
+		//wp_update_post($newpostdata);
+	}
 
 	
 

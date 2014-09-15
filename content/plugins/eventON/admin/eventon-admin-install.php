@@ -49,6 +49,6 @@ function eventon_create_page( $slug, $option, $page_title = '', $page_content = 
 function eventon_create_pages() {
 
 	// Events Main page
-    eventon_create_page( esc_sql( _x( 'events', 'page_slug', 'eventon' ) ), 'eventon_events_page_id', __( 'Events', 'eventon' ), '' );
+    eventon_create_page( esc_sql( _x( 'event-directory', 'page_slug', 'eventon' ) ), 'eventon_events_page_id', __( 'Events', 'eventon' ), '' );
 
 }

@@ -30,8 +30,18 @@
 
 		
 		
-		<h2 class='heading'>myEventON Documentation</h2>
+		<h2 class='heading tac' style=''>EventON Documentation</h2>
 		
+		<div class='eventon_searchbox'>
+			<form role="search" action="http://www.myeventon.com/" method="get" id="searchform">
+				<input type="text" name="s" placeholder="Search Documentation"/>
+				<input type="hidden" name="post_type" value="document" /> <!-- // hidden 'products' value -->
+				<input type="submit" alt="Search" value="Search" />
+			</form>
+		</div>
+		<p style=' margin-bottom:25px'><i>NOTE: Please feel free to type in your question and search our documentation library for related answeres</i></p>
+
+		<h4><a href='http://www.myeventon.com/documentation/frequently-asked-questions/' target='_blank'>FAQ</a></h4>
 		<h4>Getting Started</h4>		
 		<p><a href='http://www.myeventon.com/documentation/getting-started-with-eventon-adding-events/' target='_blank'>How to add events to calendar</a></p>
 		<p><a href='http://www.myeventon.com/documentation/adding-calendar-to-site/' target='_blank'>How to add eventON calendar to pages</a></p>

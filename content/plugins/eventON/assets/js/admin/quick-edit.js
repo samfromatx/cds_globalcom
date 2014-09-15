@@ -22,6 +22,7 @@ jQuery(document).ready(function(){
 		var _featured	 			= $evo_inline_data.find('._featured').text();
 		var _evo_date_format		= $evo_inline_data.find('._evo_date_format').text();
 		var _evo_time_format		= $evo_inline_data.find('._evo_time_format').text();
+		var _menu_order		= $evo_inline_data.find('._menu_order').text();
 		
 		jQuery('input[name="evcal_start_date"]', '.inline-edit-row').val(evcal_start_date);
 		jQuery('input[name="evcal_start_time_hour"]', '.inline-edit-row').val(evcal_start_time_hour);
@@ -38,6 +39,7 @@ jQuery(document).ready(function(){
 		
 		jQuery('input[name="evcal_location"]', '.inline-edit-row').val(evcal_location);
 		jQuery('input[name="evcal_organizer"]', '.inline-edit-row').val(evcal_organizer);
+		jQuery('input[name="_menu_order"]', '.inline-edit-row').val(_menu_order);
 		
 		
 		

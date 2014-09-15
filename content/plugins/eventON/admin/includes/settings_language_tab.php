@@ -41,7 +41,15 @@ $eventon_custom_language_array = array(
 			'label'=>'All Day',
 			'name'=>'evcal_lang_allday',
 			'legend'=>''
-		),array('type'=>'togend'),
+		),array(
+			'label'=>'Year Around Event',
+			'name'=>'evcal_lang_yrrnd',
+			'legend'=>''
+		),array(
+			'label'=>'Events',
+			'name'=>'evcal_lang_events',
+		),
+		array('type'=>'togend'),
 	array(
 		'type'=>'togheader',
 		'name'=>'Calendar Header'
@@ -97,6 +105,9 @@ $eventon_custom_language_array = array(
 		'name'=>'evcal_lang_location',
 		'legend'=>''
 	),array(
+		'label'=>'Event Location',
+		'name'=>'evcal_lang_evloc',
+	),array(
 		'label'=>'Type your address',
 		'name'=>'evcalL_getdir_placeholder',
 		'legend'=>'Get directions section'
@@ -125,6 +136,9 @@ $eventon_custom_language_array = array(
 		'label'=>'Event Organized by',
 		'name'=>'evcal_evcard_org',
 		'legend'=>''
+	),array(
+		'label'=>'Event Organizer',
+		'name'=>'evcal_lang_evorg',
 	),array(
 		'label'=>'Close event button text',
 		'name'=>'evcal_lang_close',

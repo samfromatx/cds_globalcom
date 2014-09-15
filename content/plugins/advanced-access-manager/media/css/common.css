@@ -144,6 +144,22 @@ a.aam-icon{
     background-position: -192px -48px;
 }
 
+.aam-icon-large-info span{
+    background-position: -240px 0;
+}
+
+.aam-icon-large-info:hover span{
+    background-position: -240px -48px;
+}
+
+.aam-icon-large-editor span{
+    background-position: -288px 0;
+}
+
+.aam-icon-large-editor:hover span{
+    background-position: -288px -48px;
+}
+
 .aam-icon-medium-add span{
     background-position: 0 0;
 }

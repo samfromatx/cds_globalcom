@@ -106,13 +106,35 @@
 
 
 /* events edit page */
-	.wp-list-table.posts #evo_featured{
+	body.post-type-ajde_events .wp-list-table.posts #evo_featured, body.post-type-ajde_events .wp-list-table.posts #woo.column-woo{
 		width: 46px;
 		text-align: left!important;
 	}
-	.wp-list-table.posts #repeat{
+	body.post-type-ajde_events .wp-list-table.posts #name{
+		width: 200px;
+		min-width: 200px
+	}
+	body.post-type-ajde_events .wp-list-table.posts #repeat{
 		width: 55px;
 		text-align: left!important;
+	}
+	a.evoevent_image{
+		position: absolute;
+		
+	}
+	.evoevent_image .evoEventCirc{
+		display: inline-block;		
+		height: 45px;
+		width: 45px;
+		border-radius: 50%;
+		border: 3px solid transparent;
+	}
+	.evoevent_image .evoEventCirc:hover{
+		border-color: #3d3d3d;
+	}
+	.column-name .evo_item_details{
+		display: inline-block;
+		padding-left: 60px;
 	}
 
 
@@ -194,13 +216,13 @@
 /*	Eventon in-window popup */
  	#evo_popup_bg{
  		background-color: #000;
- 		opacity:0.6;
+ 		opacity:0.7;
  		position: fixed; height: 100%; width: 100%;
- 		z-index: 990;
+ 		z-index: 999999;
  		top: 0; left: 0; display: none;
  	}
 	#eventon_popup_outter{
-		z-index:10900;
+		z-index:9999999;
 		position:absolute;
 		top:0;
 		left:0;
@@ -311,6 +333,7 @@
 		border-bottom: 2px solid #ca9058;
 		padding: 4px 10px 3px;
 		vertical-align: top
+		margin-right: 5px;
 	}
 	.eventon_popup_text .eventon_shortcode_btn:hover{
 		border-color:#c6c6c6;
@@ -790,7 +813,7 @@
 	#adminmenuwrap #menu-posts-ajde_events .wp-menu-image:before{
 		content: "\f133";
 		display: inline-block;
-		font-family: FontAwesome;
+		font-family: evo_FontAwesome;
 		font-style: normal;
 		font-weight: normal;
 		line-height: 1;

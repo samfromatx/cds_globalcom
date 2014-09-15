@@ -8,12 +8,12 @@
  */
 
 //AAM Version for Update purpose
-define('AAM_VERSION', '2.7');
+define('AAM_VERSION', '2.8.1');
 
 define('AAM_BASE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
 $base_url = WP_PLUGIN_URL . '/' . basename(AAM_BASE_DIR) . '/';
-if (force_ssl_admin()) {
+if (force_ssl_admin() && (strpos($base_url, 'https') !== 0)) {
     $base_url = str_replace('http', 'https', $base_url);
 }
 define('AAM_BASE_URL', $base_url);

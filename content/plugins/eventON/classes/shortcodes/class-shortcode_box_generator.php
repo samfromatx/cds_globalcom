@@ -43,7 +43,6 @@ class eventon_admin_shortcode_box{
 				'name'=>'Calendar ID',
 				'type'=>'text',
 				'var'=>'cal_id',
-				'guide'=>'Unique ID to differentiate this calendar from others',
 				'default'=>'0',
 				'placeholder'=>'eg. 1'
 			),
@@ -184,7 +183,7 @@ class eventon_admin_shortcode_box{
 				'guide'=>'Select the user interaction option to override individual event user interactions',
 				'var'=>'ux_val',
 				'default'=>'0',
-				'options'=>apply_filters('eventon_uix_shortcode_opts', array('0'=>'None','1'=>'Slide Down EventCard','3'=>'Lightbox popup window'))
+				'options'=>apply_filters('eventon_uix_shortcode_opts', array('0'=>'None','X'=>'Do not interact','1'=>'Slide Down EventCard','3'=>'Lightbox popup window'))
 			),'etc_override'=>array(
 				'name'=>'Event type color override',
 				'type'=>'YN',
@@ -215,6 +214,12 @@ class eventon_admin_shortcode_box{
 				'options'=>array( 
 					'sort_date'=>'Date','sort_title'=>'Title',
 				)
+			),'hide_sortO'=>array(
+				'name'=>'Hide sort options section',
+				'type'=>'YN',
+				'guide'=>'This will hide sort options section on the calendar.',
+				'var'=>'hide_so',
+				'default'=>'no',
 			),'expand_sortO'=>array(
 				'name'=>'Expand sort options by default',
 				'type'=>'YN',
@@ -226,6 +231,12 @@ class eventon_admin_shortcode_box{
 				'type'=>'YN',
 				'guide'=>'This will change text alignment to Right-to-left for languages like Arabic.',
 				'var'=>'rtl',
+				'default'=>'no',
+			),'show_limit'=>array(
+				'name'=>'Show load more events button',
+				'type'=>'YN',
+				'guide'=>'Require "event count limit" to work, then this will add a button to show rest of the events for calendar in increments',
+				'var'=>'show_limit',
 				'default'=>'no',
 			)
 
@@ -267,6 +278,10 @@ class eventon_admin_shortcode_box{
 					<span >".$var['name'].
 					"</span>".$guide."</p>							
 				</div>";
+			break;
+
+			case 'customcode':
+				echo $var['value'];
 			break;
 			
 			case 'text':
@@ -369,35 +384,101 @@ class eventon_admin_shortcode_box{
 	}
 	
 	public function get_shortcode_field_array(){
-		
+		$_current_year = date('Y');
 		$shortcode_guide_array = apply_filters('eventon_shortcode_popup', array(
 			array(
 				'id'=>'s1',
 				'name'=>'Main Calendar',
 				'code'=>'add_eventon',
 				'variables'=>apply_filters('eventon_basiccal_shortcodebox', array(
-					$this->shortcode_default_field('show_et_ft_img')
+					$this->shortcode_default_field('cal_id')
+					,$this->shortcode_default_field('show_et_ft_img')
 					,$this->shortcode_default_field('ft_event_priority')
 					,$this->shortcode_default_field('only_ft')
 					,$this->shortcode_default_field('hide_past')	
 					,$this->shortcode_default_field('hide_past_by')	
 					,$this->shortcode_default_field('sort_by')
 					,$this->shortcode_default_field('event_count')
+					,$this->shortcode_default_field('show_limit')
 					,$this->shortcode_default_field('month_incre')
 					,$this->shortcode_default_field('event_type')
 					,$this->shortcode_default_field('event_type_2')
 					,$this->shortcode_default_field('event_type_3')
 					,$this->shortcode_default_field('etc_override')
-					,$this->shortcode_default_field('fixed_mo_yr')
-					,$this->shortcode_default_field('cal_id')
+					,$this->shortcode_default_field('fixed_mo_yr')	
 					,$this->shortcode_default_field('event_order')
 					,$this->shortcode_default_field('lang')
 					,$this->shortcode_default_field('UIX')
 					,$this->shortcode_default_field('evc_open')					
-					,$this->shortcode_default_field('jumper')
+					,array(
+							'name'=>'Show jump months option',
+							'type'=>'YN',
+							'guide'=>'Display month jumper on the calendar',
+							'var'=>'jumper',
+							'default'=>'no',
+							'afterstatement'=>'jumper_offset'
+						),array(
+							'name'=>' Jumper Start Year',
+							'type'=>'select',
+							'options'=>array(
+								'0'=>$_current_year-2,
+								'1'=>$_current_year-1,
+								'2'=>$_current_year,
+								),
+							'guide'=>'Select which year you want to set to start jumper options at relative to current year',
+							'var'=>'jumper_offset','default'=>'0',
+							'closestatement'=>'jumper_offset'
+						)
+
+					,$this->shortcode_default_field('hide_sortO')
 					,$this->shortcode_default_field('expand_sortO')
 					,$this->shortcode_default_field('accord')
 					,$this->shortcode_default_field('rtl')
+					,
+
+					/*
+					array(
+							'name'=>'Activate Tile Design',
+							'type'=>'YN',
+							'guide'=>'This will activate the tile event design for calendar instead of rows of events.',
+							'default'=>'no',
+							'var'=>'tiles',
+							'afterstatement'=>'tiles'
+						),
+						array(
+							'name'=>'Tile Box Height (px)',
+							'placeholder'=>'eg. 200',
+							'type'=>'text',
+							'guide'=>'Set the fixed height of event tile for the tiled calendar design',
+							'var'=>'tile_height','default'=>'0'
+						),array(
+							'name'=>'Tile Background Color',
+							'type'=>'select',
+							'options'=>array(
+								'0'=>'Event Color',
+								'1'=>'Featured Image',
+								),
+							'guide'=>'Select the type of background for the event tile design',
+							'var'=>'tile_bg','default'=>'0'
+						),array(
+							'name'=>'Number of Tiles in a Row',
+							'type'=>'select',
+							'options'=>array(
+								'2'=>'2',
+								'3'=>'3',
+								'4'=>'4',
+								'5'=>'5',
+								),
+							'guide'=>'Select the number of tiles to show on one row',
+							'var'=>'tile_count','default'=>'0'
+						),
+						array(
+							'name'=>'Custom Code',
+							'type'=>'customcode',
+							'value'=>$this->html___tilestyle_options(),
+							'closestatement'=>'tiles'
+						)
+					*/
 				))
 			),
 			array(
@@ -413,10 +494,13 @@ class eventon_admin_shortcode_box{
 						'guide'=>'Limit number of events per month (integer)',
 						'var'=>'event_count',
 						'default'=>'0'
-					),$this->shortcode_default_field('month_incre')
+					)
+					,$this->shortcode_default_field('show_limit')
+					,$this->shortcode_default_field('month_incre')
 					,$this->shortcode_default_field('fixed_mo_yr')
 					,$this->shortcode_default_field('cal_id')
 					,$this->shortcode_default_field('event_order')
+					,$this->shortcode_default_field('hide_past')
 					,$this->shortcode_default_field('hide_mult_occur'),
 					array(
 						'name'=>'Hide empty months',
@@ -442,6 +526,10 @@ class eventon_admin_shortcode_box{
 		return $shortcode_guide_array;
 	}
 	
+	function html___tilestyle_options(){
+		return;
+	}
+
 	public function get_content(){
 		
 	$shortcode_guide_array = $this->get_shortcode_field_array();

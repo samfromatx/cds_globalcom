@@ -17,13 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class EVO_post_types{
 
+	private static $evOpt='';
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		add_action( 'init', array( __CLASS__, 'register_taxonomies' ), 5 );
 		add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
-
+		self::$evOpt = get_option('evcal_options_evcal_1');
 	}
 
 	/**
@@ -35,8 +36,8 @@ class EVO_post_types{
 		 **/
 		do_action( 'eventon_register_taxonomy' );
 		
-		$evcal_opt1= get_option('evcal_options_evcal_1');
 		
+		$evOpt = self::$evOpt;
 			
 		
 		$__capabilities = array(
@@ -57,17 +58,28 @@ class EVO_post_types{
 				'rewrite' => array( 'slug' => 'event-type' ) 
 			)) 
 		);
+		register_taxonomy( 'event_organizer', 
+			apply_filters( 'eventon_taxonomy_objects_event_organizer', array('ajde_events') ),
+			apply_filters( 'eventon_taxonomy_args_event_organizer', array(
+				'hierarchical' => false, 
+				'label' => __('Event Organizer','eventon'), 
+				'show_ui' => true,
+				'query_var' => true,
+				'capabilities'			=> $__capabilities,
+				'rewrite' => array( 'slug' => 'event-type' ) 
+			)) 
+		);
 
 
 
 		
 
 		// Event type custom taxonomy NAMES
-		$event_type_names = evo_get_ettNames($evcal_opt1);
+		$event_type_names = evo_get_ettNames($evOpt);
 
 
 		// for each activated event type category
-		for($x=1; $x<evo_get_ett_count($evcal_opt1)+1; $x++){
+		for($x=1; $x<evo_get_ett_count($evOpt)+1; $x++){
 
 			$ab = ($x==1)? '':'_'.$x;
 			$ab2 = ($x==1)? '':'-'.$x;
@@ -112,8 +124,12 @@ class EVO_post_types{
 			return;
 
 		do_action( 'eventon_register_post_type' );
+
+		// get updated event slug for evnet posts
+		$evOpt = self::$evOpt;
+		$event_slug = (!empty($evOpt['evo_event_slug']))? $evOpt['evo_event_slug']: 'events';
 		
-		$labels = eventon_get_proper_labels('Event','Events');
+		$labels = eventon_get_proper_labels( __('Event','eventon'),__('Events','eventon'));
 		register_post_type('ajde_events', 
 			apply_filters( 'eventon_register_post_type_ajde_events',
 				array(
@@ -122,18 +138,23 @@ class EVO_post_types{
 					'public' 				=> true,
 					'show_ui' 				=> true,
 					'capability_type' 		=> 'eventon',
+					'map_meta_cap'			=> true,
 					'publicly_queryable' 	=> true,
 					'hierarchical' 			=> false,
-					'rewrite' 				=> apply_filters('eventon_event_slug', array('slug'=>'events')),
+					'rewrite' 				=> apply_filters('eventon_event_slug', array(
+						'slug'=>$event_slug)),
 					'query_var'		 		=> true,
-					'supports' 				=> array('title','editor','custom-fields','thumbnail'),
-					//'supports' 			=> array('title','editor','thumbnail'),
+					'supports' 				=> apply_filters('eventon_event_post_supports', array('title','author', 'editor','custom-fields','thumbnail','page-attributes')),
+					//'supports' 			=> array('title','editor','thumbnail','page-attributes'),
 					'menu_position' 		=> 15, 
 					'has_archive' 			=> true
 				)
 			)
 		);
+
+		
 	}
+
 
 }
 

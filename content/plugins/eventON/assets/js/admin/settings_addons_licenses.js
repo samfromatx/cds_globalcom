@@ -1,19 +1,24 @@
 /*
-	Settings addons & licenses page
-	ver: 0.1
+*	Eventon Settings tab - addons and licenses
+*	Version: 0.3
+*	Last Updated: 2014-6-18
 */
+
 jQuery(document).ready(function($){
 
 	init();
 
 	// load addon details
 		function init(){
+
 			var obj = $('#evo_addons_list');
 
 			var ajaxdataa = { };
 			ajaxdataa['action']= 'evo_addons';
 			ajaxdataa['eventon_addons_opt']= obj.data('addons');
 			ajaxdataa['evo_licenses']= obj.data('licenses');
+			ajaxdataa['adminurl']= obj.data('adminurl');
+			ajaxdataa['active_plugins']= obj.data('active_plugins');
 			var ajax_url = obj.data('url');
 
 			$.ajax({
@@ -24,7 +29,7 @@ jQuery(document).ready(function($){
 				url:ajax_url,
 				data: ajaxdataa,
 				dataType:'json',
-				success:function(data){
+				success:function(data){					
 					obj.html(data.content);
 				}
 			});
@@ -85,6 +90,35 @@ jQuery(document).ready(function($){
 					}
 				});
 			}
+		});
+	// deactivate eventon license
+		$('.evo_addons_page').on('click', '#evoDeactLic', function(){
+			
+			var data_arg = {
+				action:'eventon_deactivate_lic',
+			};	
+			$.ajax({
+				beforeSend: function(){
+					$('.evo_addons_page').find('.addon.main').css({'opacity':'0.2'});
+				},
+				type: 'POST',
+				url:the_ajax_script.ajaxurl,
+				data: data_arg,
+				dataType:'json',
+				success:function(data){
+					//console.log(data);
+					if(data.status=='success'){
+
+						location.reload();
+						
+					}else{
+						alert(data.error_msg);
+					}					
+					
+				},complete:function(){
+					$('.evo_addons_page').find('.addon.main').css({'opacity':'1'});
+				}
+			});
 		});
 	
 	// ADDON license activatation

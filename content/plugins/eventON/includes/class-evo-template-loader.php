@@ -46,18 +46,25 @@ class EVO_Template_Loader {
 			1=>TEMPLATEPATH.'/'.$eventon->template_url,
 		));
 		
-		
-		$events_page_id = get_option('eventon_events_page_id');
+		$evOpt = evo_get_options('1');
+		$events_page_id = evo_get_event_page_id($evOpt);
 		
 		// single and archieve events page
 		if( is_single() && get_post_type() == 'ajde_events' ) {
 			$file 	= 'single-ajde_events.php';
-		}elseif ( is_post_type_archive( 'ajde_events' ) || ( !empty($events_page_id) && is_page( $events_page_id )  )) {
-			$file 	= 'archive-ajde_events.php';
-			$paths[] 	= AJDE_EVCAL_PATH . '/templates/';
+
+		// if this page is event archive page
+		}elseif ( is_post_type_archive( 'ajde_events' )  ) {
+			$file__ = evo_get_event_template($evOpt);
+
+			
+
+			$file 	= $file__;
+			$paths[] 	= ($file__ == 'archive-ajde_events.php')?
+				AJDE_EVCAL_PATH . '/templates/': get_template_directory();
 		}
-		//echo (get_post_type() == 'ajde_events' )? 't':'nada';
 		
+
 
 		// FILE Exist
 		if ( $file ) {
@@ -79,7 +86,7 @@ class EVO_Template_Loader {
 			}
 		}
 		
-		// /print_r($template);
+		//print_r($template);
 		
 		return $template;
 	}

@@ -1,10 +1,14 @@
 /*
-	Version: 2.2.9
+	Version: 2.2.15
 */
 
 jQuery(document).ready(function($){
 	
 	
+	
+	  	
+
+
 	
 	// meta box sections
 	// click hide and show
@@ -41,15 +45,26 @@ jQuery(document).ready(function($){
 		if($(this).val()!=''){
 			$('#evcal_location_name').val( $(this).val());
 			$('#evcal_location').val( option.data('address')  );
+			$('#evcal_lat').val( option.data('lat')  );
+			$('#evcal_lon').val( option.data('lon')  );
+			$('#evo_location_tax').val( option.data('tid')  );
 
-
-			if(option.data('lat')!='')
-				$('#evcal_lat').val( option.data('lat')  );
-			if(option.data('lon')!='')
-				$('#evcal_lon').val( option.data('lon')  );
+			$('#evo_loc_img_id').val( option.data('loc_img_id')  );
+			$('.evo_metafield_image .evo_loc_image_src img').attr('src', option.data('loc_img_src') ).fadeIn();
 
 		}
+	});
 
+	// organizer picker
+	$('#evcal_organizer_field').on('change',function(){
+		var option = $('option:selected', this);
+
+		if($(this).val()!=''){
+			$('#evcal_organizer_name').val( $(this).val());
+			$('#evcal_org_contact').val( option.data('contact')  );
+			$('#evcal_org_img').val( option.data('img')  );	
+			$('#evo_organizer_tax_id').val( option.data('tid')  );	
+		}
 	});
 
 	//makeInputSelect("evcal_location_field");
@@ -156,12 +171,14 @@ jQuery(document).ready(function($){
 			if(rgb=='1'){
 				return;
 			}else{
-				rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-			
-				return "#" +
-				("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-				("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-				("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
+				if(rgb!=='' && rgb){
+					rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+					
+					return "#" +
+					("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+					("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+					("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
+				}
 			}
 		}
 		
@@ -265,10 +282,10 @@ jQuery(document).ready(function($){
 		$('#evo_endtime').click(function(){
 			// yes
 			if($(this).hasClass('NO')){
-				$('.evo_enddate_selection').slideUp();
-				$('#evo_dp_to').attr({'value':''});
+				$('.evo_enddate_selection').animate({'opacity':'0.5'});
+				//$('#evo_dp_to').attr({'value':''});
 			}else{
-				$('.evo_enddate_selection').slideDown();
+				$('.evo_enddate_selection').animate({'opacity':'1'});
 			}
 		});
 	
@@ -285,6 +302,8 @@ jQuery(document).ready(function($){
 		        var date = $(this).datepicker('getDate');
    				var dayOfWeek = date.getUTCDay();
 
+   				// save event year based off start event date
+   				$('#evo_event_year').attr({'value':date.getUTCFullYear()});
    				$('.evo_days_list').find('input').removeAttr('checked');
    				$('.evo_days_list').find('input[value="'+dayOfWeek+'"]').attr({'checked':'checked'});
 
@@ -304,7 +323,7 @@ jQuery(document).ready(function($){
 
 
 	// yes no buttons in event edit page
-		$('.eventon_mb').on( 'click','.evo_yn_btn',function(){
+		$('.evo_yn_btn').on( 'click',function(){
 			// yes
 			if($(this).hasClass('NO')){
 				$(this).removeClass('NO');

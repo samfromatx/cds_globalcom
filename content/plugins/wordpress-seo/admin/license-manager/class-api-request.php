@@ -17,9 +17,12 @@ if( ! class_exists( "Yoast_API_Request", false ) ) {
 		*/
 		private $args = array(
 			'method' => 'GET',
-			'timeout' => 20, 
-			'sslverify' => false, 
-			'headers' => array( 'Accept-Encoding' => '*' ) 
+			'timeout' => 10,
+			'sslverify' => false,
+			'headers' => array(
+				'Accept-Encoding' => '*',
+				'X-Yoast-EDD' => '1'
+			)
 		);
 
 		/**

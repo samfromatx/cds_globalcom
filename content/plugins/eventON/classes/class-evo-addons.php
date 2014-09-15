@@ -7,8 +7,11 @@
  * @author 		AJDE
  * @category 	Admin
  * @package 	EventON/Classes
- * @version     2.2.12
+ * @version     2.2.15
  */
+
+if(!class_exists('evo_addon')){
+
 
 class evo_addon{
 
@@ -34,29 +37,26 @@ class evo_addon{
 		$this->urls = $init;
 	}
 
-
+		public function get_eventon_version(){
+			global $eventon;
+			return $eventon->version;
+		}
 
 	// REQUIREMENT check
 		public function requirment_check(){
-			$active_plugins = get_option( 'active_plugins' );
 			
-			if( defined('EVENTON_BASE') || in_array( 'eventON/eventon.php', $active_plugins ) || in_array( 'eventon/eventon.php', $active_plugins )){
-				global $eventon;
+			// eventon exist if addon connect to this function
 
-				$eventON_version = $eventon->version;
+			// check if eventon version is compatible and return true of false
+			global $eventon;
 
-				// if eventON version is lower than what we need
-				if(version_compare($this->addon_data['version'], $eventON_version)>0){
-					$this->addon_data['evo_version'] = $ver;
-					add_action('admin_notices', array($this, '_old_eventon_warning'));
-				}
-				return true;
+			$eventON_version = $eventon->version;
 
-			}else{
-
-				add_action('admin_notices', array($this, '_no_eventon_warning'));
-				return false;
+			// if eventON version is lower than what we need
+			if(!empty($eventON_version) && version_compare($this->addon_data['evo_version'], $eventON_version)>0){				
+				add_action('admin_notices', array($this, '_old_eventon_warning'));
 			}
+			return true;
 		}
 
 		// display warning if EventON version is old
@@ -221,12 +221,6 @@ class evo_addon{
 		}
 }
 
-
-// depreciating class
-
-class evo_addons{
-	function add_to_eventon_addons_list(){
-
-	}
 }
+
 ?>

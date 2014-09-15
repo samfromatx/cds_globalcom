@@ -72,14 +72,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		$new_license_content= '';
 		$error_msg='00';
 		
-		$license_errors = array( 
-			'01'=>"No data returned from envato API",
-			"02"=>'Your license is not a valid one!, please check and try again.',
-			"03"=>'envato verification API is busy at moment, please try later.',
-			"00"=>'Could not verify the License key. Please try again.'
-		);
-		
-		
 		$key = $_POST['key'];
 		$slug = $_POST['slug'];
 		
@@ -90,19 +82,19 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		
 		if($status=='1'){
 			$save_license_date = $eventon->evo_updater->save_license_key($slug, $key);
-			
-					
+								
 			// successfully saved new verified license
 			if($save_license_date!=false){
 				$status = 'success';
 				
 				$new_license_content ="License Status: <strong>Activated</strong>";
 			}else{
-				$status='error';
+				$status='error';				
+				$error_msg = $eventon->evo_updater->error_code_($status);
 			}
 		}else{	
 			if(!empty($status))
-				$error_msg = $license_errors[$status];
+				$error_msg = $eventon->evo_updater->error_code_($status);
 				$status='error'; 		
 		}
 		
@@ -118,6 +110,29 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	}
 	add_action('wp_ajax_eventon_verify_lic', 'eventon_license_verification');
 	add_action('wp_ajax_nopriv_eventon_verify_lic', 'eventon_license_verification');
+
+	// deactivate eventon license
+		function eventon_deactivate_evo(){
+			global $eventon;
+			$error_msg ='';
+
+			$status = $eventon->evo_updater->deactivate_eventon_license();
+
+			if($status){
+				$status = 'success';
+			}else{
+				$error_msg = $eventon->evo_updater->error_code_();
+			}
+			$return_content = array(
+				'status'=>$status,		
+				'error_msg'=>$error_msg
+			);
+			echo json_encode($return_content);		
+			exit;
+
+		}
+		add_action('wp_ajax_eventon_deactivate_lic', 'eventon_deactivate_evo');
+		add_action('wp_ajax_nopriv_eventon_deactivate_lic', 'eventon_deactivate_evo');
 
 // activate addon license
 	function eventon_addon_license_activation(){
@@ -168,7 +183,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			
 		
 		$return_content = array(
-			//'response'=>$server_response,
+			'response'=>$__save_new_lic,
 			'status'=>$status,
 			'error_msg'=>$error_msg,	
 			'new_content'=>$new_license_content,
@@ -182,7 +197,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
 
-/** 	Primary function to load event data */
+// Primary function to load event data */
 	function evcal_ajax_callback(){
 		global $eventon;
 		$shortcode_args;
@@ -223,6 +238,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			$focus_end_date_range = mktime(23,59,59,($focused_month_num),(date('t',(strtotime($time_string) ))), ($focused_year));
 		}
 		
+
 		$eve_args = array(
 			'focus_start_date_range'=>$focus_start_date_range,
 			'focus_end_date_range'=>$focus_end_date_range,
@@ -232,30 +248,27 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		);
 		
 		// shortcode arguments USED to build calendar
-		$shortcode_args_arr = $_POST['shortcode'];
-		
-		if(!empty($shortcode_args_arr) && count($shortcode_args_arr)>0){
-			foreach($shortcode_args_arr as $f=>$v){
-				$shortcode_args[$f]=$v;
+			$shortcode_args_arr = $_POST['shortcode'];
+			
+			if(!empty($shortcode_args_arr) && count($shortcode_args_arr)>0){
+				foreach($shortcode_args_arr as $f=>$v){
+					$shortcode_args[$f]=$v;
+				}
+				$eve_args = array_merge($eve_args, $shortcode_args);
+				$lang = $shortcode_args_arr['lang'];
+			}else{
+				$lang ='';
 			}
-			$eve_args = array_merge($eve_args, $shortcode_args);
-			$lang = $shortcode_args_arr['lang'];
-		}else{
-			$lang ='';
-		}
 		
 		
 		// GET calendar header month year values
 		$calendar_month_title = get_eventon_cal_title_month($focused_month_num, $focused_year, $lang);
 		
 		
-		// Addon hook
-		if(has_filter('eventon_ajax_arguments')){
-			$eve_args = apply_filters('eventon_ajax_arguments',$eve_args, $_POST);
-		}
+		// AJAX Addon hook
+		$eve_args = apply_filters('eventon_ajax_arguments',$eve_args, $_POST);
 		
-		//print_r($eve_args);
-		
+				
 		$content_li = $eventon->evo_generator->eventon_generate_events( $eve_args);
 		
 		

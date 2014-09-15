@@ -5,3 +5,7 @@ local-config.php
 prod-config.php
 stage-config.php
 searchreplacedb2.php
+content/cache/
+graphics/
+media/
+tours/

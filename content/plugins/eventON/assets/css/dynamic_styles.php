@@ -24,7 +24,7 @@
 
 		array(
 			'item'=>'.ajde_evcal_calendar .calendar_header p, 
-			.eventon_events_list .eventon_list_event .evcal_cblock, .evcal_cblock, .eventon_events_list .eventon_list_event .evcal_desc span.evcal_desc2, .evcal_desc span.evcal_desc2, .evcal_evdata_row .evcal_evdata_cell h2, .evcal_evdata_row .evcal_evdata_cell h3.evo_h3, .evcal_month_line p, .evo_clik_row .evo_h3',
+			.eventon_events_list .eventon_list_event .evcal_cblock, .evcal_cblock, .eventon_events_list .eventon_list_event .evcal_desc span.evcal_desc2, .evcal_desc span.evcal_desc2, .evcal_evdata_row .evcal_evdata_cell h2, .evcal_evdata_row .evcal_evdata_cell h3.evo_h3, .evcal_month_line p, .evo_clik_row .evo_h3, .eventon_events_list .eventon_list_event .evcal_desc span.evcal_event_subtitle, .evo_pop_body .evcal_desc span.evcal_event_subtitle',
 			'css'=>'font-family:$', 'var'=>'evcal_font_fam',	'default'=>"oswald, 'arial narrow'"
 		),array(
 			'item'=>'.ajde_evcal_calendar .evo_sort_btn, .eventon_sf_field p, .evo_srt_sel p.fa',
@@ -79,9 +79,13 @@
 			'item'=>'.eventon_events_list .eventon_list_event .evcal_eventcard, .evcal_evdata_row, .evorow .tbrow',
 			'css'=>'background-color:#$', 'var'=>'evcal__bc1',	'default'=>'EAEAEA'
 		),array(
-		'name'=>'Event title color',
+			'name'=>'Event title color',
 			'item'=>'#evcal_list .eventon_list_event .evcal_desc span.evcal_event_title',
 			'css'=>'color:#$', 'var'=>'evcal__fc3',	'default'=>'6B6B6B'
+		),array(
+			'name'=>'Event sub title color',
+			'item'=>'.eventon_events_list .eventon_list_event .evcal_desc span.evcal_event_subtitle, .evo_pop_body .evcal_desc span.evcal_event_subtitle',
+			'css'=>'color:#$', 'var'=>'evcal__fc3st',	'default'=>'6B6B6B'
 		),array(
 			'item'=>'.fp_popup_option i',
 			'multicss'=>array(
@@ -89,13 +93,13 @@
 				array('css'=>'font-size:$', 'var'=>'fp__f1b',	'default'=>'22px')
 			)			
 		),array(
-			'item'=>'.evo-jumper span',
+			'item'=>'.evo_cal_above span',
 			'multicss'=>array(
 				array('css'=>'color:#$', 'var'=>'evcal__jm001',	'default'=>'ffffff'),
 				array('css'=>'background-color:#$', 'var'=>'evcal__jm002',	'default'=>'d3d3d3')
 			)			
 		),array(
-			'item'=>'.evo-jumper span:hover',
+			'item'=>'.evo_cal_above span:hover',
 			'multicss'=>array(
 				array('css'=>'color:#$', 'var'=>'evcal__jm001H','default'=>'ffffff'),
 				array('css'=>'background-color:#$', 'var'=>'evcal__jm002H',	'default'=>'d3d3d3')

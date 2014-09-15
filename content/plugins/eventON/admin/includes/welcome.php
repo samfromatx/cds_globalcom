@@ -158,7 +158,7 @@ class EVO_Welcome_Page {
 		</div>
 
 		<div class='evow_credits'>
-			<p style='text-transform:uppercase; font-size:16px; margin:0; padding-bottom:3px;'><a href='http://www.ashanjay.com' target='_blank'>AshanJay Product</a></p>
+			<p style='text-transform:uppercase; font-size:20px; margin:0; padding-bottom:3px;'><a href='http://www.ashanjay.com' target='_blank'>AshanJay Product</a></p>
 			<p style='text-transform:uppercase; opacity:0.7; margin:0'>Made in Portland, OR</p>
 		</div>
 		
