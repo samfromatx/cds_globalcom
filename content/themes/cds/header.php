@@ -37,16 +37,25 @@
         )); ?>
         <li><a href="/about/contact">Contact</a></li>
     </nav>
+    <?php
+    $cdsdomain = $_SERVER['SERVER_NAME'];
+    $usdomain = "";
+    $ukdomain = "";
+    if ($cdsdomain == "www.cds-global.com") {
+        $usdomain = "selected";
+    } elseif ($cdsdomain == "uk.cds-global.com") {
+        $ukdomain = "selected";
+    }
+    ?>
     <div class="container">
         <div id="tools">
             <div class="menu-button"></div>
             <div class="country dropdown">
                 <label for="cdsglobal_country" class="hidefromscreen">Country:</label>
                 <select id="cdsglobal_country">
-                    <option value="">United States</option>
+                    <option <?php echo $usdomain; ?> value="http://www.cds-global.com">United States</option>
                     <option value="http://www.cdsglobal.ca/">Canada</option>
-                    <option value="http://www.cdsglobal.co.uk/">United Kingdom</option>
-                    <option value="http://www.cdsglobal.com.au/">Australia</option>
+                    <option <?php echo $ukdomain; ?> value="http://www.cdsglobal.co.uk/">United Kingdom/Australia</option>
                 </select>
             </div>
             <?php get_search_form(); ?>
