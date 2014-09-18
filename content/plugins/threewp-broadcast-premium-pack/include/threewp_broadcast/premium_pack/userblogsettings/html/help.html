@@ -1,0 +1,104 @@
+This page is a manual for the <a title="User &amp; Blog Settings plugin" href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/user-blog-settings-plugin/"><em>User &amp; Blog Settings</em> plugin</a> from the <a title="ThreeWP Broadcast Premium Pack" href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/">ThreeWP Broadcast Premium Pack</a>. This same manual, although without screenshots, is also available in the plugin's help tab. To view the screenshots in the manual, please <a title="User &amp; Blog Settings plugin" href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/user-blog-settings-plugin/">see the online version</a>.
+<h2>Table of contents</h2>
+<ul>
+	<li><a href="#base_concepts">Base concepts</a>: modifications and criteria</li>
+	<li><a href="#how_to_create_a_modification">How to create a modification</a></li>
+	<li><a href="#testing">Testing the modification</a> on a blog / role / user</li>
+	<li><a href="#examples">Examples</a></li>
+	<li><a href="#faq">FAQ</a></li>
+</ul>
+<a name="base_concepts"></a>
+<h2>Base concepts</h2>
+The broadcast meta box is the Broadcast box that is seen when editing posts.
+
+User &amp; Blog Settings (<em>U&amp;B</em>) works by modifying (1) how Broadcast is shown to the user and (2) the meta box.
+
+The Super Admin creates <strong>modifications</strong>, that contains information about which parts of Broadcast should be modified.
+
+[caption id="attachment_264" align="aligncenter" width="300"]<a href="http://plainview.se/wp-content/uploads/2013/10/ubs-modification.png"><img class="size-medium wp-image-264 " alt="A modification" src="http://plainview.se/wp-content/uploads/2013/10/ubs-modification-300x42.png" width="300" height="42" /></a> A modification[/caption]
+
+Each modification has one or more <strong>criteria</strong>, that decide which blog + role + user combinations the respective modification should apply to.
+
+[caption id="attachment_263" align="aligncenter" width="300"]<a href="http://plainview.se/wp-content/uploads/2013/10/ubs-criteria.png"><img class="size-medium wp-image-263 " alt="Modification criteria" src="http://plainview.se/wp-content/uploads/2013/10/ubs-criteria-300x78.png" width="300" height="78" /></a> Modification criteria[/caption]
+<h3>Modifications</h3>
+Each modification contains the following information:
+<ul>
+	<li>The modification name, that should describe to the super admin what the modification does.</li>
+	<li>Visibility settings: which parts of Broadcast should be shown.</li>
+	<li>Meta box modifications: <em>U&amp;B</em> automatically detects the settings available in the meta box and shows a selection of possible changes for each.</li>
+</ul>
+&nbsp;
+<h3>Criteria</h3>
+The criteria decide which combinations of blogs, roles and users the modification applies to. When searching for applicable modifications, <em>U&amp;B</em> searches for criteria in the following priority:
+<ol>
+	<li>A specific user on this blog</li>
+	<li>A specific user with this role</li>
+	<li>A specific user</li>
+	<li>A role on this blog</li>
+	<li>A blog</li>
+	<li>A role</li>
+</ol>
+If a criteria match is found, any lower priorities are ignored: is a modification for a specific user + role (priority 2) is found, a modification with priority 4, "user on blog" is ignored even though it might be the same user on the correct blog.
+
+After the above, all modifications set to <em>any blog</em>, <em>any role</em>, <em>any user</em> will then be applied.
+
+Use the <strong>test</strong> function to see how modifications are selected.
+<a name="how_to_create_a_modification"></a>
+<h2>How to create a modification</h2>
+Before creating a modification, formulate a descriptive sentence that explains what the goal of the modification is: you want to do <strong>something</strong>, depending on specific <strong>criteria</strong>.
+<blockquote>"I want to <strong>hide the Broadcast</strong> box from <strong>all editors on the blog</strong> <em>Broadcast 3</em>."</blockquote>
+<ol>
+	<li>Create a modification.</li>
+	<li>Edit the modification.</li>
+	<li>Write a description: <em>Hide the broadcast box</em></li>
+	<li>Uncheck <em>Display Broadcast meta box</em>.</li>
+	<li>Save the modification.</li>
+	<li>Go back to the modifications overview.</li>
+	<li>Hover over the newly-created modification.</li>
+	<li>Click on the <em>Edit the criteria</em> link.</li>
+	<li>There should already by a row of criteria.</li>
+	<li>Select the blog <em>Broadcast 3</em>.</li>
+	<li>Save the criteria.</li>
+</ol>
+Or
+<blockquote>"All authors should <strong>have their posts automatically posted</strong> and linked to the <em>IT</em> blog, <strong>no matter which blog</strong> they're writing on."</blockquote>
+<ol>
+	<li>Create a modification.</li>
+	<li>Edit the modification.</li>
+	<li>Write a description: <em>Post and link to IT</em></li>
+	<li>In the meta box settings:</li>
+	<li>Find the link option.</li>
+	<li>Change it to <em>force on</em> or <em>force on an</em><em>d hide</em>, depending on your preference.</li>
+	<li>In the <em>Broadcast to</em> settings:</li>
+	<li>Find the <em>IT</em> blog.</li>
+	<li>Change it to <em>force on</em> or <em>force on an</em><em>d hide</em>, depending on your preference.</li>
+	<li>Save the modification.</li>
+	<li>Go back to the modifications overview.</li>
+	<li>Hover over the newly-created modification.</li>
+	<li>Click on the <em>Edit the criteria</em> link.</li>
+	<li>There should already by a row of criteria.</li>
+	<li>Select the role <em>Author</em>.</li>
+	<li>Save the criteria.</li>
+</ol>
+Now you should <strong>test</strong> the modification to see if it is applied correctly.
+<a name="testing"></a>
+<h2>Testing</h2>
+The <em>test</em> tab can help show which modifications affect specific combinations of blogs / roles /users. Just select a combination and press the button. <em>U&amp;B</em> will then show a list of the modifications that are applied to the selected combination.
+
+This feature helps to find conflicts between modifications. See the criteria search order, above.
+<a name="examples"></a>
+<h2>Examples</h2>
+<h3>1: Force all authors to broadcast to a blog</h3>
+[gallery link="file" ids="242,243,244,245,246,247,248,249,250"]
+
+Note that the above will broadcast all author posts to the blog <em>Broadcast 3</em>. You might want to force linking also, see example 3.
+<h3>2: Hide Broadcast completely from everyone except administrators</h3>
+[gallery link="file" ids="253,254,255,256,257,258,259,260,261"]
+<h3>3: Force linking and broadcast of custom fields and taxonomies</h3>
+[gallery link="file" ids="266,267,268,269,270,271,272,273,274"]
+<a name="faq"></a>
+<h2>FAQ</h2>
+<h3>Is the super admin affected by modifications?</h3>
+<strong>Yes</strong>, with <strong>one exception</strong>: the broadcast <strong>menu</strong> is never hidden from the <strong>super admin</strong>. How would one change U&amp;B settings if one can not use the Broadcast menu? :)
+
+&nbsp;

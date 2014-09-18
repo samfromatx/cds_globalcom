@@ -1,0 +1,7 @@
+Attachment Shortcodes is a plugin to generically handle shortcodes that contain media attachment IDs. Normally when a post is broadcast the content is left untouched.
+
+This is a problem if you have a shortcode for a plugin that points to a media attachment, because the ID number(s) of the attachment(s) will only be valid for the parent post. The attachments, which might not even have been broadcasted, will not have the same IDs on each child blog as on the parent blog.
+
+Using this plugin you can inform Broadcast that there are specific shortcodes in the post that need to be modified per child blog. Attachment Shortcodes will only modify the attributes that use valid attachment IDs, not URLs.
+
+Use the wizard to create some example shortcodes and then modify them to work with the shortcodes you are using.

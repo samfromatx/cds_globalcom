@@ -1,0 +1,20 @@
+{
+    "name": "plainview/threewp_broadcast_premium_pack",
+    "description": "ThreeWP Broadcast Premium Pack",
+	"license" : "GPL-3.0",
+	"authors": [ {
+		"name": "Edward Plainview",
+		"email": "edward@plainview.se"
+	} ],
+	"require-dev": {
+		"php": ">=5.4.0",
+		"plainview/sdk": "dev-master"
+	},
+	"autoload":
+	{
+		"psr-4": {
+			"threewp_broadcast\\premium_pack\\": "include/threewp_broadcast/premium_pack"
+		}
+        },
+	"minimum-stability": "dev"
+}

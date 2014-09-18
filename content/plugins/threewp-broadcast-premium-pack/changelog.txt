@@ -1,0 +1,191 @@
+Changelog for the ThreeWP Broadcast Premium Pack Plugins
+--------------------------------------------------------
+
+Premium Pack versions require at least the same version of Broadcast.
+
+20140814
+Renamed "Keep Child Attachments" to "Protect Child Attachments"
+Version 4
+
+20140802
+User & Blog Settings Post: Plugin added.
+
+20140722
+Redirect All Children: Plugin added.
+
+20140721
+Protect Child Content: Plugin added.
+
+20140715
+All In One Calendar: Plugin added.
+
+20140708
+Version 3
+
+20140701
+User & Blog Settings: Select boxes can now just have their values set.
+
+20140620
+Keep Child Attachments: Plugin added.
+
+20140616
+LocalLinks: Disable warnings when loading incorrect HTML.
+
+20140615
+Better support for Windows servers.
+Version 2.24
+
+20140606
+ACF: Added support for galleries.
+
+20140603
+WooCommerce: Variation pricing correctly broadcasted.
+
+20140602
+ACF: Added support for relationships.
+
+20140520
+Comments: Plugin added.
+Version 2.23
+
+20140511
+Activity Monitor: Plugin added.
+
+20140422
+Version 2.21
+
+20140420
+Custom Field Attachments: Automatically parses multiple attachment IDs in the same custom field, using non-numbers as separators.
+Purge Children: Plugin added.
+
+20140413
+Queue: Fix bug where the last items are sometimes not queued.
+Local Links: Fixed incompatability with Queue.
+
+20140412
+Version 2.20
+
+20140412
+Event Organiser: Can update event venues when syncing using Sync Taxonomies.
+Sync Taxonomies: Plugin added.
+
+20140406
+New: Plugins combined into one big premium plugin that enables the various speciality plugins.
+Custom Field Attachments: Plugin added.
+
+20140402
+Version 2.19
+
+20140331
+ACF: Support for post objects and files.
+
+20140324
+Event Organiser: Fix broadcast of event date.
+
+20140314
+Version 2.18
+Attachment Shortcodes: Plugin added.
+
+20140226
+Event Organiser: Plugin added.
+
+20140214
+ACF: New: "Flexible content" field images are correctly copied.
+
+20140123
+Version 2.15
+
+20140122
+ACF: Fix: same attachment can be used in several image fields.
+ACF: Also handles images in repeater fields.
+
+20140117
+ACF: Added compatability with newer versions of ACF that return arrays instead of values.
+
+20140117
+Version 2.14
+
+20140116
+Queue: Requires even less memory due to optimizations.
+
+20140114
+User Blog Settings: Increased compatability with Keep Child Status
+
+20140112
+Version 2.12
+
+20140104
+All Blogs: Plugin added.
+
+20140103
+Send To Many: Compatability with new Broadcast version, fixed missing HTML file.
+Keep Child Status: Fatal error line 209 fixed.
+
+20131230
+Queue: Round robin, more robustness, fatal errors are displayed.
+
+20131218
+Version 2.11
+
+20131217
+Queue: Retry countdown. Better retry handling.
+
+20131216
+Queue: More reliable javascript queuing (ignore unnecessary warnings from other plugins).
+
+20131210
+Per Blog Taxonomies: Plugin added.
+Permalinks: Plugin added.
+
+20131122
+Queue: Javascripts informs of errors.
+
+20131121
+Version 2.10
+WooCommerce: Plugin added.
+
+20131114
+Added "Premium" to plugin names.
+
+20131113
+Version 2.9
+
+20131112
+KeepChildStatus: Plugin added.
+UserBlogSettings: Fixed CSS display when testing.
+UserBlogSettings: Stricter application of criteria.
+UserBlogSettings: Nicer display of blog names with special characters.
+UserBlogSettings: Apply JS in the preview box.
+Views: Fix for removed added_meta_box action.
+
+20131111
+UserBlogSettings: Added support for select modifications.
+UserBlogSettings: Note about current blog not being visible.
+
+20131101
+Version 2.7
+Advanced Custom Fields: Plugin added.
+SendToMany: Fixed send to many button - using new prepare action.
+
+20131028
+Version 2.6
+Local Links: Plugin added.
+
+20131018
+Version 2.4
+User & Blog Settings: Plugin added.
+
+20131011
+Version 2.3
+Send To Many: Plugin added.
+
+20131010
+Queue: Added process data caching.
+
+20131007
+Version 2.2
+Views: Plugin added.
+
+20131006
+Initial release to coincide with Broadcast 2.0.
+Queue: Plugin added.

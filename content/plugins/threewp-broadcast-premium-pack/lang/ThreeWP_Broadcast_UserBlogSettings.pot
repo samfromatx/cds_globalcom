@@ -1,0 +1,482 @@
+#: ThreeWP_Broadcast_UserBlogSettings.php:542
+#, php-format
+msgid "%s display settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:536
+#, php-format
+msgid "%s meta box settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:539
+msgid "1 display setting"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:533
+msgid "1 meta box settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:336
+#, php-format
+msgid "A new modification criterion, %s, has been created."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:482
+#, php-format
+msgid "A new modification, %s, has been created."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:393
+msgid "Any"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:497
+msgid "Applies to"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:347
+#: ThreeWP_Broadcast_UserBlogSettings.php:372
+#: ThreeWP_Broadcast_UserBlogSettings.php:683
+msgid "Blog"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:773
+msgid "Broadcast User & Blog Settings"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:909
+msgid "Could not parse date"
+msgstr ""
+
+#. Create a new modification
+#: ThreeWP_Broadcast_UserBlogSettings.php:559
+msgid "Create a new modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:295
+msgid "Create a new modification criterion"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:447
+msgid "Create modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:298
+msgid "Create new criterion"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:319
+#, php-format
+msgid "Criteria %s has been deleted."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:396
+msgid "DD"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:401
+msgid "Date format"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:302
+#: ThreeWP_Broadcast_UserBlogSettings.php:451
+msgid "Delete"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:368
+msgid "Description"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:139
+msgid "Display broadcast columns"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:144
+msgid "Display broadcast menu"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:149
+msgid "Display broadcast meta box"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:134
+msgid "Display settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:138
+msgid "Display the broadcast columns in the post overview showing link information."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:143
+msgid "Display the broadcast menu in the post overview showing link information."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:148
+msgid "Display the broadcast meta box in the post overview showing link information."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:627
+msgid "Edit modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:640
+msgid "Edit modification criteria"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:524
+msgid "Edit the criteria"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:523
+msgid "Edit the criteria used for this modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:520
+#: ThreeWP_Broadcast_UserBlogSettings.php:521
+msgid "Edit the modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:625
+#, php-format
+msgid "Editing modification %s"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:639
+#, php-format
+msgid "Editing modification criteria %s"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:580
+msgid "Enabled"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:164
+msgid "Force off"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:165
+msgid "Force off and hide"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:161
+msgid "Force on"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:162
+msgid "Force on and hide"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:575
+msgid "General"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:124
+msgid "General settings"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:397
+msgid "HH"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:657
+msgid "Help"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:916
+msgid "Invalid date"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:899
+msgid "Invalid email address"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:404
+msgid "Latest valid date"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:158
+msgid "Leave it alone"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:159
+msgid "Leave it alone and hide it"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:395
+#: plainview_sdk/plainview/sdk/form.php:398
+msgid "MM"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:152
+msgid "Meta box settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:186
+#, php-format
+msgid "Meta box settings: %s"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:390
+msgid "Minimum length"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:495
+msgid "Modification"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:477
+#, php-format
+msgid "Modification created %s"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:128
+msgid "Modification name"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:467
+#, php-format
+msgid "Modification, %s, has been deleted."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:496
+#: ThreeWP_Broadcast_UserBlogSettings.php:614
+msgid "Modifications"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:579
+msgid "Modify the Broadcast settings for users?"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:716
+msgid "No modifications affect this blog / role / user combination."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:202
+#, php-format
+msgid "No modifications available for the %s input."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:684
+#: ThreeWP_Broadcast_UserBlogSettings.php:689
+#: ThreeWP_Broadcast_UserBlogSettings.php:694
+msgid "None in particular"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:163
+msgid "Off"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:160
+msgid "On"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:875
+msgid "Please create at least one public post to be used as a post template."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/radios.php:59
+#: plainview_sdk/plainview/sdk/form2/inputs/traits/validation.php:182
+#, php-format
+msgid "Please fill in %s."
+msgstr ""
+
+#. Display a preview.
+#: ThreeWP_Broadcast_UserBlogSettings.php:248
+msgid "Preview"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:325
+msgid "Required field"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:348
+#: ThreeWP_Broadcast_UserBlogSettings.php:378
+#: ThreeWP_Broadcast_UserBlogSettings.php:688
+msgid "Role"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:399
+msgid "SS"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:583
+msgid "Save settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:208
+msgid "Save the settings"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:155
+msgid "Select the modifcations for each setting in the meta box."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:520
+msgid "Super admin"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:647
+msgid "Test"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:646
+#: ThreeWP_Broadcast_UserBlogSettings.php:698
+msgid "Test modifications"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:264
+msgid "The broadcast meta box is not shown to the user. But if it were visible, it would look like this:"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:266
+msgid "The broadcast meta box is visible and looks like this:"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:328
+msgid "The criteria have been saved."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/email.php:29
+#, php-format
+msgid "The e-mail address in %s is not valid!"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:725
+#, php-format
+msgid "The following modifications affect the combination you have chosen: %s"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:235
+msgid "The modification settings have been saved."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:127
+msgid "The name of the modification that only the super admin sees."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:380
+#, php-format
+msgid "The plugin and all associated settings and database tables have been removed. Please %sfollow this link to complete the uninstallation procedure%s."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/traits/maxlength.php:31
+#, php-format
+msgid "The text in %s is too long!"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/traits/minlength.php:42
+#, php-format
+msgid "The text in %s is too short!"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/traits/max.php:34
+#, php-format
+msgid "The value in %s (%s) is larger than the allowed maximum of %s."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form2/inputs/traits/min.php:34
+#, php-format
+msgid "The value in %s (%s) is smaller than the allowed minimum of %s."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:384
+msgid "The value must be larger than or equal to"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:386
+msgid "The value must be smaller or equal to"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:381
+msgid "This link will take you to the index page"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:356
+msgid "This page will remove all the plugin tables and settings from the database and then deactivate the plugin."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:488
+msgid "This table lists all the available modifications and a short summary of which settings are altered."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:661
+msgid "Uninstall"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:363
+msgid "Uninstall plugin"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:292
+msgid "Update above criteria"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:289
+msgid "Update existing criteria"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:669
+msgid "Use this form to find out which modifcations affect different combinations of blogs / roles / users."
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:349
+#: ThreeWP_Broadcast_UserBlogSettings.php:384
+#: ThreeWP_Broadcast_UserBlogSettings.php:693
+msgid "User"
+msgstr ""
+
+#: ThreeWP_Broadcast_UserBlogSettings.php:774
+msgid "User & Blog Settings"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:388
+msgid "Valid values"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:400
+msgid "YYYY"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:359
+msgid "Yes, I'm sure I want to remove all the plugin tables and settings."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:371
+msgid "You have to check the checkbox in order to uninstall the plugin."
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:390
+msgid "characters"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:926
+msgid "characters long"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:956
+msgid "may not be empty"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:950
+msgid "may not be larger than"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:938
+msgid "may not be smaller than"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:926
+msgid "must be at least"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:1911
+msgid "no"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/form.php:388
+msgid "to"
+msgstr ""
+
+#: plainview_sdk/plainview/sdk/wordpress/base.php:1911
+msgid "yes"
+msgstr ""
