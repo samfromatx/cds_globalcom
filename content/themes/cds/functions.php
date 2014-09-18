@@ -9,6 +9,7 @@ include 'widgets/optin.php';
 include 'widgets/media-post.php';
 include 'widgets/nonprofit-post.php';
 include 'widgets/twitter.php';
+include 'widgets/twitter-uk.php';
 include 'widgets/youtube.php';
 include 'widgets/vimeo.php';
 
