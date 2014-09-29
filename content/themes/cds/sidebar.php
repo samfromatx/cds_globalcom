@@ -1,6 +1,7 @@
 <?php
 // See if the current page or the parent has a custom industry sidebar
 // Otherwise fall back to the default one.
+$cdsdomain = $_SERVER['SERVER_NAME'];
 $actual_link = "$_SERVER[REQUEST_URI]";
 $parentdir = explode('/', $actual_link);
 if ($parentdir[1] != "stay-informed") {
@@ -10,14 +11,22 @@ if ($parentdir[1] != "stay-informed") {
     <?php
         // If this is a leaf page, include the CTA buttons
         global $children;
-        if (isset($children) && count($children) == 0): ?>
-            <div class="widget cta">
-                <a href="/about/contact/?sbj=quote"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
-            </div>
-            <div class="widget cta">
-                <a href="/about/contact/?sbj=demo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/schedule-a-demo.png" alt="Request a demo"></a>
-            </div>
-        <?php endif;
+        if (isset($children) && count($children) == 0):
+            if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com"): ?>
+                <div class="widget cta">
+                    <a href="/about/contact/?sbj=quote"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
+                </div>
+                <div class="widget cta">
+                    <a href="/about/contact/?sbj=demo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/schedule-a-demo.png" alt="Request a demo"></a>
+                </div>
+        <?php
+            elseif ($cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com"): ?>
+                <div class="widget cta">
+                    <a href="/about/contact/#contactinfo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
+                </div>
+        <?php
+            endif;
+        endif;
 
         //$sidebar = "industry-{$post->post_name}";
         $sidebar = "industry-$parentdir[2]";
