@@ -1,7 +1,15 @@
+<?php
+    $cdsdomain = $_SERVER['SERVER_NAME'];
+    if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") {
+        $twitterHandle = "cdsglobal";
+    } elseif ($cdsdomain == "www.cdsglobal.co.uk" || $cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com") {
+        $twitterHandle = "CDSGlobalEurope&Australia";
+    }
+?>
         <footer role="contentinfo">
             <div class="social">
                 <ul>
-                    <li><a href="https://twitter.com/cdsglobal" target="_blank" class="twitter">Twitter</a></li>
+                    <li><a href="https://twitter.com/<?php echo $twitterHandle; ?>" target="_blank" class="twitter">Twitter</a></li>
                     <li><a href="https://www.facebook.com/CDSGlobal" target="_blank" class="facebook">Facebook</a></li>
                     <li><a href="http://www.linkedin.com/company/cds-global" target="_blank" class="linkedin">LinkedIn</a></li>
                     <li><a href="http://instagram.com/cdsglobalinc" target="_blank" class="instagram">Instagram</a></li>
