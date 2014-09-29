@@ -6,6 +6,7 @@ function remove_headers($string) { $headers = array( "/to\:/i", "/from\:/i", "/b
 }
 // Pick up the cleaned form data
 
+$salesInquiry = remove_headers($_POST['salesInquiry']);
 $country = remove_headers($_POST['country']);
 $bizname = remove_headers($_POST['bizname']);
 $biztype = remove_headers($_POST['biztype']);
@@ -38,6 +39,7 @@ Comments: $comments";
         $subject = "Message from UK business request web form";
     }
     $message = "Name: $firstname $lastname
+Business Industry: $salesInquiry
 Business Region: $country
 E-mail: $email
 Phone: $phone
