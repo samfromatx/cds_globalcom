@@ -250,8 +250,8 @@ function cds_resource_priority_metabox($resource) {
         <option value="1" <?php selected( $selected, '1' ); ?>>Very High</option>
         <option value="2" <?php selected( $selected, '2' ); ?>>High</option>
         <option value="3" <?php selected( $selected, '3' ); ?>>Medium</option>
-        <option value="3" <?php selected( $selected, '4' ); ?>>Low</option>
-        <option value="3" <?php selected( $selected, '5' ); ?>>Very Low</option>
+        <option value="4" <?php selected( $selected, '4' ); ?>>Low</option>
+        <option value="5" <?php selected( $selected, '5' ); ?>>Very Low</option>
     </select>
     <?php
 }
@@ -498,7 +498,7 @@ function resources_get_posts($query) {
         )));
     }
 }
-add_action('pre_get_posts', 'resources_get_posts');
+//add_action('pre_get_posts', 'resources_get_posts');
 
 function add_sticky_to_custom_posts_archive($posts) {
     global $wp_query;

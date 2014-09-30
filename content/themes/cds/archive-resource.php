@@ -88,6 +88,7 @@ setup_postdata($post);
                 <ul class="listing resources">
 
                         <?php
+                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
                         if (isset($_GET['industry']) && isset($_GET['type'])) {
                             $query = new WP_Query( array( 'post_type' => 'resource', 'meta_query' => array(	array('key' => 'industry', 'value'   => $_GET['industry'], 'compare' => 'LIKE', ),), 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
@@ -96,7 +97,8 @@ setup_postdata($post);
                         } elseif (isset($_GET['type'])) {
                             $query = new WP_Query( array( 'post_type' => 'resource', 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
                         } else {
-                            $query = new WP_Query( array( 'post_type' => 'resource', 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
+                            $query = new WP_Query( array( 'post_type' => 'resource', 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10,
+                'paged'=>$paged ) );
                         }
 
                         while ( $query->have_posts() ): $query->the_post();
@@ -121,8 +123,8 @@ setup_postdata($post);
                 </ul>
                 <nav class="pagination">
                     <div class="previous"><?php previous_posts_link('Previous page'); ?></div>
-                    <div class="next"><?php next_posts_link('Next page'); ?></div>
-                    <div class="pages">Page <?php echo get_query_var('paged') ? get_query_var('paged') : 1; ?> of <?php echo $GLOBALS['wp_query']->max_num_pages; ?></div>
+                    <div class="next"><?php next_posts_link('Next page', $query->max_num_pages); ?></div>
+                    <div class="pages">Page <?php echo get_query_var('paged') ? get_query_var('paged') : 1; ?> of <?php echo $query->max_num_pages; ?></div>
                 </nav>
                 <?php else: ?>
                     <p>Sorry, there are no resources available for your selected filters.</p>
