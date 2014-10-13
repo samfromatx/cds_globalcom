@@ -19,7 +19,11 @@
     <?php wp_head(); ?>
     <a href="https://plus.google.com/103871200619595329856" rel="publisher" class="hidefromscreen">Google Plus</a>
 </head>
+<?php
+$cdsdomain = $_SERVER['SERVER_NAME'];
+?>
 <body <?php body_class(); ?>>
+    <?php if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") { ?>
     <!-- Google Tag Manager -->
         <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-N5XJNT"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -29,6 +33,18 @@
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-N5XJNT');</script>
     <!-- End Google Tag Manager -->
+    <?php } elseif ($cdsdomain == "www.cdsglobal.co.uk") { ?>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-668234-4', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <?php } ?>
     <nav role="navigation">
         <?php wp_nav_menu(array(
             'theme_location' => 'primary',
@@ -38,7 +54,6 @@
         <li><a href="/about/contact">Contact</a></li>
     </nav>
     <?php
-    $cdsdomain = $_SERVER['SERVER_NAME'];
     $usdomain = "";
     $ukdomain = "";
     if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") {
