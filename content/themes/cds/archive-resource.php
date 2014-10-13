@@ -91,14 +91,13 @@ setup_postdata($post);
                         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
                         if (isset($_GET['industry']) && isset($_GET['type'])) {
-                            $query = new WP_Query( array( 'post_type' => 'resource', 'meta_query' => array(	array('key' => 'industry', 'value'   => $_GET['industry'], 'compare' => 'LIKE', ),), 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
+                            $query = new WP_Query( array( 'post_type' => 'resource', 'meta_query' => array(	array('key' => 'industry', 'value'   => $_GET['industry'], 'compare' => 'LIKE', ),), 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10, 'paged'=>$paged ) );
                         } elseif (isset($_GET['industry'])) {
-                            $query = new WP_Query( array( 'post_type' => 'resource', 'meta_query' => array(	array('key' => 'industry', 'value'   => $_GET['industry'], 'compare' => 'LIKE', ),), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
+                            $query = new WP_Query( array( 'post_type' => 'resource', 'meta_query' => array(	array('key' => 'industry', 'value'   => $_GET['industry'], 'compare' => 'LIKE', ),), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10, 'paged'=>$paged ) );
                         } elseif (isset($_GET['type'])) {
-                            $query = new WP_Query( array( 'post_type' => 'resource', 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority' ) );
+                            $query = new WP_Query( array( 'post_type' => 'resource', 'tax_query' => array( array( 'taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => $_GET['type'], ), ), 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10, 'paged'=>$paged ) );
                         } else {
-                            $query = new WP_Query( array( 'post_type' => 'resource', 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10,
-                'paged'=>$paged ) );
+                            $query = new WP_Query( array( 'post_type' => 'resource', 'orderby' => array( 'meta_value_num' => 'ASC', 'date' => 'DESC' ), 'meta_key' => 'resource_priority', 'posts_per_page' => 10, 'paged'=>$paged ) );
                         }
 
                         while ( $query->have_posts() ): $query->the_post();
