@@ -18,7 +18,7 @@
             else:
                 get_template_part('partials/page', 'basic');
             endif; ?>
-            <?php get_sidebar(); ?>
+            <?php //get_sidebar(); ?>
         </div>
         <?php endif; ?>
     </div>

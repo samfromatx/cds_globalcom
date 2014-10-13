@@ -3,7 +3,7 @@
     <?php the_post_thumbnail('full'); ?>
 </div>
 
-<div class="primary">
+<div class="primary" style="width:95%;">
     <?php the_content(); ?>
     <ul class="listing">
         <?php global $children; foreach ($children as $child): ?>
@@ -20,3 +20,19 @@
         <?php endforeach; ?>
     </ul>
 </div>
+<aside class="sidebarListing sidebar" role="complementary">
+    <?php
+$cdsdomain = $_SERVER['SERVER_NAME'];
+$actual_link = "$_SERVER[REQUEST_URI]";
+$parentdir = explode('/', $actual_link);
+
+        $sidebar = "industry-$parentdir[2]";
+        if (!is_active_sidebar($sidebar)) {
+            $parent = get_post($post->post_parent);
+            $sidebar = "industry-{$parent->post_name}";
+            if (!is_active_sidebar($sidebar))
+                $sidebar = 'cds-global-sidebar';
+        }
+        dynamic_sidebar($sidebar);
+    ?>
+</aside>

@@ -112,3 +112,4 @@
         <?php endif; ?>
     <?php endif; ?>
 </article>
+<?php get_sidebar(); ?>
