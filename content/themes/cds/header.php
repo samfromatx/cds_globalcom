@@ -2,6 +2,9 @@
 <!--[if IE 8]> <html class="lt-ie9" <?php language_attributes(); ?>> <![endif]-->
 <!--[if gt IE 8]><!--> <html <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
+    <?php
+    $cdsdomain = $_SERVER['SERVER_NAME'];
+    ?>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php wp_title('|'); ?></title>
@@ -16,12 +19,10 @@
     <!--[if lt IE 9]>
     <script src="/content/themes/cds/javascripts/ie9.js"></script>
     <![endif]-->
+    <meta name="msvalidate.01" content="2DE0077177D32455C498CE9C6A6DECD5" />
     <?php wp_head(); ?>
     <a href="https://plus.google.com/103871200619595329856" rel="publisher" class="hidefromscreen">Google Plus</a>
 </head>
-<?php
-$cdsdomain = $_SERVER['SERVER_NAME'];
-?>
 <body <?php body_class(); ?>>
     <?php if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") { ?>
     <!-- Google Tag Manager -->
@@ -61,7 +62,7 @@ $cdsdomain = $_SERVER['SERVER_NAME'];
         $twitterHandle = "cdsglobal";
     } elseif ($cdsdomain == "www.cdsglobal.co.uk" || $cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com") {
         $ukdomain = "selected";
-        $twitterHandle = "CDSGlobalEurope&Australia";
+        $twitterHandle = "CDSGlobalEurope";
     }
     ?>
     <div class="container">
