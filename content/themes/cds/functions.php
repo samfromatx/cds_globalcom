@@ -691,5 +691,5 @@ function resource_table_content( $column_name, $post_id ) {
     if ($column_name == 'venue') {
     echo get_post_meta( $post_id, '_bs_meta_event_venue', true );
     }*/
-
 }
+
