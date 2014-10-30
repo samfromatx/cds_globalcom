@@ -1,9 +1,9 @@
 <?php
     $cdsdomain = $_SERVER['SERVER_NAME'];
-    if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") {
-        $twitterHandle = "cdsglobal";
-    } elseif ($cdsdomain == "www.cdsglobal.co.uk" || $cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com") {
+    if ($cdsdomain == "www.cdsglobal.co.uk" || $cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com") {
         $twitterHandle = "CDSGlobalEurope";
+    } else {
+        $twitterHandle = "cdsglobal";
     }
 ?>
         <footer role="contentinfo">

@@ -63,6 +63,9 @@
     } elseif ($cdsdomain == "www.cdsglobal.co.uk" || $cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com") {
         $ukdomain = "selected";
         $twitterHandle = "CDSGlobalEurope";
+    } elseif ($cdsdomain == "www.cdsglobal.ca" || $cdsdomain == "ca.cds-global.com" || $cdsdomain == "stageca.cds-global.com") {
+        $cadomain = "selected";
+        $twitterHandle = "cdsglobal";
     }
     ?>
     <div class="container">
@@ -72,7 +75,7 @@
                 <label for="cdsglobal_country" class="hidefromscreen">Country:</label>
                 <select id="cdsglobal_country">
                     <option <?php echo $usdomain; ?> value="http://www.cds-global.com">United States</option>
-                    <option value="http://www.cdsglobal.ca/">Canada</option>
+                    <option <?php echo $cadomain; ?> value="http://www.cdsglobal.ca/">Canada</option>
                     <option <?php echo $ukdomain; ?> value="http://www.cdsglobal.co.uk/">United Kingdom/Australia</option>
                 </select>
             </div>
