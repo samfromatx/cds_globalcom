@@ -2,6 +2,8 @@
 
 namespace threewp_broadcast;
 
+use \Exception;
+
 /**
 	@brief	Data of an attached file.
 
@@ -40,22 +42,18 @@ class attachment_data
 		else
 			$r->id = $attachment;
 
+		$r->post = get_post( $r->id );
+
+		if ( ! $r->post )
+			throw new Exception( sprintf( 'The attachment ID %s does not have an associated post.', $r->id ) );
+
 		$metadata = wp_get_attachment_metadata( $r->id );
 		// Does the file have metadata?
 		if ( $metadata )
-		{
-			$r->filename_base = basename( $metadata['file'] );
-			$r->filename_path = $upload_dir[ 'basedir' ] . '/' . $metadata[ 'file' ];
 			$r->file_metadata = $metadata;
-		}
-		else
-		{
-			// No metadata = not an image. Guess the upload directory and what not.
-			$r->filename_path = get_attached_file( $r->id );
-			$r->filename_base = basename( $r->filename_path );
-		}
 
-		$r->post = get_post( $r->id );
+		$r->filename_path = get_attached_file( $r->id );
+		$r->filename_base = basename( $r->filename_path );
 
 		// Copy all of the custom data for this post.
 		$r->post_custom = get_post_custom( $r->id );

@@ -3,11 +3,11 @@
  * Plugin Name: EventON
  * Plugin URI: http://www.myeventon.com/
  * Description: A beautifully crafted minimal calendar experience
- * Version: 2.2.17
+ * Version: 2.2.20
  * Author: AshanJay
  * Author URI: http://www.ashanjay.com
  * Requires at least: 3.7
- * Tested up to: 3.9.2
+ * Tested up to: 4.0
  *
  * Text Domain: eventon
  * Domain Path: /lang/languages/
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'EventON' ) ) {
 
 class EventON {
-	public $version = '2.2.17';
+	public $version = '2.2.20';
 	/**
 	 * @var evo_generator
 	 */
@@ -82,8 +82,9 @@ class EventON {
 	public function evo_url($resave=false){
 		$init = get_option('eventon_addon_urls');
 		if(empty($init) || $resave){
+			$path = AJDE_EVCAL_PATH;
 			$arr = array(
-				'addons'=>AJDE_EVCAL_PATH.'/classes/class-evo-addons.php',
+				'addons'=>$path.'/classes/class-evo-addons.php',
 				'date'=> time()
 			);
 			update_option('eventon_addon_urls',$arr);
@@ -100,6 +101,8 @@ class EventON {
 
 		// post types
 		include_once( 'includes/class-evo-post-types.php' );
+
+		include_once( 'includes/class-evo-datatime.php' ); // time and date related classes
 
 		if ( is_admin() )
 			$this->admin_includes();
@@ -363,7 +366,6 @@ class EventON {
 			);
 
 
-
 			// google maps	
 			wp_register_script('eventon_gmaps', AJDE_EVCAL_URL. '/assets/js/eventon_gen_maps.js', array('jquery'),'1.0',true );	
 			wp_register_script('eventon_init_gmaps', AJDE_EVCAL_URL. '/assets/js/eventon_init_gmap.js', array('jquery'),'1.0',true );
@@ -391,9 +393,10 @@ class EventON {
 			}
 
 
-			// LOAD custom google fonts for skins		
-			$gfont="http://fonts.googleapis.com/css?family=Oswald:400,300|Open+Sans:400,300";
-			wp_register_style( 'evcal_google_fonts', $gfont, '', '', 'screen' );
+			// LOAD custom google fonts for skins	
+			//$gfonts = (is_ssl())? 'https://fonts.googleapis.com/css?family=Oswald:400,300|Open+Sans:400,300': 'http://fonts.googleapis.com/css?family=Oswald:400,300|Open+Sans:400,300';	
+			$gfonts="//fonts.googleapis.com/css?family=Oswald:400,300|Open+Sans:400,300";
+			wp_register_style( 'evcal_google_fonts', $gfonts, '', '', 'screen' );
 			
 			$this->register_evo_dynamic_styles();
 

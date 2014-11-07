@@ -48,6 +48,9 @@ $eventon_custom_language_array = array(
 		),array(
 			'label'=>'Events',
 			'name'=>'evcal_lang_events',
+		),array(
+			'label'=>'Show More Events',
+			'name'=>'evcal_lang_sme',
 		),
 		array('type'=>'togend'),
 	array(

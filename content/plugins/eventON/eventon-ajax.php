@@ -7,7 +7,7 @@
  * @author 		AJDE
  * @category 	Core
  * @package 	EventON/Functions/AJAX
- * @version     1.1
+ * @version     2.2.20
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -77,32 +77,37 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		
 		
 		// verify license from eventon server
-		$status = $eventon->evo_updater->_verify_license_key($slug, $key);
+		$return = $eventon->evo_updater->_verify_license_key($slug, $key);
 		
 		
-		if($status=='1'){
+		if($return=='1'){
 			$save_license_date = $eventon->evo_updater->save_license_key($slug, $key);
 								
 			// successfully saved new verified license
 			if($save_license_date!=false){
-				$status = 'success';
-				
+				$status = 'success';				
 				$new_license_content ="License Status: <strong>Activated</strong>";
 			}else{
 				$status='error';				
-				$error_msg = $eventon->evo_updater->error_code_($status);
+				$error_msg = $eventon->evo_updater->error_code_($return);
 			}
 		}else{	
-			if(!empty($status))
-				$error_msg = $eventon->evo_updater->error_code_($status);
-				$status='error'; 		
+			// status is not empty
+			if(!empty($status_)){
+				$error_msg = $eventon->evo_updater->error_code_($return);
+				$status='error'; 
+			}else{
+				//empty return but error codes set
+				$error_msg = $eventon->evo_updater->error_code_();
+				$status='error'; 
+			}		
 		}
 		
 		
 		$return_content = array(
 			'status'=>$status,		
 			'new_content'=>$new_license_content,
-			'error_msg'=>$error_msg
+			'error_msg'=>$error_msg,
 		);
 		echo json_encode($return_content);		
 		exit;
@@ -143,9 +148,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		$license_errors = array( 
 			'01'=>"Could not connect to remote server at this time.",
 			"02"=>'Your license is not a valid one!, please check and try again.',
-			"00"=>'Could not verify the License key. Please try again.'
+			"00"=>'Could not verify the License key. Please try again.',			
+			'500'=>'Internal Server Error'
 		);
-		
+		$__save_new_lic ='';
 
 		$__data = array(
 			'slug'=>$_POST['slug'],
@@ -153,7 +159,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			'email'=>$_POST['email'],
 			'product_id'=>$_POST['product_id']
 		);
-		
+		//http://www.myeventon.com/woocommerce/?wc-api=software-api&request=activation&email=	jair@brandmyname.nl&licence_key=EVOTX8e453fbe-f856-4213-a02c-9267eb9fe14b&product_id=EVOTX
 		
 		// verify license from eventon server
 		$status = $eventon->evo_updater->ADD_verify_lic($__data);
@@ -171,7 +177,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			}else{
 			// return activated to be not true
 				$status = 'failed';
-				$error_msg = $license_errors['00'];
+				$error_msg = ($eventon->evo_updater->error_code!='00')?
+					$license_errors[$eventon->evo_updater->error_code]: $license_errors['02'];
 			}
 			
 		}else{

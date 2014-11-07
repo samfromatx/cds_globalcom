@@ -277,83 +277,90 @@ function eventon_get_formatted_time($row_unix){
 		return $output;
 	}
 
-/*	GET event UNIX time from date and time format $_POST values */
+/*	GET event UNIX time from date and time format $_POST values
+	Updated: 2.2.20 
+*/
 	function eventon_get_unix_time($data='', $date_format='', $time_format=''){
 		
 		$data = (!empty($data))? $data : $_POST;
 		
-		// END DATE
-		$__evo_end_date =(empty($data['evcal_end_date']))?
-			$data['evcal_start_date']: $data['evcal_end_date'];
-		
-		// date format
-		$_wp_date_format = (!empty($date_format))? $date_format: 
-			( (isset($_POST['_evo_date_format']))? $_POST['_evo_date_format']
-				: get_option('date_format')
-			);
-		
-		$_is_24h = (!empty($time_format) && $time_format=='24h')? true:
-			( (isset($_POST['_evo_time_format']) && $_POST['_evo_time_format']=='24h')? 
-				true: false
-			); // get default site-wide date format
+		// check if start and end time are present
+		if(!empty($data['evcal_end_date']) && !empty($data['evcal_start_date'])){
+			// END DATE
+			$__evo_end_date =(empty($data['evcal_end_date']))?
+				$data['evcal_start_date']: $data['evcal_end_date'];
 			
-		
-		//$_wp_date_str = split("[\s|.|,|/|-]",$_wp_date_format);
-		
-		// ---
-		// START UNIX
-		if( !empty($data['evcal_start_time_hour'])  && !empty($data['evcal_start_date']) ){
+			// date format
+			$_wp_date_format = (!empty($date_format))? $date_format: 
+				( (isset($_POST['_evo_date_format']))? $_POST['_evo_date_format']
+					: get_option('date_format')
+				);
 			
-			$__Sampm = (!empty($data['evcal_st_ampm']))? $data['evcal_st_ampm']:null;
-
-			//get hours minutes am/pm 
-			$time_string = $data['evcal_start_time_hour']
-				.':'.$data['evcal_start_time_min'].$__Sampm;
-			
-			// event start time string
-			$date = $data['evcal_start_date'].' '.$time_string;
-			
-			// parse string to array by time format
-			$__ti = ($_is_24h)?
-				date_parse_from_format($_wp_date_format.' H:i', $date):
-				date_parse_from_format($_wp_date_format.' g:ia', $date);
+			$_is_24h = (!empty($time_format) && $time_format=='24h')? true:
+				( (isset($_POST['_evo_time_format']) && $_POST['_evo_time_format']=='24h')? 
+					true: false
+				); // get default site-wide date format
 				
-			date_default_timezone_set('UTC');	
-			// GENERATE unix time
-			$unix_start = mktime($__ti['hour'], $__ti['minute'],0, $__ti['month'], $__ti['day'], $__ti['year'] );
 			
-					
-		}else{ $unix_start =0; }
-		
-		// ---
-		// END TIME UNIX
-		if( !empty($data['evcal_end_time_hour'])  && !empty($data['evcal_end_date']) ){
+			//$_wp_date_str = split("[\s|.|,|/|-]",$_wp_date_format);
 			
-			$__Eampm = (!empty($data['evcal_et_ampm']))? $data['evcal_et_ampm']:null;
+			// ---
+			// START UNIX
+			if( !empty($data['evcal_start_time_hour'])  && !empty($data['evcal_start_date']) ){
+				
+				$__Sampm = (!empty($data['evcal_st_ampm']))? $data['evcal_st_ampm']:null;
 
-			//get hours minutes am/pm 
-			$time_string = $data['evcal_end_time_hour']
-				.':'.$data['evcal_end_time_min'].$__Eampm;
-			
-			// event start time string
-			$date = $__evo_end_date.' '.$time_string;
+				//get hours minutes am/pm 
+				$time_string = $data['evcal_start_time_hour']
+					.':'.$data['evcal_start_time_min'].$__Sampm;
+				
+				// event start time string
+				$date = $data['evcal_start_date'].' '.$time_string;
+				
+				// parse string to array by time format
+				$__ti = ($_is_24h)?
+					date_parse_from_format($_wp_date_format.' H:i', $date):
+					date_parse_from_format($_wp_date_format.' g:ia', $date);
 					
+				date_default_timezone_set('UTC');	
+				// GENERATE unix time
+				$unix_start = mktime($__ti['hour'], $__ti['minute'],0, $__ti['month'], $__ti['day'], $__ti['year'] );
+				
+						
+			}else{ $unix_start =0; }
 			
-			// parse string to array by time format
-			$__ti = ($_is_24h)?
-				date_parse_from_format($_wp_date_format.' H:i', $date):
-				date_parse_from_format($_wp_date_format.' g:ia', $date);
+			// ---
+			// END TIME UNIX
+			if( !empty($data['evcal_end_time_hour'])  && !empty($data['evcal_end_date']) ){
+				
+				$__Eampm = (!empty($data['evcal_et_ampm']))? $data['evcal_et_ampm']:null;
+
+				//get hours minutes am/pm 
+				$time_string = $data['evcal_end_time_hour']
+					.':'.$data['evcal_end_time_min'].$__Eampm;
+				
+				// event start time string
+				$date = $__evo_end_date.' '.$time_string;
+						
+				
+				// parse string to array by time format
+				$__ti = ($_is_24h)?
+					date_parse_from_format($_wp_date_format.' H:i', $date):
+					date_parse_from_format($_wp_date_format.' g:ia', $date);
+				
+				date_default_timezone_set('UTC');		
+				// GENERATE unix time
+				$unix_end = mktime($__ti['hour'], $__ti['minute'],0, $__ti['month'], $__ti['day'], $__ti['year'] );		
+						
+				
+			}else{ $unix_end =0; }
+				
+				
+			$unix_end =(!empty($unix_end) )?$unix_end:$unix_start;
 			
-			date_default_timezone_set('UTC');		
-			// GENERATE unix time
-			$unix_end = mktime($__ti['hour'], $__ti['minute'],0, $__ti['month'], $__ti['day'], $__ti['year'] );		
-					
-			
-		}else{ $unix_end =0; }
-			
-			
-		$unix_end =(!empty($unix_end) )?$unix_end:$unix_start;
-		
+		}else{
+			$unix_start = $unix_end = 0;
+		}
 		// output the unix timestamp
 		$output = array(
 			'unix_start'=>$unix_start,
@@ -636,7 +643,6 @@ function eventon_get_formatted_time($row_unix){
 */
 	function eventon_return_timely_names_($type, $data, $len='full', $lang=''){
 
-
 		$eventon_day_names = array(
 		1=>'monday','tuesday','wednesday','thursday','friday','saturday','sunday');
 		$eventon_month_names = array(1=>'january','february','march','april','may','june','july','august','september','october','november','december');
@@ -724,7 +730,7 @@ function eventon_get_formatted_time($row_unix){
 			
 			
 			if($len == 'full'){
-				
+
 				$option_name_prefix = 'evcal_lang_';
 				$_not_value = $eventon_month_names[ $text_num];
 				
@@ -746,7 +752,6 @@ function eventon_get_formatted_time($row_unix){
 
 
 	function eventon_get_event_day_name($day_number){
-
 		return eventon_return_timely_names_('day_num_to_name',$day_number);
 	}
 
@@ -755,23 +760,20 @@ function eventon_get_formatted_time($row_unix){
 	function eventon_get_new_monthyear($current_month_number, $current_year, $difference){
 		
 		$month_num = $current_month_number + $difference;
+
+		// /echo $current_month_number.' '.$month_num.' --';
 		
-		if($month_num>12 && $month_num<25){
-
-			$next_m_n = $month_num-12;
-			$next_y = $current_year+1;
-		}elseif($month_num>24 ){
-			$next_m_n = $month_num-24;
-			$next_y = $current_year+2;
+		$count = ($difference>=0)? '+'.$difference: '-'.$difference;
 
 
-		}else{
-			$next_m_n =$month_num;
-			$next_y = $current_year;
-		}
+		$time = mktime(0,0,0,$current_month_number,1,$current_year);
+		$new_time = strtotime($count.'month ', $time);
+		
+		$new_time= explode('-',date('Y-n', $new_time));
+		
 		
 		$ra = array(
-			'month'=>$next_m_n, 'year'=>$next_y
+			'month'=>$new_time[1], 'year'=>$new_time[0]
 		);
 		return $ra;
 	}
@@ -812,17 +814,12 @@ function eventon_get_formatted_time($row_unix){
 
 /* ADD TO CALENDAR */
 	function eventon_get_addgoogle_cal($object){
-		$location = (!empty($object->evals['evcal_location']))? $object->evals['evcal_location'][0] : ''; 
+		$location = (!empty($object->evals['evcal_location']))? urlencode($object->evals['evcal_location'][0]) : ''; 
 		$start = evo_get_adjusted_utc($object->estart);
 		$end = evo_get_adjusted_utc($object->eend);
 		$title = urlencode($object->etitle);
 
-		return 'http://www.google.com/calendar/event?
-action=TEMPLATE
-&text='.$title.'
-&dates='.$start.'/'.$end.'
-&details='.$title.'
-&location='.$location;
+		return 'http://www.google.com/calendar/event?action=TEMPLATE&amp;text='.$title.'&amp;dates='.$start.'/'.$end.'&amp;details='.$title.'&amp;location='.$location;
 	}
 
 
@@ -882,7 +879,6 @@ action=TEMPLATE
 	}
 	if( !function_exists ('eventon_returnmonth_name_by_num')){
 		function eventon_returnmonth_name_by_num($n){
-					
 			return eventon_return_timely_names_('month_num_to_name', $n);
 		}
 	}
@@ -981,26 +977,6 @@ action=TEMPLATE
 
 
 
-/** Return integer value for a hex color code **/
-	function eventon_get_hex_val($color){
-	    if ($color[0] == '#')
-	        $color = substr($color, 1);
-
-	    if (strlen($color) == 6)
-	        list($r, $g, $b) = array($color[0].$color[1],
-	                                 $color[2].$color[3],
-	                                 $color[4].$color[5]);
-	    elseif (strlen($color) == 3)
-	        list($r, $g, $b) = array($color[0].$color[0], $color[1].$color[1], $color[2].$color[2]);
-	    else
-	        return false;
-
-	    $r = hexdec($r); $g = hexdec($g); $b = hexdec($b);
-
-	    $val = (int)(($r+$g+$b)/3);
-		
-	    return $val;
-	}
 
 
 
@@ -1379,7 +1355,7 @@ function eventon_styles($default, $field, $options){
 
 
 // eventon and wc check function
-// added 2.2.17
+// added 2.2.17 - updated: 2.2.19
 	function evo_initial_check($slug='eventon'){
 		
 		if($slug=='eventon'){
@@ -1391,9 +1367,10 @@ function eventon_styles($default, $field, $options){
 				if(file_exists($evoURL['addons'])){
 					return $evoURL['addons'];
 				}else{
-					return AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
-				}
-				
+					$path = AJDE_EVCAL_PATH;
+					$url = $path.'/classes/class-evo-addons.php';
+					return file_exists($url)? $url: false;
+				}				
 				
 			}else{
 				//echo 2;
@@ -1406,7 +1383,8 @@ function eventon_styles($default, $field, $options){
    						require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 	   				
 					if(is_plugin_active_for_network(EVENTON_BASE.'/eventon.php')){
-						$url = AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
+						$path = AJDE_EVCAL_PATH;
+						$url = $path.'/classes/class-evo-addons.php';
 						return $url;
 					}else{
 						$blogs = wp_get_sites();
@@ -1427,7 +1405,8 @@ function eventon_styles($default, $field, $options){
 								}
 
 								if(!empty($evoSlug) && $_evoInstalled){
-									$url = AJDE_EVCAL_PATH.'/classes/class-evo-addons.php';
+									$path = AJDE_EVCAL_PATH;
+									$url = $path.'/classes/class-evo-addons.php';
 
 									$evoURL= (file_exists($url))? $url: false;
 									break;
@@ -1452,7 +1431,8 @@ function eventon_styles($default, $field, $options){
 						}
 
 						if(!empty($evoSlug) && $_evoInstalled){
-							$url = AJDE_EVCAL_PATH. '/classes/class-evo-addons.php';
+							$path = AJDE_EVCAL_PATH;
+							$url = $path. '/classes/class-evo-addons.php';
 
 							return (file_exists($url))? $url: false;
 						}else{ 	return false;	}
@@ -1502,8 +1482,78 @@ function eventon_styles($default, $field, $options){
 			}
 			return $_wcInstalled;
 		}
-
 	}
+
+// added 2.2.18 - updated 2.2.19
+	function evo_get_addon_class_file(){
+		$path = AJDE_EVCAL_PATH;
+		return $path.'/classes/class-evo-addons.php';
+	}
+
+	// EVENT POST Related
+		// check whether location values exists for a given event
+			function evo_location_exists($pmv){
+				if( !empty($pmv['evcal_location']) || !empty($pmv['evcal_location_name']) || 
+					(!empty($pmv['evcal_lat']) && !empty($pmv['evcal_lon']))
+				){
+					return true;
+					}else{ return false;}
+			}
+
+
+
+// EVENT COLOR
+	/** Return integer value for a hex color code **/
+		function eventon_get_hex_val($color){
+		    if ($color[0] == '#')
+		        $color = substr($color, 1);
+
+		    if (strlen($color) == 6)
+		        list($r, $g, $b) = array($color[0].$color[1],
+		                                 $color[2].$color[3],
+		                                 $color[4].$color[5]);
+		    elseif (strlen($color) == 3)
+		        list($r, $g, $b) = array($color[0].$color[0], $color[1].$color[1], $color[2].$color[2]);
+		    else
+		        return false;
+
+		    $r = hexdec($r); $g = hexdec($g); $b = hexdec($b);
+
+		    $val = (int)(($r+$g+$b)/3);
+			
+		    return $val;
+		}
+
+	// get hex color in correct format (with #)
+		function eventon_get_hex_color($pmv, $defaultColor='', $opt=''){
+
+			$pure_hex_val = '';
+
+			if(!empty($pmv['evcal_event_color'])){
+				// check if color have #
+				if( strpos($pmv['evcal_event_color'][0], '#') !== false ){
+
+					// strip all # from hex val
+					$pure_hex_val = str_replace('#','',$pmv['evcal_event_color'][0]);
+
+				}else{
+					$pure_hex_val = $pmv['evcal_event_color'][0];
+				}
+			}else{	// if there are no event colors saved
+
+				if(!empty($defaultColor)){
+					$pure_hex_val = $defaultColor;
+				}else{
+
+					$opt = (!empty($opt))? $opt: get_option('evcal_options_evcal_1');
+					$pure_hex_val = ( !empty($opt['evcal_hexcode'])? $opt['evcal_hexcode']: '206177');
+				}
+				
+			}
+
+			return '#'.$pure_hex_val;
+		}
+
 
 
 // SUPPORT FUNCTIONS

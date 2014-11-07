@@ -91,9 +91,9 @@
 	.ajde_evcal_calendar.ul .calendar_header{min-height:0; margin: 0;}
 
 	.ajde_evcal_calendar #evcal_prev{ margin-left: 15px;}
-	.ajde_evcal_calendar #evcal_prev .fa{ margin-left: -6px;}
+	/*.ajde_evcal_calendar #evcal_prev .fa{ margin-left: -6px;}*/
 	.ajde_evcal_calendar #evcal_next{margin-left: 7px;}
-	.ajde_evcal_calendar #evcal_next .fa{margin-left: -4px;}
+	/*.ajde_evcal_calendar #evcal_next .fa{margin-left: -4px;}*/
 	.ajde_evcal_calendar a#evcal_prev:hover{background-position:-5px -17px}
 	.ajde_evcal_calendar a#evcal_next:hover{background-position:-20px -17px}
 	.ajde_evcal_calendar .calendar_header p{
@@ -108,7 +108,7 @@
 	.ajde_evcal_calendar .calendar_header .evcal_arrows .fa{
 		font-size: 24px;
 		margin-top:4px;
-		position: absolute;
+		/*position: absolute;*/
 	}
 	.ajde_evcal_calendar .calendar_header .evcal_arrows:hover .fa{color: #fff}
 	.ajde_evcal_calendar .calendar_header .evcal_arrows{
@@ -255,6 +255,7 @@
 		cursor:pointer;
 		display:block;
 		border-left:2px solid transparent;
+		color: #929292;
 	}
 	.eventon_filter_dropdown p:hover{
 		background-color:#f7f7f7;
@@ -937,7 +938,7 @@
 		z-index: 2;
 		opacity: 0.6
 	}
-	.evo_metarow_locImg p{
+	#evcal_list .eventon_list_event .evo_metarow_locImg p.evoLOCtxt, .evo_popup .evo_metarow_locImg p.evoLOCtxt{
 		color: #fff;
 		font-family: oswald, 'arial narrow';
 		font-size: 16px;
@@ -951,7 +952,7 @@
 		-ms-transform: translateY(-50%);
 		transform: translateY(-50%);
 	}
-	.evo_metarow_locImg p span{
+	#evcal_list .eventon_list_event .evo_metarow_locImg p.evoLOCtxt span, .evo_popup .evo_metarow_locImg p.evoLOCtxt span{
 		display: block;
 		text-align: center;
 		font-family: 'open sans';
@@ -1114,6 +1115,7 @@
 		height: 20px;
 		width: 20px;
 		position: relative;
+		line-height: 100%
 	}
 	#evcal_widget #evcal_head .evcal_arrows.evcal_btn_prev .fa{
 		margin-left: -2px;

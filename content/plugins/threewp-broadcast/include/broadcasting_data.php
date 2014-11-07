@@ -35,6 +35,13 @@ class broadcasting_data
 	public $blogs;
 
 	/**
+		@brief		OPTIONAL IN: Broadcast data object.
+		@details	If this is left to null, and linking is enabled, broadcast will retrieve the broadcast data automatically during broadcast_post().
+		@since		2014-08-31 18:50:10
+	**/
+	public $broadcast_data;
+
+	/**
 		@brief		The ID of the child blog we are currently working on.
 		@var		$current_child_blog_id
 		@since		20130927
@@ -54,6 +61,14 @@ class broadcasting_data
 		@since		2014-06-20 11:58:18
 	**/
 	public $delete_attachments = true;
+
+	/**
+		@brief		Storage for equivalent post IDs on various blogs.
+		@details	Used as a "seen" lookup table to prevent looping.
+		@see		equivalent_posts
+		@since		2014-09-21 12:55:22
+	**/
+	public $equivalent_posts;
 
 	/**
 		@brief		IN: True if the broadcaster wants to link this post to the child blog posts,
@@ -149,6 +164,7 @@ class broadcasting_data
 
 	public function __construct( $options = [] )
 	{
+		$this->equivalent_posts = new equivalent_posts();
 		$this->blogs = new blog_collection;
 
 		// Import any known values from the options object.
@@ -172,6 +188,15 @@ class broadcasting_data
 			$this->blogs->put( $blog->id, $blog );
 
 		return $this;
+	}
+
+	/**
+		@brief		Return the equivalent post IDs collection.
+		@since		2014-09-21 11:36:12
+	**/
+	public function equivalent_posts()
+	{
+		return $this->equivalent_posts;
 	}
 
 	/**

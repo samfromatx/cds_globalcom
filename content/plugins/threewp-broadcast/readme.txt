@@ -1,17 +1,16 @@
 === ThreeWP Broadcast ===
 Contributors: edward_plainview
-Donate link: http://plainview.se/donate/
 License: GPLv3
 Requires at least: 3.3.1
 Stable tag: trunk
-Tags: broadcast, multipost, duplicate, posts, sitepress, threewp, linking, posts, multiple, blogs, woocommerce, wpml, synchronize, event organiser, acf
-Tested up to: 3.9
+Tags: broadcast, multipost, sharing, share content, duplicate, posts, marketing, threewp, linking, posts, multiple, blogs, sitepress, woocommerce, synchronize, event organiser, acf, all in one calendar, menu, copy menu, duplicate menu
+Tested up to: 4.0
 
-Network plugin for PHP v5.4+ to broadcast posts to other blogs in the network. Custom post types, taxonomies, attachments and WPML are supported.
+Network content sharing by multiposting between blogs for PHP v5.4+. Posts can be linked to each other and updated automatically.
 
 == Description ==
 
-Network plugin for PHP v5.4 to broadcast posts to other blogs in the network. Broadcastable features include:
+Network content sharing by multiposting between blogs for PHP v5.4+. Broadcast can be used to copy posts to other blogs, link posts between blogs, share content as templates, etc. Broadcastable features include:
 
 * Parent post links to child posts
 * Posts, pages
@@ -20,8 +19,6 @@ Network plugin for PHP v5.4 to broadcast posts to other blogs in the network. Br
 * Attached images
 * Featured images
 * Galleries
-* Woocommerce support (see FAQ)
-* WPML support
 
 Broadcasted posts can be linked to their parents, which updates child posts when the parent post is updated. This includes all data: title, slug, content, custom fields, attachments, etc.
 
@@ -35,20 +32,21 @@ For those who have Yoast's Wordpress SEO plugin installed, if the Broadcast's ca
 = Other features =
 
 * Groups plugin enables blog grouping for easy selection
-* Custom field blacklist and whitelist
+* Custom field blacklist, whitelist and protect list.
 * Last used settings are remembered
 * User role access granularity
 * An enormous amount of extra features in the premium pack
 
 = Premium Pack =
 
-The <a href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a> is an actively maintained collection of plugins that expand the functionality of Broadcast.
+The <a href="http://plugins.plainview.se/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a> is an actively maintained collection of plugins that expand the functionality of Broadcast.
 
-For a complete list of features and more information, see <a href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em>'s page on the web</a>. Currently the Premium Pack offers:
+For a complete list of features and more information, see <a href="http://plugins.plainview.se/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em>'s page on the web</a>. Currently the Premium Pack offers:
 
 * <strong>Advanced Custom Fields</strong> adds support for correctly broadcasting attachment field types using the ACF plugin.
 * <strong>All Blogs</strong> allows users to broadcast to all blogs in the network without having to be a user of the blog.
 * <strong>All In One Calendar</strong> adds support for <a href="http://www.wordpress.org/plugins/all-in-one-event-calendar/">Timely's All In One Calendar</a> plugin.
+* <strong>Back To Parent</strong> updates the parent post with the new child content.
 * <strong>Attachment Shortcodes</strong> copies attachments specified in custom shortcodes.
 * <strong>Comments</strong> adds support for broadcasting of comments.
 * <strong>Custom Field Attachments</strong> allows post custom field containing attachment IDs to be broadcasted correctly..
@@ -56,6 +54,7 @@ For a complete list of features and more information, see <a href="http://plainv
 * <strong>Keep Child Attachments</strong> keeps the child post's attachments instead of deleting them when updating a broadcast.
 * <strong>Keep Child Status</strong> keeps the status of post children to private, pending, published, draft, no matter the status of the parent.
 * <strong>Local Links</strong> automatically updates links to local posts on each child blog.
+* <strong>Menus</strong> can copy menus between blogs (overwrite / update), with support for equivalent child posts on the child blogs and equivalent taxonomies.
 * <strong>Per Blog Taxonomies</strong> allows individual setting of child post taxonomies.
 * <strong>Permalinks</strong> enables more precise permalink control.
 * <strong>Protect Child Content</strong> prevents overwriting of child post content.
@@ -63,21 +62,24 @@ For a complete list of features and more information, see <a href="http://plainv
 * <strong>Redirect All Children</strong> redirects single post views from visitors of child posts to the parent post.
 * <strong>Queue</strong> adds a broadcast queue which helps to broadcast posts to tens / hundreds / more blogs.
 * <strong>Send To Many</strong> broadcasts many posts to several blogs at once, instead of individually editing and broadcasting each post.
-Sync Taxonomies
 * <strong>Sync Taxomnomies</strong> synchronize the taxonomies of target blogs with those from a source blog.
 * <strong>User & Blog Settings</strong> (UBS) can hide the broadcast meta box and/or menu, modify the meta box to force/prevent broadcast to blogs, with separate settings for users / blogs / roles.
 * <strong>User & Blog Settings Post</strong> uses the modifications from the UBS plugin to broadcast posts with one click.
 * <strong>Views</strong> adds support for WP Types and Views content templates.
-* <strong>WooCommerce</strong> allows product variations to be broadcasted.
+* <strong>WooCommerce</strong> allows attribute taxonomies and product variations to be broadcasted.
+
+= Documentation =
+
+Although Broadcast is relatively easy to understand by itself, for extra documentation see <a href="http://plugins.plainview.se/threewp-broadcast/">Broadcast's online documentation</a>.
 
 = Misc =
 
-Requires php v5.4 for trait support. Users of php v5.3 should remain with version 1.18. Users of php v5.3 can only use the <a href="http://plainview.se/wp-content/uploads/2013/08/threewp-broadcast_v1.18.zip">latest legacy version: v1.18</a>.
+Requires php v5.4 for trait support. PHP 5.3 is no longer officially supported.
 
 Available in the following languages:
 
-* Dutch
 * English
+* Dutch
 * French - Seb giss <sgissinger@gmail.com>
 * Italian
 * French
@@ -85,10 +87,6 @@ Available in the following languages:
 * Swedish
 
 The git repository can be found at: https://github.com/the-plainview/threewp_broadcast
-
-= Actions and filters =
-
-Broadcast offers some actions/filters for plugin developers with which to interact with Broadcast. See the main broadcast file and the include/threewp_broadcast/filter and /actions directories for documentation and live examples.
 
 == Installation ==
 
@@ -132,12 +130,13 @@ Broadcast offers some actions/filters for plugin developers with which to intera
 33. Premium Pack: Protect Child Content
 34. Premium Pack: User & Blog Settings Post 1
 35. Premium Pack: User & Blog Settings Post 2
+36. Premium Pack: Menus plugin copies menus between blogs, using parent/child links.
 
 == Frequently Asked Questions ==
 
 = I need support! =
 
-The easiest way to get my attention is to <a href="mailto:edward@plainview.se">contact me via e-mail</a> and then use <a href="http://plainview.se/donate/">my donation page</a>.
+The easiest way to get my attention is to <a href="mailto:plugins@plainview.se">contact me via e-mail</a> and ask how to donate a little something for my time.
 
 For contract work such as the following, contact me so we can make a deal:
 
@@ -147,13 +146,19 @@ For contract work such as the following, contact me so we can make a deal:
 
 If you're not into donations, try the support forum to see if other users can help you out.
 
+= Debug dumps =
+
+A debug dump is the long text that is displayed when broadcasting a post with debug mode on. This dump can then be read to see what Broadcast is or isn't doing.
+
+To switch on debug mode, see the admin settings. If your site is live it would be wise to input your IP in the associated textarea, so that only you see the debug dump.
+
 = Blacklist, whitelisting, force broadcast =
 
-Broadcasting to specific blogs, hiding blogs and forcing blogs can be acheived with the <em>User & Blog Settings</em> plugin in the <a href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
+Broadcasting to specific blogs, hiding blogs and forcing blogs can be acheived with the <em>User & Blog Settings</em> plugin in the <a href="http://plugins.plainview.se/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
 
 = Bulk broadcast existing pages =
 
-To broadcast many posts at once, see the <em>Send To Many</em> plugin in the <a href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
+To broadcast many posts at once, see the <em>Send To Many</em> plugin in the <a href="http://plugins.plainview.se/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
 
 = Galleries and attachments =
 
@@ -163,13 +168,11 @@ If you have a gallery shortcode in the post ( [gallery columns="2" ids="427,433,
 
 = Hide broadcast from the users =
 
-The broadcast meta box, menu and columns in the post view can be hidden from users / roles / blogs using <em>User & Blog Settings</em> plugin in the <a href="http://plainview.se/wordpress/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
+The broadcast meta box, menu and columns in the post view can be hidden from users / roles / blogs using <em>User & Blog Settings</em> plugin in the <a href="http://plugins.plainview.se/threewp-broadcast-premium-pack/" title="Premium Pack's page on the web"><em>Broadcast Premium Pack</em></a>.
 
 = Is php v5.4 really necessary? =
 
-Yes, if you expect me to write neat, maintainable, legible code.
-
-If you use v5.3 then use the last plugin that works with that version: v1.18. The download link is on the main page.
+Yes. PHP v5.3 has been officially unsupported since the 14th of August, 2014. If your web host refuses to upgrade to a supported version, go find a new host.
 
 = Orphans? =
 
@@ -203,26 +206,69 @@ Broadcast is capable of handling WooCommerce products.
 
 This will broadcast all normal product settings: SKU, price, etc.
 
-If your products have variations, you'll be wanting the WooCommerce plugin from the premium pack.
+If your products have variations, or you want the attribute taxonomies to be synced, you'll be wanting the WooCommerce plugin from the premium pack.
+
+If you have a product gallery, use the "Custom Field Attachments" premium plugin to broadcast the "_product_image_gallery" custom field.
 
 = WPML Sitepress =
 
-There is an included plugin, ThreeWP Broadcast WPML, that provides support for transferring WPML translation data between broadcasted posts.
+WPML is semi-supported via a plugin in the premium pack.
 
-It works transparently in the background, but in case you've never really used WPML (like myself), here's how I got it working:
+For more information, see WPML discussion here: http://wordpress.org/support/topic/wmpl-integration-not-working
 
-1. Enable the Broadcast and Broadcast WPML plugins.
-2. Write a new post in a language. Link and broadcast it to another blog in the network.
-3. The new post should have the same language in the child blog(s).
-4. In the parent blog, create a new translation of the post.
-5. Link and broadcast it to the other blogs in the network.
-6. The other blogs should now have two translations of the same post and the same post overview listing.
+= XCache vs APC opcode cache =
 
-2014-01-12 This plugin will soon be replaced by a WPML premium plugin that enables broadcasting from the translation manager.
-2014-05-20 This plugin will be removed in the future.
-2014-08-14 Still awaiting patches to WPML to be integrated.
+Xcache v2 does not support PHP namespaces, which is a PHP 5.3 feature. Trying to enable Broadcast with Xcache v2 enabled will result in a PHP crash.
+
+Xcache v3, which does support namespaces, has not yet been tested. Anyone with Xcache v3 experience is welcome to contact me with info.
+
+APC works flawlessly.
 
 == Changelog ==
+
+= 11 20141021 =
+* Fix: Fatal error when broadcasting attachments.
+
+= 10 20141020 =
+* New: Premium Pack Plugin: Menus
+* Code: Major refactoring. ThreeWP_Broadcast() function introduced to easily retrieve the Broadcast instance.
+* Code: threewp_broadcast_get_user_writable_blogs is now an action.
+* Code: Actions now use the standard Plainview Wordpress SDK actions as the base class.
+
+= 9 20141017 =
+* Fix JS error: blogs_to_hide empty value.
+* Fix: last_used_settings warning.
+* Fix: Settings being forgotten sometimes.
+* Fix: Maintenance not working sometimes due to non-standard temp directory.
+
+= 8 20141013 =
+* New: Premium Pack Plugin: Protect Child Status
+* Fix: Better duplicate image finding.
+* Code: broadcasting_after_switch_to_blog action has $broadcast_here property. Allows skipping blogs.
+* Code: Last used settings are now stored in the user's meta table, instead of a separate database table. The table will be removed in v9 or v10.
+* Code: Better attachment validity checking.
+
+= 7 20140923 =
+* Fix: Massive optimization of taxonomy syncing.
+* New: "Same Parent" check for broadcast data maintenance check. If two posts on a blog say they have the same parent.
+* Fix: Hang upon broadcasting galleries.
+* Fix: Not setting child post taxonomies sometimes.
+* Fix: Code to prevent broadcast looping (using the ACF plugin).
+* Fix: Copy attachments with metadata that don't have filenames (ex: m4a files).
+
+= 6 20140909 =
+* Code: broadcast_data class replaces BroadcastData.
+* New: Premium Pack Plugin: Back To Parent
+* Version 4.0 compataiblity (version bump).
+* Obsolete and broken WPML plugin removed. See discussion here: http://wordpress.org/support/topic/wmpl-integration-not-working
+
+= 5 20140830 =
+* Hide information from non-network admins.
+* Fix: Warning messages on lines ~2000
+* Fix: Unnecessary warning for empty blog groups.
+* Fix: Unlink all works again.
+* Code: Better post modification detection (line 2553).
+* Change: Internal fields are now broadcasted per default on NEW installations.
 
 = 4 20140814 =
 * Fix: More robust duplicate attachment finding.

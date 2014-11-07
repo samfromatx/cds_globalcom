@@ -17,9 +17,9 @@
 			<p>Yes! you can ask any support related questions from us using the live chat support. This is free of charge. Please do remember that our availability varies on this chat. Look forward to answering your questions!</p>
 		</a>
 		
-		<a class='evo_support_box' href='http://codecanyon.net/item/eventon-wordpress-event-calendar-plugin/1211017/comments' target='_blank'>
-			<h3>Codecanyon Message Board</h3>
-			<p>When the chat is offline, this is the best place for you to post your questions regarding eventon.</p>
+		<a class='evo_support_box' href='http://support.ashanjay.com/forum/eventon/' target='_blank'>
+			<h3>Official Support Forum</h3>
+			<p>Hope you understand that we can not be online all the time, when that happen you can use our official support forum and we can get back to you faster and track your issues all the way.</p>
 		</a>
 
 		<a class='evo_support_box twitter' href='http://www.twitter.com/myeventon' target='_blank'>

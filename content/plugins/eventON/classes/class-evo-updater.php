@@ -6,7 +6,7 @@
  * @author 		AJDE
  * @category 	Admin
  * @package 	EventON/Classes
- * @version     2.2.12
+ * @version     2.2.20
  */
  
 class evo_updater{
@@ -347,32 +347,44 @@ class evo_updater{
 			if($saved_key!=false ){		
 							
 				global $wp_version;
+				$siteurl = get_bloginfo('url');
 			
 				$args = array(
 					'slug' => $this->slug,
 					'key'=>$saved_key,
 					'server'=>$_SERVER['SERVER_NAME'],
-					'siteurl'=>get_site_url(),
+					'siteurl'=>$siteurl,
 					'evoversion'=>$eventon->version,
 				);
+
+
 				$request_string = array(
 					'body' => array(
 						'action' => 'verify_envato_purchase', 
 						'request' => serialize($args),
 						'api-key' => md5(get_bloginfo('url'))
 					),
-					'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo('url')
+					'user-agent' => 'WordPress/' . $wp_version . '; ' . $siteurl
 				);
 				
 			
 				$request = wp_remote_post($this->api_url, $request_string);
+
+				//print_r($request_string);
+				//print_r($this->api_url);
+				print_r($request);
+
 				if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
 					$license_check_status =  $request['body'];
 					
 					// if validation return 1 or if error code returned
 					return ($license_check_status==1)? true:$license_check_status;
 						
-				}			
+				}else{
+
+					// http request failed, connection time out
+					$this->error_code = '08';
+				}		
 			}	
 		}
 
@@ -557,7 +569,7 @@ class evo_updater{
 		}
 
 		
-		// remove addon licenses
+	// remove addon licenses
 		public function remove_license($slug='', $key=''){
 			$licenses =get_option('_evo_licenses');
 						
@@ -581,6 +593,7 @@ class evo_updater{
 		public function error_code_($code=''){
 			$code = (!empty($code))? $code: $this->error_code;
 			$array = array(
+				"00"=>'Could not verify the License key. Please try again.',
 				'01'=>"No data returned from envato API",
 				"02"=>'Your license is not a valid one!, please check and try again.',
 				"03"=>'envato verification API is busy at moment, please try later.',
@@ -588,7 +601,7 @@ class evo_updater{
 				"05"=>'Your EventON version is older than 2.2.17.',
 				"06"=>'Eventon license key not passed correct!',
 				"07"=>'Could not deactivate eventON license from remote server',
-				"00"=>'Could not verify the License key. Please try again.'
+				'08'=>'http request failed, connection time out. Please contact your web provider!'
 			);
 			return $array[$code];
 		}

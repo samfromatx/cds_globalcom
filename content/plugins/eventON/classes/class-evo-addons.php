@@ -7,7 +7,7 @@
  * @author 		AJDE
  * @category 	Admin
  * @package 	EventON/Classes
- * @version     2.2.15
+ * @version     2.2.19
  */
 
 if(!class_exists('evo_addon')){
@@ -26,8 +26,9 @@ class evo_addon{
 		// save main plugin file urls to be used from options
 		$init = get_option('eventon_addon_urls');
 		if(empty($init)){
+			$path = AJDE_EVCAL_PATH;
 			$arr = array(
-				'addons'=>AJDE_EVCAL_PATH.'/classes/class-evo-addons.php',
+				'addons'=>$path .'/classes/class-evo-addons.php',
 				'date'=> time()
 			);
 			update_option('eventon_addon_urls',$arr);
@@ -43,10 +44,10 @@ class evo_addon{
 		}
 
 	// REQUIREMENT check
+		// not using this since 2.2.19 addons will have its own version of this
 		public function requirment_check(){
 			
 			// eventon exist if addon connect to this function
-
 			// check if eventon version is compatible and return true of false
 			global $eventon;
 
@@ -121,7 +122,8 @@ class evo_addon{
 					
 					//echo 'tt';
 					// AUTO UPDATE notifier -- using main eventon updater class
-					require_once( AJDE_EVCAL_PATH.'/classes/class-evo-updater.php' );		
+					$path = AJDE_EVCAL_PATH;
+					require_once( $path .'/classes/class-evo-updater.php' );		
 					$api_url = 'http://update.myeventon.com/';
 					$this->evo_updater = new evo_updater( 
 						$this->addon_data['version'], $api_url, 

@@ -34,7 +34,8 @@
 			$rearrange_items['paypal']='<p val="paypal">'.__('Paypal','eventon').'</p>';
 		
 		// custom fields
-		for($x=1; $x<4; $x++){
+		$_cmd_num = evo_calculate_cmd_count($evcal_opt[1]);
+		for($x=1; $x<=$_cmd_num; $x++){
 			if( !empty($evcal_opt[1]['evcal_ec_f'.$x.'a1']) && !empty($evcal_opt[1]['evcal_af_'.$x]) && $evcal_opt[1]['evcal_af_'.$x]=='yes')
 				$rearrange_items['customfield'.$x] = '<p val="customfield'.$x.'">'.$evcal_opt[1]['evcal_ec_f'.$x.'a1'].'</p>';
 		}
@@ -80,11 +81,11 @@
 		
 	//print_r($implode);
 	/**
-		SETTINGS ARRAY
+		APPEARNACE SETTINGS ARRAY
 	*/
 
 		if($eventon->evo_updater->is_activated('eventon')){
-		$__appearance_additions = apply_filters('eventon_appearance_add', 
+			$__appearance_additions = apply_filters('eventon_appearance_add', 
 
 			array(
 				array('id'=>'evo_notice_1','type'=>'notice','name'=>__('Once you make changes to appearance make sure to clear browser and website cache to see results.','eventon')),	
@@ -196,11 +197,11 @@
 				array('id'=>'evo_fte_override','type'=>'begin_afterstatement'),
 					array('id'=>'evcal__ftec','type'=>'color','name'=>'Featured event left bar color', 'default'=>'ca594a'),
 				array('id'=>'evcal_ftovrr','type'=>'end_afterstatement'),
-			)
-		);
-	}else{
-		$__appearance_additions = apply_filters('eventon_appearance_add', array(array('id'=>'evcal__note','type'=>'note','name'=>'General Calendar apparences are restricted to only activated copy of eventon')));
-	}
+				)
+			);
+		}else{
+			$__appearance_additions = apply_filters('eventon_appearance_add', array(array('id'=>'evcal__note','type'=>'note','name'=>'General Calendar apparences are restricted to only activated copy of eventon')));
+		}
 		
 
 	// event types category names		
@@ -297,7 +298,24 @@
 			}
 		
 
+	// shortcodes tab content
 
+		ob_start();
+		?>
+			<p>Use the "Generate shortcode" button to open lightbox shortcode generator to create your desired calendar shortcode.</p><br/>
+			
+			<a id="evo_shortcode_btn" class="eventon_popup_trig evo_admin_btn btn_prime" title="eventON Shortcode generator" href="#" data-textbox='evo_set_shortcodes'>[ ] Generate shortcode</a><br/>
+			<p id='evo_set_shortcodes'></p>
+
+			<p style='padding-top:10px'><b>Other common shortcodes</b></p>
+			<p>[add_eventon] -- Default month calendar</p>
+			<p>[add_eventon_list number_of_months="5" hide_empty_months="yes" ] -- 5 months events list with empty months hidden from view</p>
+			<p>[add_eventon_list number_of_months="5" month_incre="-5" ] -- Show list of 5 past months</p>
+
+		<?php
+
+		$shortcodes_tab = ob_get_clean();
+		eventon_shortcode_pop_content();
 
 	$cutomization_pg_array = array(
 		array(
@@ -455,9 +473,17 @@
 				array('id'=>'evcal_sh001','type'=>'subheader','name'=>__('Featured Image','eventon')),
 				array('id'=>'evo_ftimghover','type'=>'yesno','name'=>'Disable hover effect on featured image','legend'=>'Remove the hover moving animation effect from featured image on event.'),
 				array('id'=>'evo_ftimgclick','type'=>'yesno','name'=>'Disable zoom effect on click','legend'=>'Remove the moving animation effect from featured image on click event.'),
-				array('id'=>'evo_ftimg_fullheight','type'=>'yesno','name'=>'Show featured image at 100% height', ),
+				/*array('id'=>'evo_ftimg_fullheight','type'=>'yesno','name'=>'Show featured image at 100% height', ), -- removed 2.2.20*/
 
-				array('id'=>'evo_ftimgheight','type'=>'text','name'=>'Set event featured image height (value in pixels)', 'default'=>'eg. 400'),
+				array('id'=>'evo_ftimgheight','type'=>'text','name'=>'Minimize height for featured image (value in pixels)', 'default'=>'eg. 400'),
+				array('id'=>'evo_ftimg_height_sty','type'=>'dropdown','name'=>'Featured image display style (On event load)', 'legend'=>'Select which display style you want to show the featured image on event card when event first load',
+					'options'=> array(
+						'minmized'=>'Minimized height',
+						'100per'=>'100% Image height with stretch to fit',
+						'full'=>'100% Image height with propotionate to calendar width'
+				)),
+
+
 				array('id'=>'evo_ftim_mag','type'=>'yesno','name'=>'Show magnifying glass over featured image','legend'=>'This will convert the mouse cursor to a magnifying glass when hover over featured image. <br/><br/><img src="'.AJDE_EVCAL_URL.'/assets/images/ajde_backender/cursor_mag.jpg"/>'),
 
 				array('id'=>'evcal_sh001','type'=>'subheader','name'=>__('Location Image','eventon')),
@@ -545,6 +571,15 @@
 				array('id'=>'evo_event_archive_page_template','type'=>'dropdown','name'=>__('Select Events Page Template','eventon'), 'options'=>$_templates_ar),
 				
 				array('id'=>'evo_event_slug','type'=>'text','name'=>__('EventOn Event Post Slug','eventon'), 'default'=>'events'),
+			)
+		),array(
+			'id'=>'evcal_012',
+			'name'=>__('Shortcode Settings','eventon'),
+			'tab_name'=>__('ShortCodes','eventon'),
+			'fields'=>array(			
+				array('id'=>'evcal__note','type'=>'customcode','code'=>$shortcodes_tab),
+				
+				
 			)
 		)
 	);	

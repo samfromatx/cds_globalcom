@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		$evcal_opt1= get_option('evcal_options_evcal_1');
 
 		// ajde_events meta boxes
-		add_meta_box('ajdeevcal_mb2','Event Color', 'ajde_evcal_show_box_2','ajde_events', 'side', 'core');
-		add_meta_box('ajdeevcal_mb1','Event Settings', 'ajde_evcal_show_box','ajde_events', 'normal', 'high');	
+		add_meta_box('ajdeevcal_mb2',__('Event Color','eventon'), 'ajde_evcal_show_box_2','ajde_events', 'side', 'core');
+		add_meta_box('ajdeevcal_mb1', __('Event Settings','eventon'), 'ajde_evcal_show_box','ajde_events', 'normal', 'high');	
 		
 		// if third party is enabled
 		if(( $evcal_opt1['evcal_evb_events']=='yes' && !empty($evcal_opt1['evcal_evb_api']) ) || ($evcal_opt1['evcal_api_meetup']=='yes' 
@@ -72,7 +72,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			$p_id = get_the_ID();
 			$ev_vals = get_post_custom($p_id);
 			
-
 			$evOpt = get_option('evcal_options_evcal_1');
 
 	?>		
@@ -81,15 +80,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<td>
 				<?php
 					// Hex value cleaning
-					$hexcolor = (!empty($ev_vals["evcal_event_color"]) )? 
-						( (strpos($ev_vals["evcal_event_color"][0],'#'))?
-							substr( $ev_vals["evcal_event_color"][0], 1 ):
-							$ev_vals["evcal_event_color"][0] 
-						): 
-							( !empty($evOpt['evcal_hexcode'])? $evOpt['evcal_hexcode']: '206177');				
+					$hexcolor = eventon_get_hex_color($ev_vals,'', $evOpt );
+									
 				?>			
 				<div id='color_selector' >
-					<em id='evColor' style='background-color:<?php echo (!empty($hexcolor) )? '#'.$hexcolor: 'na'; ?>'></em>
+					<em id='evColor' style='background-color:<?php echo (!empty($hexcolor) )? $hexcolor: 'na'; ?>'></em>
 					<p class='evselectedColor'>
 						<span class='evcal_color_hex evcal_chex'  ><?php echo (!empty($hexcolor) )? $hexcolor: 'Hex code'; ?></span>
 						<span class='evcal_color_selector_text evcal_chex'><?php _e('Click here to pick a color');?></span>
@@ -133,7 +128,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				
 				
 				<input id='evcal_event_color' type='hidden' name='evcal_event_color' 
-					value='<?php echo (!empty($ev_vals["evcal_event_color"]) )? $ev_vals["evcal_event_color"][0]: null; ?>'/>
+					value='<?php echo str_replace('#','',$hexcolor); ?>'/>
 				<input id='evcal_event_color_n' type='hidden' name='evcal_event_color_n' 
 					value='<?php echo (!empty($ev_vals["evcal_event_color_n"]) )? $ev_vals["evcal_event_color_n"][0]: null ?>'/>
 				</td>
@@ -1170,11 +1165,21 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 				'evo_exclude_ev',
 				
-				'_evcal_ec_f1a1_cus','_evcal_ec_f2a1_cus','_evcal_ec_f3a1_cus',
-				'_evcal_ec_f1a1_cusL','_evcal_ec_f2a1_cusL','_evcal_ec_f3a1_cusL',
-				'_evcal_ec_f1_onw','_evcal_ec_f2_onw','_evcal_ec_f3_onw',
 				'evcal_lat','evcal_lon',
 			));
+
+		// append custom fields based on activated number
+			$evcal_opt1= get_option('evcal_options_evcal_1');
+			$num = evo_calculate_cmd_count($evcal_opt1);
+			for($x =1; $x<=$num; $x++){	
+				if(eventon_is_custom_meta_field_good($x)){
+					$fields_ar[]= '_evcal_ec_f'.$x.'a1_cus';
+					$fields_ar[]= '_evcal_ec_f'.$x.'a1_cusL';
+					$fields_ar[]= '_evcal_ec_f'.$x.'_onw';
+				}
+			}
+			
+			
 		
 		
 		// field names that pertains only to event date information

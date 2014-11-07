@@ -204,7 +204,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		<tr class="form-field">
 			<th scope="row" valign="top"><label for="term_meta[location_address]"><?php _e( 'Location Address', 'eventon' ); ?></label></th>
 			<td>
-				<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="<?php echo esc_attr( $term_meta['location_address'] ) ? esc_attr( $term_meta['location_address'] ) : ''; ?>">
+				<input type="text" name="term_meta[location_address]" id="term_meta[location_address]" value="<?php echo esc_attr( $term_meta['location_address'] ) ? esc_attr( stripslashes($term_meta['location_address']) ) : ''; ?>">
 				<p class="description"><?php _e( 'Enter a location address','eventon' ); ?></p>
 			</td>
 		</tr>

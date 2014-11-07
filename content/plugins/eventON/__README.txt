@@ -5,7 +5,7 @@ Author URI: http://ashanjay.com/
 Tags: calendar, event calendar, event posts
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 2.2.17
+Stable tag: 2.2.20
 
 Event calendar plugin for wordpress that utilizes WP's custom post type.  
 
@@ -19,6 +19,34 @@ Event calendar plugin for wordpress that utilizes WP's custom post type. This pl
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+= 2.2.20 (2014-10-13)
+ADDED: Backup shortcode generator in settings
+FIXED: Saving events without time cause undefine error solved
+FIXED: Sorting not working
+FIXED: Custom meta fields more than 3 fields not working correct
+FIXED: Mobile eventTop tap not working
+FIXED: Event color hex code processing incorrectly
+FIXED: Jumper not moving when changing months
+FIXED: Arrow styles to better work for all
+UPDATED: Featured image height style options for better visual
+UPDATED: month arrow JS to work off body DOM tree
+UPDATED: POT files
+
+= 2.2.19 (2014-9-18)
+FIXED: Sorting and filtering not working for eventon and addons
+FIXED: Events lists month name fix
+FIXED: Updated available on eventon settings addon tab
+FIXED: W3C validation fixes
+
+= 2.2.18 (2014-9-16)
+FIXED: Minor style issues
+FIXED: Sorting not working error
+FIXED: ux_val=X not working
+FIXED: EventCard open by default settings fixed
+FIXED: Show more events text missing in language
+FIXED: Google fonts for SSL based https urls
+UPDATED: Different method to check installed addons
+
 = 2.2.17 (2014-9-10)
 ADDED: Mobile tap on eventtop and jquery mobile support
 ADDED: Upto 10 custom meta data fields for events can now be activated

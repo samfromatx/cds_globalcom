@@ -117,12 +117,21 @@ if(isset($_POST['action']) && $_POST['action']=='evo_addons'){
 		// EACH ADDON
 		foreach($addons as $slug=>$addons){
 
+			$_has_addon = false;
 			// Check if addon is installed in the website
 			//$_has_addon = ($evo_installed_addons && in_array($slug, $evo_installed_addons))?true:false;
-			$_has_addon = ( !empty($activePlugins) && in_array($slug.'/'.$slug.'.php', $activePlugins) )?true:false;
+			if(!empty($activePlugins)){
+				foreach($activePlugins as $plugin){
+					// check if foodpress is in activated plugins list
+					if(strpos( $plugin, $slug.'.php') !== false){
+						$_has_addon = true;
+					}
+				}
+			}else{	$_has_addon = false;	}
+			
 			
 			if($_has_addon){
-				$_addon_options_array = $eventon_addons_opt[(string)$slug];				
+				$_addon_options_array = $eventon_addons_opt[$slug];				
 			}
 			
 			// initial variables
@@ -132,9 +141,7 @@ if(isset($_POST['action']) && $_POST['action']=='evo_addons'){
 
 				$__remote_version = (!empty($evo_licenses[$slug]['remote_version']))? '<span title="Remote server version"> /'.$evo_licenses[$slug]['remote_version'].'</span>': null;
 
-				$_has_update = (!empty($evo_licenses[$slug]['has_new_update']) && $evo_licenses[$slug]['has_new_update'])? true:false;
-				$_ADD_new_update_details_btn = ($_has_update)?
-					"<p class='links'><b> New Update availale</b><br/><a href='".$admin_url."update-core.php'>Update Now</a> | <a class='thickbox' href='".$admin_url."plugin-install.php?tab=plugin-information&plugin={$slug}&section=changelog&TB_iframe=true&width=600&height=400'>Version Details</a></p>":null;
+				
 				
 			
 			// ACTIVATED
@@ -146,7 +153,6 @@ if(isset($_POST['action']) && $_POST['action']=='evo_addons'){
 					<p class='version'><span><?php echo $eventon_addons_opt[$slug]['version']?></span><?php echo $__remote_version;?></p>
 					<p class='status'>License Status: <strong>Activated</strong> | <a href='?page=eventon&tab=evcal_4&action=rl&slug=<?php echo $slug;?>'>Deactivate</a></p>
 					<p class="links"><?php echo $guide;?><a href='<?php echo $addons['link'];?>' target='_blank'>Learn More</a></p>
-					<?php echo $_ADD_new_update_details_btn;?>
 				</div>
 			
 			<?php	

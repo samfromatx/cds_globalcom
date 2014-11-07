@@ -63,7 +63,7 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 				if( $evOPT['evo_morelass']!='yes' && (strlen($object->fulltext) )>600 ){
 					$more_code = 
 						"<div class='eventon_details_shading_bot'>
-							<p class='eventon_shad_p' content='less'><span class='ev_more_text' txt='".eventon_get_custom_language($evoOPT2, 'evcal_lang_less','less')."'>".eventon_get_custom_language($evoOPT2, 'evcal_lang_more','more')."</span><span class='ev_more_arrow'></span></p>
+							<p class='eventon_shad_p' content='less'><span class='ev_more_text' data-txt='".eventon_get_custom_language($evoOPT2, 'evcal_lang_less','less')."'>".eventon_get_custom_language($evoOPT2, 'evcal_lang_more','more')."</span><span class='ev_more_arrow'></span></p>
 						</div>";
 					$evo_more_active_class = 'shorter_desc';
 				}else{
@@ -136,7 +136,7 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 						$inside='';
 						if(!empty($object->locName)){
 							$inner = (!empty($object->locAdd))? '<span>'.$object->locAdd.'</span>':null;
-							$inside = "<p>{$object->locName}{$inner}</p>";
+							$inside = "<p class='evoLOCtxt'>{$object->locName}{$inner}</p>";
 						}
 						$OT.="<div class='evo_metarow_locImg evorow bordb ".( !empty($inside)?'tvi':null)."' style='height:{$fullheight}px; background-image:url(".$img_src[0].")' id='".$object->id."_locimg' >{$inside}</div>";
 					}
@@ -157,10 +157,10 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 					
 					$__hoverclass = (!empty($object->hovereffect) && $object->hovereffect!='yes')? ' evo_imghover':null;
 					$__noclickclass = (!empty($object->clickeffect) && $object->clickeffect=='yes')? ' evo_noclick':null;
-					$__fullheight = (!empty($object->fullheight) && $object->fullheight=='yes')? ' evo_fullheight':null;
 					$__zoom_cursor = (!empty($evOPT['evo_ftim_mag']) && $evOPT['evo_ftim_mag']=='yes')? ' evo_imgCursor':null;
 
-					$OT.= "<div class='evo_metarow_fimg evorow evcal_evdata_img ".$end_row_class.$__hoverclass.$__fullheight.$__zoom_cursor.$__noclickclass."' data-imgheight='".$object->img[2]."' data-imgwidth='".$object->img[1]."'  style='background-image: url(".$object->img[0].")'>".$end."</div>";
+
+					$OT.= "<div class='evo_metarow_fimg evorow evcal_evdata_img ".$end_row_class.$__hoverclass.$__zoom_cursor.$__noclickclass."' data-imgheight='".$object->img[2]."' data-imgwidth='".$object->img[1]."'  style='background-image: url(".$object->img[0].")' data-imgstyle='".$object->ftimg_sty."' data-minheight='".$object->min_height."'>".$end."</div>";
 					
 				break;
 			
@@ -229,7 +229,7 @@ function eventon_eventcard_print($array, $evOPT, $evoOPT2){
 				
 
 				//$__ics_data_vars = "data-start='{$object->estart}' data-end='{$object->eend}' data-location='{$object->eloc}' data-summary='{$object->etitle}' data-stamp='{$object->estamp}'";
-				$__ics_url =admin_url('admin-ajax.php').'?action=eventon_ics_download&event_id='.$object->event_id.'&sunix='.$object->estart.'&eunix='.$object->eend;
+				$__ics_url =admin_url('admin-ajax.php').'?action=eventon_ics_download&amp;event_id='.$object->event_id.'&amp;sunix='.$object->estart.'&amp;eunix='.$object->eend;
 
 				$__googlecal_link = eventon_get_addgoogle_cal($object);
 

@@ -2,9 +2,8 @@
 
 /*
 	AJDE Backender 
-	version: 2.2
+	version: 2.3
 	Description: print out back end customization form set up for the plugin settings
-	Date: 2014-3-11
 */
 
 /** Store settings in this array */
@@ -27,7 +26,11 @@ function print_ajde_customization_form($cutomization_pg_array, $evOPT, $extra_ta
 	
 
 	
+	// different types of content
 
+	/*
+		notice, image, icon, subheader, note, checkbox, text. textarea, font_size, font_style, border_radius, color, fontation, multicolor, radio, dropdown, checkboxes, yesno, begin_afterstatement, end_afterstatement, hiddensection_open, hiddensection_close, customcode
+	*/
 
 
 	foreach($cutomization_pg_array as $cpa=>$cpav){								

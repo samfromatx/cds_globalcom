@@ -15,9 +15,10 @@ if ( ! class_exists( 'evo_admin' ) ) :
 /** evo_admin Class */
 class evo_admin {
 
+	private $class_name;
 	/** Constructor */
 	public function __construct() {
-
+		
 	}
 
 	function get_image($size='', $placeholder=true){
@@ -39,13 +40,23 @@ class evo_admin {
 
 	function get_color($pmv=''){
 		if(!empty($pmv['evcal_event_color'])){
-			return $pmv['evcal_event_color'][0];
+			if( strpos($pmv['evcal_event_color'][0], '#') !== false ){
+				return $pmv['evcal_event_color'][0];
+			}else{
+				return '#'.$pmv['evcal_event_color'][0];
+			}
 		}else{
 			$opt = get_option('evcal_options_evcal_1');
 			$cl = (!empty($opt['evcal_hexcode']))? $opt['evcal_hexcode']: '206177';
-			return $cl;
+			return '#'.$cl;
 		}
 	}
+
+	public function addon_exists($slug){
+		$addons = get_option('eventon_addons');
+		return (!empty($addons) && array_key_exists($slug, $addons))? true: false;
+	}
+	
 }
 
 endif;

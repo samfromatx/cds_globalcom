@@ -1,6 +1,6 @@
 /*
 	Script that runs on all over the backend pages
-	ver: 2.2.15
+	ver: 2.2.20
 */
 jQuery(document).ready(function($){
 	
@@ -150,6 +150,11 @@ jQuery(document).ready(function($){
 	
 	// OPEN POPUP BOX
 		function eventon_popup_open(obj){
+
+			// append textbox id to popup if given
+			if(obj.attr('data-textbox')!==''){
+				$('.eventon_popup').attr({'data-textbox':obj.attr('data-textbox')});
+			}
 
 			// dynamic content within the site
 			var dynamic_c = obj.attr('dynamic_c');
@@ -477,10 +482,19 @@ jQuery(document).ready(function($){
 	}
 	
 	// insert code into text editor
-		$('.evoPOSH_footer').on('click','.evoPOSH_insert',function(){
-			var shortcode = $('#evoPOSH_code').html();		
+		$('body').on('click','.evoPOSH_insert',function(){
+			var obj = $(this);
+			var shortcode = obj.siblings('#evoPOSH_code').html();	
+
+			// if shortcode insert textbox id given
+			var textbox = obj.closest('.eventon_popup').attr('data-textbox');
 			
-			tinymce.activeEditor.execCommand('mceInsertContent', false, shortcode);
+			if(textbox === undefined){
+				tinymce.activeEditor.execCommand('mceInsertContent', false, shortcode);				
+			}else{
+				$('#'+textbox).html(shortcode);
+			}				
+			
 			
 			hide_popupwindowbox();
 		});

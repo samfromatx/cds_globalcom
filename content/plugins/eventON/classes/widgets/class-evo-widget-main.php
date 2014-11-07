@@ -5,7 +5,7 @@
  * @author 		AJDE
  * @category 	Widget
  * @package 	EventON/Classes
- * @version     1.3
+ * @version     1.4
  */
 class EvcalWidget extends WP_Widget{
 	
@@ -279,7 +279,7 @@ class EvcalWidget extends WP_Widget{
 		//print_r($args);
 		
 		$content =$eventon->evo_generator->eventon_generate_calendar($args);
-		echo "<div id='evcal_widget'>".$content."</div>";
+		echo "<div id='evcal_widget' class='evo_widget'>".$content."</div>";
 		
 		
 		if(has_action('eventon_after_widget')){
@@ -334,55 +334,53 @@ class EvcalWidget_SC extends WP_Widget{
 	}
 
 	// update the new values for widget
-	function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		
-		$instance['evo_shortcodeW'] = strip_tags($new_instance['evo_shortcodeW']);
-		$instance['evo_title'] = strip_tags($new_instance['evo_title']);
-		
-		return $instance;
-	}
-
-	/**
-	 * The actuval widget
-	 */
-	public function widget($args, $instance) {
-		global $eventon;
-				
-		// extract widget specific variables
-		extract($args, EXTR_SKIP);		
-		
-		
-		/*
-			 WIDGET
-		*/	
-		if(has_action('eventon_before_widget_SC')){
-			do_action('eventon_before_widget_SC');
-		}else{
-			echo $before_widget;
-		}			
-		
-
-		$title = apply_filters('widget_title', $instance['evo_title'] );  
-
-		// widget title
-		if(!empty($instance['evo_title']) ){
-			echo $before_title. $title .$after_title;
+		function update($new_instance, $old_instance) {
+			$instance = $old_instance;
+			
+			$instance['evo_shortcodeW'] = strip_tags($new_instance['evo_shortcodeW']);
+			$instance['evo_title'] = strip_tags($new_instance['evo_title']);
+			
+			return $instance;
 		}
 
-		// shortcode
-		if(!empty($instance['evo_shortcodeW'])){
-			echo "<div id='evcal_widget' >";
-			echo do_shortcode( $instance['evo_shortcodeW']) ;	
-			echo "</div>";		
-		}
+	// The actuval widget
+		public function widget($args, $instance) {
+			global $eventon;
+					
+			// extract widget specific variables
+			extract($args, EXTR_SKIP);		
+			
+			
+			/*
+				 WIDGET
+			*/	
+			if(has_action('eventon_before_widget_SC')){
+				do_action('eventon_before_widget_SC');
+			}else{
+				echo $before_widget;
+			}			
+			
+
+			$title = apply_filters('widget_title', $instance['evo_title'] );  
+
+			// widget title
+			if(!empty($instance['evo_title']) ){
+				echo $before_title. $title .$after_title;
+			}
+
+			// shortcode
+			if(!empty($instance['evo_shortcodeW'])){
+				echo "<div id='evcal_widget' class='evo_widget'>";
+				echo do_shortcode( $instance['evo_shortcodeW']) ;	
+				echo "</div>";		
+			}
 
 
-		if(has_action('eventon_after_widget_SC')){
-			do_action('eventon_after_widget_SC');
-		}else{
-			echo $after_widget;
+			if(has_action('eventon_after_widget_SC')){
+				do_action('eventon_after_widget_SC');
+			}else{
+				echo $after_widget;
+			}
+			
 		}
-		
-	}
 }

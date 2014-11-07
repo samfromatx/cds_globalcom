@@ -112,9 +112,10 @@
 			var cal = obj.closest('div.ajde_evcal_calendar ');
 			
 			if( obj.attr('data-gmtrig')=='1' && obj.attr('data-gmap_status')!='null'){
-				loadl_gmaps_in(obj, cal, '');
+				loadl_gmaps_in(obj, cal, '');				
 			}			
 				
+
 		}
 		
 		
@@ -125,18 +126,16 @@
 
 			var mapformat = evodata.data('mapformat');				
 			var ev_location = obj.find('.evcal_desc');
-			
-			var latlon = ev_location.attr('latlon');
-			if(latlon=='1'){
-				var address = ev_location.attr('latlng');
-				var location_type = 'latlng';
-				
-			}else{
-				var address = ev_location.attr('add_str');
+
+			var location_type = ev_location.attr('data-location_type');
+			if(location_type=='address'){
+				var address = ev_location.attr('data-location_address');
 				var location_type = 'add';
+			}else{			
+				var address = ev_location.attr('data-latlng');
+				var location_type = 'latlng';				
 			}
-			
-			
+
 			var map_canvas_id= (mapId!=='')?
 				mapId:
 				obj.siblings('.event_description').find('.evcal_gmaps').attr('id');
@@ -146,12 +145,13 @@
 			var zoomlevel = (typeof zoom !== 'undefined' && zoom !== false)? parseInt(zoom):12;
 			
 			var scroll = evodata.data('mapscroll');	
+			//console.log(map_canvas_id+' '+mapformat+' '+ location_type +' '+scroll +' '+ address);
 			
 								
 			//obj.siblings('.event_description').find('.evcal_gmaps').html(address);
 			initialize(map_canvas_id, address, mapformat, zoomlevel, location_type, scroll);
 
-			//console.log(map_canvas_id+' '+mapformat+' '+ location_type +' '+scroll +' '+ address);
+			
 		}
 		
 		

@@ -107,12 +107,12 @@ function eventon_custom_event_columns( $column , $post_id) {
 
 			echo "<div class='evoevent_item'>";
 				$img_src = $eventon->evo_admin->get_image('thumbnail',false);
-				$event_color = $eventon->evo_admin->get_color($pmv);
+				$event_color = eventon_get_hex_color($pmv);
 				echo '<a class="evoevent_image" href="' . get_edit_post_link( $post_id ) . '">';
 				if($img_src){
 					echo '<img class="evoEventCirc" src="' . $img_src . '"/>';
 				}else{
-					echo '<span class="evoEventCirc" style="background-color:#' . $event_color . '"></span>';
+					echo '<span class="evoEventCirc" style="background-color:' . $event_color . '"></span>';
 				}
 				echo '</a><div class="evo_item_details">';
 			
