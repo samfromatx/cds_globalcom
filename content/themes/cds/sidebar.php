@@ -12,7 +12,7 @@ if ($parentdir[1] != "stay-informed") {
         // If this is a leaf page, include the CTA buttons
         global $children;
         if (isset($children) && count($children) == 0):
-            if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com"): ?>
+            if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com" || $cdsdomain == "www.cdsglobal.ca" || $cdsdomain == "ca.cds-global.com" || $cdsdomain == "stageca.cds-global.com"): ?>
                 <div class="widget cta">
                     <a href="/about/contact/?sbj=quote"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
                 </div>
