@@ -4,6 +4,7 @@ include 'widgets/single-post.php';
 include 'widgets/latest-post.php';
 include 'widgets/upcoming-events.php';
 include 'widgets/industries.php';
+include 'widgets/industries_wide.php';
 include 'widgets/locations.php';
 include 'widgets/optin.php';
 include 'widgets/media-post.php';
