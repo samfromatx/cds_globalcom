@@ -14,10 +14,10 @@ if ($parentdir[1] != "stay-informed") {
         if (isset($children) && count($children) == 0):
             if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com" || $cdsdomain == "www.cdsglobal.ca" || $cdsdomain == "ca.cds-global.com" || $cdsdomain == "stageca.cds-global.com"): ?>
                 <div class="widget cta">
-                    <a href="/about/contact/?sbj=quote"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
+                    <a href="/get-a-quote/?sbj=quote"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/get-a-quote.png" alt="Request a quote"></a>
                 </div>
                 <div class="widget cta">
-                    <a href="/about/contact/?sbj=demo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/schedule-a-demo.png" alt="Request a demo"></a>
+                    <a href="/schedule-a-demo/?sbj=demo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/schedule-a-demo.png" alt="Request a demo"></a>
                 </div>
         <?php
             elseif ($cdsdomain == "uk.cds-global.com" || $cdsdomain == "stageuk.cds-global.com"): ?>
