@@ -22,26 +22,26 @@ class IndustriesWideWidget extends WP_Widget {
         </div>
         <div class="features" style="margin: 0 !important;">
     <div class="industries widget">
-        <h2>We offer solutions that power, connect and simplify your business or nonprofit in these industries</h2>
+        <h2>Solutions that power, connect and simplify</h2>
         <ul>
             <li>
-            <div><a href="http://stage.cds-global.com/industries/consumer-products/"><img width="100" height="100" src="http://stage.cds-global.com/content/uploads/2014/11/consumer-products.png" class="attachment-post-thumbnail" alt="consumer-products" /></a><br />
-            <a href="http://stage.cds-global.com/industries/consumer-products/">Consumer Products</a></div>
+            <div><a href="/industries/consumer-products/"><img width="100" height="100" src="/content/uploads/2014/11/consumer-products.png" class="attachment-post-thumbnail" alt="consumer-products" /></a><br />
+            <a href="/industries/consumer-products/">Consumer Products</a></div>
             <p>Convert visitors into customers and customers into brand advocates with effective, turnkey, multichannel eCommerce solutions that drive results and revenues.</p>
         </li>
                         <li>
-            <div><a href="http://stage.cds-global.com/industries/media/"><img width="100" height="100" src="http://stage.cds-global.com/content/uploads/2014/11/media.png" class="attachment-post-thumbnail" alt="media" /></a><br />
-            <a href="http://stage.cds-global.com/industries/media/">Media</a></div>
+            <div><a href="/industries/media/"><img width="100" height="100" src="/content/uploads/2014/11/media.png" class="attachment-post-thumbnail" alt="media" /></a><br />
+            <a href="/industries/media/">Media</a></div>
             <p>Be a leader in the ever-changing print and digital landscape with innovative, sustainable and highly cost-effective solutions to attract, retain and interact with consumers.</p>
         </li>
                         <li>
-            <div><a href="http://stage.cds-global.com/industries/nonprofit/"><img width="100" height="100" src="http://stage.cds-global.com/content/uploads/2014/11/nonprofits.png" class="attachment-post-thumbnail" alt="nonprofit" /></a><br />
-            <a href="http://stage.cds-global.com/industries/nonprofit/">Nonprofit</a></div>
+            <div><a href="/industries/nonprofit/"><img width="100" height="100" src="/content/uploads/2014/11/nonprofits.png" class="attachment-post-thumbnail" alt="nonprofit" /></a><br />
+            <a href="/industries/nonprofit/">Nonprofit</a></div>
             <p>Strategically collect, analyze and use data to your advantage to target communications and stand out in the crowd, turning prospects into donors and donors into lifelong supporters.</p>
         </li>
                         <li>
-            <div><a href="http://stage.cds-global.com/industries/utilities/"><img width="100" height="100" src="http://stage.cds-global.com/content/uploads/2014/11/utilities.png" class="attachment-post-thumbnail" alt="utilities" /></a><br />
-            <a href="http://stage.cds-global.com/industries/utilities/">Utilities</a></div>
+            <div><a href="/industries/utilities/"><img width="100" height="100" src="/content/uploads/2014/11/utilities.png" class="attachment-post-thumbnail" alt="utilities" /></a><br />
+            <a href="/industries/utilities/">Utilities</a></div>
             <p>Improve customer service, decrease operating costs and boost profitability with solutions designed to meet utilities’ specific payment processing and communication needs.</p>
         </li>
                 </ul>
