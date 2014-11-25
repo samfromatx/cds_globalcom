@@ -44,6 +44,7 @@
     <meta name="msvalidate.01" content="2DE0077177D32455C498CE9C6A6DECD5" />
     <?php wp_head(); ?>
     <a href="https://plus.google.com/103871200619595329856" rel="publisher" class="hidefromscreen">Google Plus</a>
+    <script src="//cdn.optimizely.com/js/2211952690.js"></script>
 </head>
 <body <?php body_class(); ?>>
     <?php if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") { ?>
