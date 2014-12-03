@@ -61,6 +61,8 @@ Template Name: Contact Form
                                 <option>Subscription notice</option>
                             </select>
                         </div>
+                             <label for="formMagPub" class="hidefromscreen">Email Address:</label>
+	                            <input type="text" name="CustomerService_Publication" placeholder="Publication Title" id="formMagPub" aria-required="false" />
                             <label for="formemailAddress" class="hidefromscreen">Email Address:</label>
 	                            <input type="email" name="emailAddress" placeholder="Email Address" id="formemailAddress" required aria-required="true" aria-invalid="true" />
 	                        <label for="formfirstName" class="hidefromscreen">First Name:</label>
