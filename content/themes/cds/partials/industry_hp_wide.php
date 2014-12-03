@@ -1,6 +1,6 @@
 <?php
 $cdsdomain = $_SERVER['SERVER_NAME'];
- if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com") {
+ if ($cdsdomain == "www.cds-global.com" || $cdsdomain == "stage.cds-global.com" || $cdsdomain == "www.cdsglobal.ca" || $cdsdomain == "stageca.cds-global.com") {
     ?>
         <ul>
             <li>
