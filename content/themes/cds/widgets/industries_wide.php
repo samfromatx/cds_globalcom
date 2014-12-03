@@ -20,7 +20,7 @@ class IndustriesWideWidget extends WP_Widget {
 
         if ($query->have_posts()): ?>
         </div>
-        <div class="features" style="margin: 0 !important;">
+        <div class="industrywide" style="margin: 0 !important;">
     <div class="industries widget">
         <h2>Solutions that power, connect and simplify</h2>
         <ul>
@@ -37,7 +37,7 @@ class IndustriesWideWidget extends WP_Widget {
                         <li>
             <div><a href="/industries/nonprofit/"><img width="100" height="100" src="/content/uploads/2014/11/nonprofits.png" class="attachment-post-thumbnail" alt="nonprofit" /></a><br />
             <a href="/industries/nonprofit/">Nonprofit</a></div>
-            <p>Strategically collect, analyze and use data to your advantage to target communications and stand out in the crowd, turning prospects into donors and donors into lifelong supporters.</p>
+            <p>Simplify the donation process and cultivate lasting donor relationships with innovative data, mailing, and caging solutions that power the modern nonprofit.</p>
         </li>
                         <li>
             <div><a href="/industries/utilities/"><img width="100" height="100" src="/content/uploads/2014/11/utilities.png" class="attachment-post-thumbnail" alt="utilities" /></a><br />
