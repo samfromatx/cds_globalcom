@@ -6,18 +6,22 @@
 <div class="primary" style="width:95%;">
     <?php the_content(); ?>
     <ul class="listing">
-        <?php global $children; foreach ($children as $child): ?>
+        <?php global $children; foreach ($children as $child):
+            if ($child->post_title != "Higher Education") {
+        ?>
             <li>
                 <a class="icon" href="<?php print get_permalink($child->ID); ?>"><?php MultiPostThumbnails::the_post_thumbnail('page', 'icon', $child->ID); ?></a>
-                <h3>
+                <h2 id="<?php echo str_replace(' ','_',$child->post_title); ?>">
                     <a href="<?php print get_permalink($child->ID); ?>">
                         <?php print $child->post_title; ?>
                     </a>
-                </h3>
+                </h2>
                 <p><?php print $child->post_excerpt ?></p>
                 <a class="more" href="<?php print get_permalink($child->ID); ?>">Learn more</a>
             </li>
-        <?php endforeach; ?>
+        <?php
+            }
+            endforeach; ?>
     </ul>
 </div>
 <aside class="sidebarListing sidebar" role="complementary">
