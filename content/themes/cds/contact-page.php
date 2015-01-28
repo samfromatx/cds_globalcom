@@ -5,6 +5,9 @@ Template Name: Contact Form
 ?>
 
 <?php get_header(); ?>
+<?php
+    $cdsdomain = $_SERVER['SERVER_NAME'];
+?>
 
     <div class="main">
         <?php if (have_posts()) : the_post(); ?>
@@ -37,7 +40,6 @@ Template Name: Contact Form
                 <div class="content" style="">
                     <?php the_content(); ?>
                     <div id="contactusform"></div>
-                   <!-- <form method="post" action="/content/themes/cds/partials/contact_process.php" class="contact" target="eloqua-submit">-->
                     <form method="post" action="https://s1851.t.eloqua.com/e/f2" class="contact" target="eloqua-submit">
                         <div>
                             <label for="formsubject" class="hidefromscreen">Subject:</label>
@@ -74,9 +76,23 @@ Template Name: Contact Form
 	                        <label for="formComments" class="hidefromscreen">Message:</label>
                             	<textarea rows="6" name="comments" placeholder="Message" id="formComments"></textarea>
                         <div>
+                            <?php   if ($cdsdomain == "www.cdsglobal.ca") { ?>
+                            <input value="cds-global-contact-canada" type="hidden" name="elqFormName" />
+                            <?php } else { ?>
                             <input value="cds-global-contact" type="hidden" name="elqFormName" />
+                            <?php } ?>
                             <input value="1851" type="hidden" name="elqSiteId" />
                             <input name="elqCampaignId" type="hidden" />
+                            <?php
+                                if ($_GET['cn']) {
+                                    $elqInitialCampaign = htmlspecialchars($_GET['cn'], ENT_QUOTES, 'UTF-8');
+                                } elseif ($_GET['utm_campaign']) {
+                                    $elqInitialCampaign = htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8');
+                                } elseif ($_COOKIE["utmcampaign"]) {
+                                    $elqInitialCampaign = $_COOKIE["utmcampaign"];
+                                }
+                            ?>
+                            <input type="hidden" name="eLQInitialCampaignName1" data-qsarg="" value="<?php echo $elqInitialCampaign; ?>">
                             <input type="submit" value="Submit" />
                         </div>
                     </form>
