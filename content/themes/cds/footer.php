@@ -30,8 +30,8 @@
     <script type="text/javascript">
         var _elqQ = _elqQ || [];
         _elqQ.push(['elqSetSiteId', '1851']);
+        _elqQ.push(['elqUseFirstPartyCookie', 'elqtracking.cds-global.com']);
         _elqQ.push(['elqTrackPageView']);
-        _elqQ.push(['elqUseFirstPartyCookie', 'www.cds-global.com']);
 
         (function () {
             function async_load() {
