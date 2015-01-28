@@ -573,16 +573,19 @@ apply_filters( 'wpseo_sitemap_page-sitemap_change_freq', 'daily', 'http://www.cd
 
 add_action('init', 'setUTMCookie');
 function setUTMCookie() {
-    if (!$_COOKIE["utmcampaign"] || $_GET['utm_campaign']) {
+    if (!$_COOKIE["utmcampaign"] && $_GET['utm_campaign']) {
         setcookie('utmcampaign', htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
-    if (!$_COOKIE["utmmedium"] || $_GET['utm_medium']) {
+    if (!$_COOKIE["utmmedium"] && $_GET['utm_medium']) {
         setcookie('utmmedium', htmlspecialchars($_GET['utm_medium'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
-    if (!$_COOKIE["utmsource"] || $_GET['utm_source']) {
+    if (!$_COOKIE["utmmedium"] && $_GET['gclid']) {
+        setcookie('utmmedium', 'adwords', time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
+    }
+    if (!$_COOKIE["utmsource"] && $_GET['utm_source']) {
         setcookie('utmsource', htmlspecialchars($_GET['utm_source'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
-    if (!$_COOKIE["utmcontent"] || $_GET['utm_content']) {
+    if (!$_COOKIE["utmcontent"] && $_GET['utm_content']) {
         setcookie('utmcontent', htmlspecialchars($_GET['utm_content'], ENT_QUOTES, 'UTF-8'), time()+3600*1, COOKIEPATH, COOKIE_DOMAIN); //For 1 hours
     }
 }
@@ -693,4 +696,26 @@ function resource_table_content( $column_name, $post_id ) {
     echo get_post_meta( $post_id, '_bs_meta_event_venue', true );
     }*/
 }
+
+function my_theme_add_editor_styles() {
+    add_editor_style( 'style.css' );
+}
+add_action( 'after_setup_theme', 'my_theme_add_editor_styles' );
+
+function __notify_admin_on_publish( $new_status, $old_status, $post )
+{
+    global $post;
+    if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
+        return;
+
+    $message = 'View it: ' . get_permalink( $post->ID ) . "\nEdit it: " . get_edit_post_link( $post->ID );
+    if ( $post_type = get_post_type_object( $post->post_type ) )
+        wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . ' Published', $message );
+}
+/* Send email notification to Admin when a new post or page is published */
+add_action( 'publish_post', '__notify_admin_on_publish', 10, 3 );
+add_action( 'publish_page', '__notify_admin_on_publish', 10, 3 );
+add_action( 'publish_resource', '__notify_admin_on_publish', 10, 3 );
+add_action( 'publish_news', '__notify_admin_on_publish', 10, 3 );
+add_action( 'publish_ajde_events', '__notify_admin_on_publish', 10, 3 );
 
