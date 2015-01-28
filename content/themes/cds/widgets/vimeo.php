@@ -17,8 +17,8 @@ class VimeoWidget extends WP_Widget {
 
         $embed_src = "//player.vimeo.com/video/$video_id?title=0&byline=0&portrait=0&api=1&player_id=vimeo";
         ?>
-        <div class="video widget double">
-            <iframe width="100%" height="100%" src="<?php echo $embed_src; ?>" frameborder="0" id="vimeo" name="homepage video" allowfullscreen seamless></iframe>
+        <div class="video widget double" style="">
+            <div class='vimeo-container'><iframe width="100%" height="100%" src="<?php echo $embed_src; ?>" frameborder="0" id="vimeo" name="homepage video" allowfullscreen seamless></iframe></div>
         </div>
         <?php
     }
