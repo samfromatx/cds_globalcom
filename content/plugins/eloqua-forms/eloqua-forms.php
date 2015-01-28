@@ -197,7 +197,7 @@ function eloqua_form($post_id = false) {
 
     <form method="post" action="<?php echo $eloquaForm['action']; ?>" class="eloqua-form" target="eloqua-submit" id="elqForm">
         <div>
-            <label><strong>Fill out the form below to access the <?php echo $on_resourceType; ?>!</strong></label><br><br>
+            <label><strong>Fill out the form below to access the <?php echo strtolower($on_resourceType); ?>.</strong></label><br><br>
             <?php foreach ($fieldNames as $name):
                 $field = $eloquaForm['fields'][$name];
 
@@ -297,12 +297,16 @@ function eloqua_form($post_id = false) {
                 $elqMed = htmlspecialchars($_GET['utm_medium'], ENT_QUOTES, 'UTF-8');
             } elseif ($_COOKIE["utmmedium"]) {
                 $elqMed = $_COOKIE["utmmedium"];
+            } elseif ($_GET['gclid']) {
+                $elqMed = 'adwords';
             }
-            if ($_GET['utm_campaign']) {
+            if ($_GET['cn']) {
+                $elqInitialCampaign = htmlspecialchars($_GET['cn'], ENT_QUOTES, 'UTF-8');
+            } elseif ($_GET['utm_campaign']) {
                 //$elqInitialCampaign = $_GET['utm_campaign'];
                 $elqInitialCampaign = htmlspecialchars($_GET['utm_campaign'], ENT_QUOTES, 'UTF-8');
             } elseif ($_COOKIE["utmcampaign"]) {
-                $$elqInitialCampaign = $_COOKIE["utmcampaign"];
+                $elqInitialCampaign = $_COOKIE["utmcampaign"];
             }
             $qsArray = array(
                 'elqCampaignName' => $elqCN,
@@ -318,8 +322,8 @@ function eloqua_form($post_id = false) {
             <?php endforeach; ?>
 
             <input type="hidden" name="elqCustomerGUID" value="">
-
-            <input type="submit" value="Submit">
+            <br>
+            <button type="submit" class="resource-submit-button btn btn-info">Download the <?php echo $on_resourceType; ?></button>
         </div>
     </form>
     <iframe name="eloqua-submit" style="display: none"></iframe>
