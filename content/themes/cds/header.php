@@ -2,28 +2,6 @@
 <!--[if IE 8]> <html class="lt-ie9" <?php language_attributes(); ?>> <![endif]-->
 <!--[if gt IE 8]><!--> <html <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
-    <?php $pageid = get_the_ID(); ?>
-    <?php if ($pageid == "6626") :
-    //Operation Smile Case Study A/B Test
-     ?>
-
-    <!-- Google Analytics Content Experiment code -->
-    <script>function utmx_section(){}function utmx(){}(function(){var
-    k='1109364-6',d=document,l=d.location,c=d.cookie;
-    if(l.search.indexOf('utm_expid='+k)>0)return;
-    function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
-    indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
-    length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
-    '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
-    '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
-    '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
-    valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
-    '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
-    </script><script>utmx('url','A/B');</script>
-    <!-- End of Google Analytics Content Experiment code -->
-
-
-    <?php endif; ?>
     <?php
     $cdsdomain = $_SERVER['SERVER_NAME'];
     ?>
@@ -45,8 +23,6 @@
     <?php wp_head(); ?>
     <a href="https://plus.google.com/103871200619595329856" rel="publisher" class="hidefromscreen">Google Plus</a>
     <script src="//cdn.optimizely.com/js/2211952690.js"></script>
-    <!--Facebook Conversion Code for Downloads-->
-    <script>(function(){var _fbq=window._fbq||(window._fbq=[]);if(!_fbq.loaded){var fbds=document.createElement('script');fbds.async=true;fbds.src='//connect.facebook.net/en_US/fbds.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(fbds,s);_fbq.loaded=true;}})();window._fbq=window._fbq||[];window._fbq.push(['track','6019447818871',{'value':'0.01','currency':'USD'}]);</script><noscript><img height="1"width="1"alt=""style="display:none"src="https://www.facebook.com/tr?ev=6019447818871&amp;cd[value]=0.01&amp;cd[currency]=USD&amp;noscript=1"/></noscript>
 </head>
 <body <?php body_class(); ?>>
     <?php if ($cdsdomain == "stage.cds-global.com") { ?>
