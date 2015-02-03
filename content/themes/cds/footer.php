@@ -25,10 +25,9 @@
             <?php wp_nav_menu(array('theme_location' => 'footer')); ?>
         </footer>
     </div><?php //.container ?>
-
-
-    <script type="text/javascript">
-        var _elqQ = _elqQ || [];
+    <?php if ($cdsdomain == "stage.cds-global.com") { ?>
+    <script>
+      var _elqQ = _elqQ || [];
         _elqQ.push(['elqSetSiteId', '1851']);
         _elqQ.push(['elqUseFirstPartyCookie', 'elqtracking.cds-global.com']);
         _elqQ.push(['elqTrackPageView']);
@@ -42,7 +41,9 @@
             if (window.addEventListener) window.addEventListener('DOMContentLoaded', async_load, false);
             else if (window.attachEvent) window.attachEvent('onload', async_load);
         })();
+
     </script>
+    <?php } ?>
 
     <script src="/content/themes/cds/javascripts/site.js"></script>
 
