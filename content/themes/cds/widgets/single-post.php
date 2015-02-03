@@ -15,7 +15,7 @@ class SinglePostWidget extends WP_Widget {
             'p' => $instance['post_id'],
              'post_type' => 'any',
         ));
-        if (!$query->have_posts())            
+        if (!$query->have_posts())
             return;
 
         $query->the_post();
@@ -37,7 +37,7 @@ class SinglePostWidget extends WP_Widget {
         <?php if ($args['id'] == 'cds-homepage'): ?>
             <h4><?php echo $instance['title']; ?></h4>
             <a href="<?php the_permalink(); echo $post_utm; ?>"><?php the_title(); ?></a>
-            <p><?php echo get_the_excerpt(); ?> <a href="<?php the_permalink(); echo $post_utm; ?>">Learn&nbsp;more</a></p>
+            <p><?php echo get_the_excerpt(); ?> <a href="<?php the_permalink(); echo $post_utm; ?>">Learn more</a></p>
             <a class="full" href="<?php the_permalink(); echo $post_utm; ?>"><?php echo $image; ?></a>
         <?php else: ?>
             <h4><?php echo $instance['title']; ?></h4>
