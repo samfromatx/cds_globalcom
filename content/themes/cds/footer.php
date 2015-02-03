@@ -58,22 +58,6 @@
         });
     </script>
 
-    <?php
-    // Add Twitter Tailored Audience code if twitter id exist in meta data
-    $twitter = get_post_meta(get_the_ID(), 'twitter_cookie', true);
-    if ( $twitter ) {
-    ?>
-        <script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
-        <script type="text/javascript">
-        twttr.conversion.trackPid('<?php echo $twitter; ?>');
-        </script>
-        <noscript>
-        <img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=<?php echo $twitter; ?>&p_id=Twitter" />
-        <img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=<?php echo $twitter; ?>&p_id=Twitter" />
-        </noscript>
-
-    <?php } ?>
-
 <?php wp_footer(); ?>
 </body>
 </html>
