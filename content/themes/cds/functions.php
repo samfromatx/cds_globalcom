@@ -719,3 +719,6 @@ add_action( 'publish_resource', '__notify_admin_on_publish', 10, 3 );
 add_action( 'publish_news', '__notify_admin_on_publish', 10, 3 );
 add_action( 'publish_ajde_events', '__notify_admin_on_publish', 10, 3 );
 
+/* Enable shortcode in widgets */
+add_filter('widget_text', 'do_shortcode');
+
