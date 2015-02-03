@@ -75,11 +75,12 @@ Template Name: Contact Form
 	                            <input name="inboundOriginator1" type="text" placeholder="How Did You Hear About Us?" id="forminboundOriginator" aria-required="false" />
 	                        <label for="formComments" class="hidefromscreen">Message:</label>
                             	<textarea rows="6" name="comments" placeholder="Message" id="formComments"></textarea>
+                            <div class='req hidefromscreen'>
+                                <label for='website'>Tell me about your website:</label>
+                                <input type='text' name='weeebsssite' id="website" />
+                            </div>
                         <div>
-                        <div class='req'>
-                            <label for='website'>Tell me about your website:</label>
-                            <input type='text' name='website' id="website" />
-                        </div>
+
                             <?php   if ($cdsdomain == "www.cdsglobal.ca") { ?>
                             <input value="cds-global-contact-canada" type="hidden" name="elqFormName" />
                             <?php } else { ?>
