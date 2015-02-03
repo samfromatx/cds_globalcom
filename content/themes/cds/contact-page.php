@@ -76,6 +76,10 @@ Template Name: Contact Form
 	                        <label for="formComments" class="hidefromscreen">Message:</label>
                             	<textarea rows="6" name="comments" placeholder="Message" id="formComments"></textarea>
                         <div>
+                        <div class='req'>
+                            <label for='website'>Tell me about your website:</label>
+                            <input type='text' name='website' id="website" />
+                        </div>
                             <?php   if ($cdsdomain == "www.cdsglobal.ca") { ?>
                             <input value="cds-global-contact-canada" type="hidden" name="elqFormName" />
                             <?php } else { ?>
