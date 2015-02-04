@@ -7,7 +7,7 @@
     <?php the_content(); ?>
     <ul class="listing">
         <?php global $children; foreach ($children as $child):
-            if ($child->post_title != "Higher Education") {
+            //if ($child->post_title != "Higher Education") {
         ?>
             <li>
                 <a class="icon" href="<?php print get_permalink($child->ID); ?>"><?php MultiPostThumbnails::the_post_thumbnail('page', 'icon', $child->ID); ?></a>
@@ -20,7 +20,7 @@
                 <a class="more" href="<?php print get_permalink($child->ID); ?>">Learn more</a>
             </li>
         <?php
-            }
+            //}
             endforeach; ?>
     </ul>
 </div>
