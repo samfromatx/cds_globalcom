@@ -46,7 +46,7 @@ Template Name: Contact Form
                             <select name="subject" required class="contact-dropdown" id="formsubject" aria-required="true">
                                 <option value="">Subject</option>
                                 <option value="Customer Service">Customer Service (magazine subscriptions, etc.)</option>
-                                <option>Sales</option>
+                                <option <?php if ($_GET['sbj'] == "sales") : echo("selected"); endif; ?>>Sales</option>
                                 <option <?php if ($_GET['sbj'] == "demo") : echo("selected"); endif; ?>>Demo</option>
                                 <option <?php if ($_GET['sbj'] == "quote") : echo("selected"); endif; ?>>Quote</option>
                                 <option>Career</option>
