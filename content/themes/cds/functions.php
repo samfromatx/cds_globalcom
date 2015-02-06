@@ -705,6 +705,7 @@ add_action( 'after_setup_theme', 'my_theme_add_editor_styles' );
 function __notify_admin_on_publish( $new_status, $old_status, $post )
 {
     global $post;
+    $blog_url = get_site_url();
     /*if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
         return;
 
@@ -712,19 +713,21 @@ function __notify_admin_on_publish( $new_status, $old_status, $post )
     if ( $post_type = get_post_type_object( $post->post_type ) )
         wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . ' Published', $message );
         */
-    if ( $new_status == 'publish' || $new_status == 'future' ) {
-    //if ( $new_status != $old_status ) {
-        //if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
-            //return;
-        if ( $new_status == 'future' ) {
-            $post_current_status = "Scheduled";
-        } else if ( $new_status == 'publish' ) {
-            $post_current_status = "Published";
-        }
+    if ( $blog_url != "http://stage.cds-global.com/wordpress" ) {
+        if ( $new_status == 'publish' || $new_status == 'future' ) {
+        //if ( $new_status != $old_status ) {
+            //if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
+                //return;
+            if ( $new_status == 'future' ) {
+                $post_current_status = "Scheduled";
+            } else if ( $new_status == 'publish' ) {
+                $post_current_status = "Published";
+            }
 
-        $message = 'View it: ' . get_permalink( $post->ID ) . "\nEdit it: " . get_edit_post_link( $post->ID ) . "\nStatus: " .  $new_status;
-        if ( $post_type = get_post_type_object( $post->post_type ) ) {
-            wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . " is " . $post_current_status, $message );
+            $message = 'View it: ' . get_permalink( $post->ID ) . "\nEdit it: " . get_edit_post_link( $post->ID ) . "\nStatus: " .  $new_status . "\nSite: " .  $blog_url;
+            if ( $post_type = get_post_type_object( $post->post_type ) ) {
+                wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . " is " . $post_current_status, $message );
+            }
         }
     }
 }
