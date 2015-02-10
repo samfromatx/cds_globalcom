@@ -93,11 +93,15 @@
             <ul class="listing resources other-resources">
                     <?php while ($query->have_posts()) {
                         $query->the_post();
-                        // Don't show more than 5 posts in this loop, we'll hide them in a separate container below
-                        if ($query->current_post > 4) break;
+                        if ($query->found_posts < 6) {
+                            $just_one_page = true;
+                        }
                         get_template_part('partials/resource-listing-small', get_post_format());
+                        // Don't show more than 5 posts in this loop, we'll hide them in a separate container below
+                        if ($query->current_post > 3) break;
                     } ?>
             </ul>
+        <?php if (!$just_one_page) { ?>
             <div class="pagination">
                 <div class="next">
                     <a href="#more">Show more resources</a>
@@ -109,6 +113,7 @@
                         get_template_part('partials/resource-listing-small', get_post_format());
                     } ?>
             </ul>
+        <?php } //end $justonepage ?>
         <?php endif; ?>
     <?php endif; ?>
 </article>
