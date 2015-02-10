@@ -85,15 +85,9 @@ Template Name: Sales/Demo Form
                             <label for="formsubject" class="hidefromscreen">Subject:</label>
                             <select name="subject" required class="contact-dropdown" id="formsubject" aria-required="true">
                                 <option value="">Subject</option>
-                                <option>Sales</option>
-                                <?php if ($_GET['sbj'] == "demo") { ?>
-                                <option <?php if ($_GET['sbj'] == "demo") : echo("selected"); endif; ?>>Demo</option>
-                                <?php } elseif ($_GET['sbj'] == "quote") { ?>
-                                <option <?php if ($_GET['sbj'] == "quote") : echo("selected"); endif; ?>>Quote</option>
-                                <?php } else { ?>
-                                <option <?php if ($_GET['sbj'] == "demo") : echo("selected"); endif; ?>>Demo</option>
-                                <option <?php if ($_GET['sbj'] == "quote") : echo("selected"); endif; ?>>Quote</option>
-                                <?php } ?>
+                                <option <?php if (get_the_title() == "Contact Sales") : echo("selected"); endif; ?>>Sales</option>
+                                <option <?php if (get_the_title() == "Schedule a Demo") : echo("selected"); endif; ?>>Demo</option>
+                                <option <?php if (get_the_title() == "Get a Quote") : echo("selected"); endif; ?>>Quote</option>
                             </select>
                         </div>
                             <label for="formemailAddress" class="hidefromscreen">Email Address:</label>
