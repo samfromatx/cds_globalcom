@@ -26,6 +26,12 @@
       'displayName' => 'Company',
       'apiName' => 'C_Company',
     ),
+    'institution' =>
+    array (
+      'type' => 'text',
+      'displayName' => 'Institution\'s Name',
+      'apiName' => 'C_Company',
+    ),
     'businessPhone' =>
     array (
       'type' => 'tel',

@@ -200,6 +200,9 @@ function eloqua_form($post_id = false) {
             <label><strong>Fill out the form below to access the <?php echo strtolower($on_resourceType); ?>.</strong></label><br><br>
             <?php foreach ($fieldNames as $name):
                 $field = $eloquaForm['fields'][$name];
+                if ($name == 'institution') :
+                    $name = 'company';
+                endif;
 
                 switch ($field['type']):
                     case 'select': ?>
@@ -219,7 +222,9 @@ function eloqua_form($post_id = false) {
         <div id="prog1">
             <?php foreach ($fieldNamesProg1 as $name2):
                 $field2 = $eloquaForm['fields'][$name2];
-
+                if ($name == 'institution') :
+                    $name = 'company';
+                endif;
                 switch ($field2['type']):
                     case 'select': ?>
                         <label for="form<?php echo $name2; ?>" class="hidefromscreen"><?php echo $name2; ?>:</label>
@@ -239,7 +244,9 @@ function eloqua_form($post_id = false) {
         <div id="prog2">
             <?php foreach ($fieldNamesProg2 as $name3):
                 $field3 = $eloquaForm['fields'][$name3];
-
+                if ($name == 'institution') :
+                    $name = 'company';
+                endif;
                 switch ($field3['type']):
                     case 'select': ?>
                         <label for="form<?php echo $name3; ?>" class="hidefromscreen"><?php echo $name3; ?>:</label>
@@ -299,6 +306,8 @@ function eloqua_form($post_id = false) {
                 $elqMed = $_COOKIE["utmmedium"];
             } elseif ($_GET['gclid']) {
                 $elqMed = 'adwords';
+            } else {
+                $elqMed = 'search';
             }
             if ($_GET['cn']) {
                 $elqInitialCampaign = htmlspecialchars($_GET['cn'], ENT_QUOTES, 'UTF-8');
