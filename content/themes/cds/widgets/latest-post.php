@@ -38,6 +38,7 @@ class LatestPostWidget extends WP_Widget {
             setup_postdata($post);
 
             $image = get_the_post_thumbnail($firstpost->ID, 250, 125);
+            $first_permalink = get_permalink( $firstpost->ID );
             if (!$image) {
                 $image_path = get_stylesheet_directory_uri() . '/images/widget-defaults/' . $instance['default_image'];
                 $image = "<img src=\"$image_path\" />";
@@ -46,7 +47,7 @@ class LatestPostWidget extends WP_Widget {
             ?>
                 <div class="nonprofit widget single">
                     <h4><?php echo $instance['title']; ?></h4>
-                    <a class="full" href="<?php the_permalink(); ?>"><?php echo $image; ?></a>
+                    <a class="full" href="<?php echo $first_permalink; ?>"><?php echo $image; ?></a>
                     <ul>
                     <?php foreach ( $recent as $post ) : setup_postdata( $post ); ?>
                     <li><a class="read" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
