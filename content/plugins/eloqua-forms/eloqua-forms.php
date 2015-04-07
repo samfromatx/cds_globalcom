@@ -197,8 +197,13 @@ function eloqua_form($post_id = false) {
 
     <form method="post" action="<?php echo $eloquaForm['action']; ?>" class="eloqua-form" target="eloqua-submit" id="elqForm">
         <div>
-            <label><strong>Fill out the form below to access the <?php echo strtolower($on_resourceType); ?>.</strong></label><br><br>
-            <?php foreach ($fieldNames as $name):
+            <?php if ($on_resourceType == "Other") { ?>
+                <label><strong>Fill out the form below to download.</strong></label><br><br>
+            <?php } else { ?>
+                <label><strong>Fill out the form below to access the <?php echo strtolower($on_resourceType); ?>.</strong></label><br><br>
+            <?php }
+
+            foreach ($fieldNames as $name):
                 $field = $eloquaForm['fields'][$name];
                 if ($name == 'institution') :
                     $name = 'company';
@@ -332,7 +337,11 @@ function eloqua_form($post_id = false) {
 
             <input type="hidden" name="elqCustomerGUID" value="">
             <br>
-            <button type="submit" class="resource-submit-button btn btn-info">Download the <?php echo $on_resourceType; ?></button>
+            <?php if ($on_resourceType == "Other") { ?>
+                <button type="submit" class="resource-submit-button btn btn-info">Download Now!</button>
+            <?php } else { ?>
+                <button type="submit" class="resource-submit-button btn btn-info">Download the <?php echo $on_resourceType; ?></button>
+            <?php } ?>
         </div>
     </form>
     <iframe name="eloqua-submit" style="display: none"></iframe>
