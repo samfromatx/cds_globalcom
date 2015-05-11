@@ -32,7 +32,7 @@ class LatestPostWidget extends WP_Widget {
     public function widget($args, $instance) {
         global $post;
 
-        $recent = get_posts(array('numberposts' => 4));
+        $recent = get_posts(array('numberposts' => 5));
         if (count($recent)) {
             $firstpost = $recent[0];
             setup_postdata($post);
