@@ -11,7 +11,7 @@ Template Name: Page with No Sidebar and No Parent
         <div class="section-nav">
             <?php get_template_part('partials/breadcrumbs'); ?>
 
-             <h1><?php the_title(); ?></h1>
+             <h1 style="font-size:3em;"><?php the_title(); ?></h1>
         </div>
         <div class="content">
 
