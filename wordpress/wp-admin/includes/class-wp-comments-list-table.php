@@ -242,7 +242,8 @@ class WP_Comments_List_Table extends WP_List_Table {
 <?php
 		if ( 'top' == $which ) {
 ?>
-			<select name="comment_type">
+			<label class="screen-reader-text" for="filter-by-comment-type"><?php _e( 'Filter by comment type' ); ?></label>
+			<select id="filter-by-comment-type" name="comment_type">
 				<option value=""><?php _e( 'All comment types' ); ?></option>
 <?php
 				/**
@@ -525,14 +526,15 @@ class WP_Comments_List_Table extends WP_List_Table {
 				comment_author_email_link();
 				echo '<br />';
 			}
-			echo '<a href="edit-comments.php?s=';
-			comment_author_IP();
-			echo '&amp;mode=detail';
-			if ( 'spam' == $comment_status )
-				echo '&amp;comment_status=spam';
-			echo '">';
-			comment_author_IP();
-			echo '</a>';
+
+			$author_ip = get_comment_author_IP();
+			if ( $author_ip ) {
+				$author_ip_url = add_query_arg( array( 's' => $author_ip, 'mode' => 'detail' ), 'edit-comments.php' );
+				if ( 'spam' == $comment_status ) {
+					$author_ip_url = add_query_arg( 'comment_status', 'spam', $author_ip_url );
+				}
+				printf( '<a href="%s">%s</a>', esc_url( $author_ip_url ), $author_ip );
+			}
 		}
 	}
 
@@ -552,9 +554,9 @@ class WP_Comments_List_Table extends WP_List_Table {
 
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
 			$post_link = "<a href='" . get_edit_post_link( $post->ID ) . "'>";
-			$post_link .= get_the_title( $post->ID ) . '</a>';
+			$post_link .= esc_html( get_the_title( $post->ID ) ) . '</a>';
 		} else {
-			$post_link = get_the_title( $post->ID );
+			$post_link = esc_html( get_the_title( $post->ID ) );
 		}
 
 		echo '<div class="response-links"><span class="post-com-count-wrapper">';

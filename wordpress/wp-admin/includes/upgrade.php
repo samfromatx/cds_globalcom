@@ -30,7 +30,7 @@ if ( !function_exists('wp_install') ) :
  * @param string $user_name User's username.
  * @param string $user_email User's email.
  * @param bool $public Whether blog is public.
- * @param null $deprecated Optional. Not used.
+ * @param string $deprecated Optional. Not used.
  * @param string $user_password Optional. User's chosen password. Will default to a random password.
  * @param string $language Optional. Language chosen.
  * @return array Array keys 'url', 'user_id', 'password', 'password_message'.
@@ -234,7 +234,7 @@ As a new WordPress user, you should go to <a href=\"%s\">your dashboard</a> to d
 	update_option( 'widget_archives', array ( 2 => array ( 'title' => '', 'count' => 0, 'dropdown' => 0 ), '_multiwidget' => 1 ) );
 	update_option( 'widget_categories', array ( 2 => array ( 'title' => '', 'count' => 0, 'hierarchical' => 0, 'dropdown' => 0 ), '_multiwidget' => 1 ) );
 	update_option( 'widget_meta', array ( 2 => array ( 'title' => '' ), '_multiwidget' => 1 ) );
-	update_option( 'sidebars_widgets', array ( 'wp_inactive_widgets' => array (), 'sidebar-1' => array ( 0 => 'search-2', 1 => 'recent-posts-2', 2 => 'recent-comments-2', 3 => 'archives-2', 4 => 'categories-2', 5 => 'meta-2', ), 'sidebar-2' => array (), 'sidebar-3' => array (), 'array_version' => 3 ) );
+	update_option( 'sidebars_widgets', array ( 'wp_inactive_widgets' => array (), 'sidebar-1' => array ( 0 => 'search-2', 1 => 'recent-posts-2', 2 => 'recent-comments-2', 3 => 'archives-2', 4 => 'categories-2', 5 => 'meta-2', ), 'array_version' => 3 ) );
 
 	if ( ! is_multisite() )
 		update_user_meta( $user_id, 'show_welcome_panel', 1 );
@@ -277,7 +277,8 @@ function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password) {
 	$user = new WP_User( $user_id );
 	$email = $user->user_email;
 	$name = $user->user_login;
-	$message = sprintf(__("Your new WordPress site has been successfully set up at:
+	$login_url = wp_login_url();
+	$message = sprintf( __( "Your new WordPress site has been successfully set up at:
 
 %1\$s
 
@@ -285,12 +286,13 @@ You can log in to the administrator account with the following information:
 
 Username: %2\$s
 Password: %3\$s
+Log in here: %4\$s
 
 We hope you enjoy your new site. Thanks!
 
 --The WordPress Team
 https://wordpress.org/
-"), $blog_url, $name, $password);
+"), $blog_url, $name, $password, $login_url );
 
 	@wp_mail($email, __('New WordPress Site'), $message);
 }
@@ -439,6 +441,9 @@ function upgrade_all() {
 
 	if ( $wp_current_db_version < 29630 )
 		upgrade_400();
+
+	if ( $wp_current_db_version < 30135 )
+		upgrade_415();
 
 	maybe_disable_link_manager();
 
@@ -1327,6 +1332,62 @@ function upgrade_400() {
 }
 
 /**
+ * Execute changes made in WordPress 4.1.4.
+ *
+ * @since 4.1.4
+ */
+function upgrade_414() {
+}
+
+/**
+ * Execute changes made in WordPress 4.1.5.
+ *
+ * @since 4.1.5
+ */
+function upgrade_415() {
+	global $wp_current_db_version, $wpdb;
+
+	if ( $wp_current_db_version < 30135 ) {
+		$content_length = $wpdb->get_col_length( $wpdb->comments, 'comment_content' );
+
+		if ( is_wp_error( $content_length ) ) {
+			return;
+		}
+
+		if ( false === $content_length ) {
+			$content_length = array(
+				'type'   => 'byte',
+				'length' => 65535,
+			);
+		} elseif ( ! is_array( $content_length ) ) {
+			$length = (int) $content_length > 0 ? (int) $content_length : 65535;
+			$content_length = array(
+				'type'	 => 'byte',
+				'length' => $length
+			);
+		}
+
+		if ( 'byte' !== $content_length['type'] || 0 === $content_length['length'] ) {
+			// Sites with malformed DB schemas are on their own.
+			return;
+		}
+
+		$allowed_length = intval( $content_length['length'] ) - 10;
+
+		$comments = $wpdb->get_results(
+			"SELECT `comment_ID` FROM `{$wpdb->comments}`
+				WHERE `comment_date_gmt` > '2015-04-26'
+				AND LENGTH( `comment_content` ) >= {$allowed_length}
+				AND ( `comment_content` LIKE '%<%' OR `comment_content` LIKE '%>%' )"
+		);
+
+		foreach ( $comments as $comment ) {
+			wp_delete_comment( $comment->comment_ID, true );
+		}
+	}
+}
+
+/**
  * Execute network level changes
  *
  * @since 3.0.0
@@ -1530,7 +1591,7 @@ function maybe_add_column($table_name, $column_name, $create_ddl) {
  *
  * @since 1.2.0
  *
- * @return array List of options.
+ * @return stdClass List of options.
  */
 function get_alloptions_110() {
 	global $wpdb;
@@ -1612,9 +1673,9 @@ function deslash($content) {
  *
  * @since 1.5.0
  *
- * @param unknown_type $queries
- * @param unknown_type $execute
- * @return unknown
+ * @param string $queries
+ * @param bool   $execute
+ * @return array
  */
 function dbDelta( $queries = '', $execute = true ) {
 	global $wpdb;
@@ -1888,9 +1949,9 @@ function make_db_current_silent( $tables = 'all' ) {
  *
  * @since 1.5.0
  *
- * @param unknown_type $theme_name
- * @param unknown_type $template
- * @return unknown
+ * @param string $theme_name
+ * @param string $template
+ * @return bool
  */
 function make_site_theme_from_oldschool($theme_name, $template) {
 	$home_path = get_home_path();
@@ -1971,9 +2032,9 @@ function make_site_theme_from_oldschool($theme_name, $template) {
  *
  * @since 1.5.0
  *
- * @param unknown_type $theme_name
- * @param unknown_type $template
- * @return unknown
+ * @param string $theme_name
+ * @param string $template
+ * @return null|false
  */
 function make_site_theme_from_default($theme_name, $template) {
 	$site_dir = WP_CONTENT_DIR . "/themes/$template";
@@ -2037,7 +2098,7 @@ function make_site_theme_from_default($theme_name, $template) {
  *
  * @since 1.5.0
  *
- * @return unknown
+ * @return false|string
  */
 function make_site_theme() {
 	// Name the theme after the blog.
@@ -2187,6 +2248,11 @@ function pre_schema_upgrade() {
 			$wpdb->query( "ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived varchar(1) NOT NULL default '0'" );
 			$wpdb->query( "ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived tinyint(2) NOT NULL default 0" );
 		}
+	}
+
+	if ( $wp_current_db_version < 30133 ) {
+		// dbDelta() can recreate but can't drop the index.
+		$wpdb->query( "ALTER TABLE $wpdb->terms DROP INDEX slug" );
 	}
 }
 

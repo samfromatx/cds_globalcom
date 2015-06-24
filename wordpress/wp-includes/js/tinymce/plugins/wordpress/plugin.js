@@ -7,6 +7,10 @@ tinymce.PluginManager.add( 'wordpress', function( editor ) {
 	var DOM = tinymce.DOM, wpAdvButton, modKey, style,
 		last = 0;
 
+	if ( typeof window.jQuery !== 'undefined' ) {
+		window.jQuery( document ).triggerHandler( 'tinymce-editor-setup', [ editor ] );
+	}
+
 	function toggleToolbars( state ) {
 		var iframe, initial, toolbars,
 			pixels = 0;
@@ -102,6 +106,10 @@ tinymce.PluginManager.add( 'wordpress', function( editor ) {
 					'<img src="' + tinymce.Env.transparentSrc + '" data-wp-more="nextpage" class="wp-more-tag mce-wp-nextpage" ' +
 						'title="' + title + '" data-mce-resize="false" data-mce-placeholder="1" />' );
 			}
+
+			if ( e.content.indexOf( '<?"' ) !== -1 ) {
+				e.content = e.content.replace( /<\?"/g, '' );
+			}
 		}
 	});
 
@@ -189,8 +197,8 @@ tinymce.PluginManager.add( 'wordpress', function( editor ) {
 			title: 'Keyboard Shortcuts',
 			width: 450,
 			height: 420,
-			inline: 1,
-			classes: 'wp-help'
+			classes: 'wp-help',
+			buttons: { text: 'Close', onclick: 'close' }
 		});
 	});
 
