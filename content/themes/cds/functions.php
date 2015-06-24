@@ -706,40 +706,46 @@ function __notify_admin_on_publish( $new_status, $old_status, $post )
 {
     global $post;
     $blog_url = get_site_url();
-    /*if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
-        return;
 
-    $message = 'View it: ' . get_permalink( $post->ID ) . "\nEdit it: " . get_edit_post_link( $post->ID );
-    if ( $post_type = get_post_type_object( $post->post_type ) )
-        wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . ' Published', $message );
-        */
     if ( $blog_url != "http://stage.cds-global.com/wordpress" ) {
         if ( $new_status == 'publish' || $new_status == 'future' ) {
-        //if ( $new_status != $old_status ) {
-            //if( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || $post->post_status == 'auto-draft' )
-                //return;
             if ( $new_status == 'future' ) {
                 $post_current_status = "Scheduled";
             } else if ( $new_status == 'publish' ) {
                 $post_current_status = "Published";
             }
 
-            $message = 'View it: ' . get_permalink( $post->ID ) . "\nEdit it: " . get_edit_post_link( $post->ID ) . "\nStatus: " .  $new_status . "\nSite: " .  $blog_url;
             if ( $post_type = get_post_type_object( $post->post_type ) ) {
-                wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . " is " . $post_current_status, $message );
+
+                $post_type_name = $post_type->labels->singular_name;
+
+                $to = 'swhite@cds-global.com';
+                $subject = 'A new ' . $post_type->labels->singular_name . " has been " . $post_current_status;
+                $message = "<h2>Page Title: " . get_the_title( $post->ID ) . "</h2>" . "<h3>Status: " .  $post_current_status . "</h3><p>View it: " . get_permalink( $post->ID ) . "<br>Edit it: " . get_edit_post_link( $post->ID ) . "</p>";
+                $headers[] = 'Content-Type: text/html; charset=UTF-8';
+                $headers[] = 'From: Wordpress Admin <cdsglobal_webadmin@cds-global.com>';
+                if ( $post_type_name == 'Resource' ) {
+                    $headers[] = 'Cc: Jennifer Bradley <jbradley@cds-global.com>';
+                }
+                //wp_mail( get_option( 'admin_email' ), 'New ' . $post_type->labels->singular_name . " is " . $post_current_status, $message, $headers );
+                wp_mail( $to, $subject, $message, $headers );
             }
         }
     }
 }
 add_action( 'transition_post_status', '__notify_admin_on_publish', 10, 3 );
-/* Send email notification to Admin when a new post or page is published
-add_action( 'publish_post', '__notify_admin_on_publish', 10, 3 );
-add_action( 'future_to_publish', '__notify_admin_on_publish', 10, 3 );
-add_action( 'publish_page', '__notify_admin_on_publish', 10, 3 );
-add_action( 'publish_resource', '__notify_admin_on_publish', 10, 3 );
-add_action( 'publish_news', '__notify_admin_on_publish', 10, 3 );
-add_action( 'publish_ajde_events', '__notify_admin_on_publish', 10, 3 );
-*/
+
 /* Enable shortcode in widgets */
 add_filter('widget_text', 'do_shortcode');
+
+add_action('wp_head', 'social_media_author_image' );
+
+function social_media_author_image() {
+    //$thisauth = get_userdata(intval($author));
+    //echo get_avatar($curauth->id, 150);
+    if ( is_author( 'jheinze' ) ) {
+        // set a custom image if we're visiting authors's author page
+       echo '<meta property="og:image" content="http://www.cds-global.com/content/uploads/2014/03/Jamey-Heinze_avatar_1394831470-150x150.jpg" />';
+    }
+}
 
